@@ -8,8 +8,8 @@ import (
 var DB *gorm.DB
 
 func InitializeDB() {
-	// Export dns to dotenv
-	dsn := "root:miumimiclairno@tcp(vue-db-1:3307)/ano"
+	// TODO: Export dns to dotenv, including database name, user, pass, port
+	dsn := "root:Kikuri@tcp(sport_db:3306)/database"
 	connection, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {

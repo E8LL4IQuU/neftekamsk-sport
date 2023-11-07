@@ -2,17 +2,19 @@ version: "3.8"
 
 services:
   web:
+    container_name: "sport_web"
     build: ./ano
     ports:
       # local:docker
       - "5000:80"
   backend:
+    container_name: "sport_backend"
     build: ./ano-go
     ports:
       - "8000:8000"
   db:
+    container_name: "sport_db"
     build: ./database
-    ports:
-      - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: "Kikuri"
+      MARIADB_ROOT_PASSWORD: "Kikuri"
+      MARIADB_DATABASE: "database"
