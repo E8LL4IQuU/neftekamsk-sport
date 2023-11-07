@@ -45,7 +45,7 @@ const NavData = [
   <div class="bg-white">
     <NavBar :navbarItems="navbarItems" v-if="!$route.meta.hideNavbar"/>
     <RouterView/>
-    <Footer :NavData="NavData" v-if"!$route.meta.hideFooter"/>
+    <Footer :NavData="NavData" v-if="!$route.meta.hideFooter"/>
   </div>
 </template>
 
