@@ -3,13 +3,22 @@ package model
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"os"
 )
 
 var DB *gorm.DB
 
 func InitializeDB() {
-	// TODO: Export dns to dotenv, including database name, user, pass, port
-	dsn := "root:Kikuri@tcp(sport_db:3306)/database"
+	// variables declared in .env
+	var user string = "root"
+	var password string = os.Getenv("DATABASE_ROOT_PASSWORD")
+	var db_host string = os.Getenv("DATABASE_CONTAINER_NAME")
+	var db_name string = os.Getenv("DATABASE_NAME")
+	var db_port string = os.Getenv("DATABASE_PORT")
+
+	// username:password@protocol(address)/dbname?param=value
+	var dsn string = user + ":" + password + "@tcp(" + db_host + ":" + db_port + ")" + "/" + db_name
+
 	connection, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
