@@ -1,0 +1,25 @@
+_id: req_f67938c2346747cd949824ef094a7027
+type: Request
+parentId: wrk_3fd1351d16c94ba29e0fbf2afe6cd304
+modified: 1698314732967
+created: 1697619707143
+url: http://localhost:8000/api/user
+name: User
+description: ""
+method: GET
+body:
+  mimeType: application/json
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1697515619704
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

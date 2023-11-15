@@ -1,0 +1,30 @@
+_id: req_8065c1e6a94f4c1bb8478f5f164ea52c
+type: Request
+parentId: wrk_3fd1351d16c94ba29e0fbf2afe6cd304
+modified: 1700020969805
+created: 1697515619804
+url: http://arikalee.burger.moe/api/register
+name: Register
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"username": "utsume",
+    	"email": "a@a.com",
+    	"password": "2"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1697515619804
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

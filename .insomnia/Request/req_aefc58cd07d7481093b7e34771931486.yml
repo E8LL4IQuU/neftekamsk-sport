@@ -1,0 +1,25 @@
+_id: req_aefc58cd07d7481093b7e34771931486
+type: Request
+parentId: wrk_3fd1351d16c94ba29e0fbf2afe6cd304
+modified: 1697620596841
+created: 1697620587605
+url: http://localhost:8000/api/logout
+name: Logout
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1697515619654
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
