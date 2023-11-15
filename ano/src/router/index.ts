@@ -62,6 +62,7 @@ const router = createRouter({
       component: () => import('../views/AdminView.vue'),
       meta: {
       hideNavbar: true,
+      hideFooter: true,
       }
     },
     {

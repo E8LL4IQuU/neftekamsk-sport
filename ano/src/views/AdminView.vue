@@ -10,7 +10,7 @@ const url: string = import.meta.env.VITE_ENDPOINT
 let bebra: string = ""
 
 onMounted(async () => {
-  await axios.get(`${url}/api/healthcheck`, {
+  await axios.get(`${url}/api/user`, {
     withCredentials: true
   }).then((response) => {
       console.log(response.data)
