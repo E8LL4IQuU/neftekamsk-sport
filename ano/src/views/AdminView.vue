@@ -9,19 +9,12 @@ const url: string = import.meta.env.VITE_ENDPOINT
 
 let bebra: string = ""
 
-onMounted(async () => {
-  await axios.get(`${url}/api/user`, {
-    withCredentials: true
-  }).then((response) => {
-      console.log(response.data)
-      bebra = response.data.name
-  })
-})
+
 </script>
 
 <template>
-<h2>
-  Hello, {{ bebra }}
+<h2 class="text-black text-3xl">
+  Admin panel
 </h2>
 </template>
 
