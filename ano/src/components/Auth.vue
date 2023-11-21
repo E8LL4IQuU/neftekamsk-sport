@@ -90,8 +90,10 @@ async function submit() {
  
     await axios.post(`${url}/api/login`, data,
     {withCredentials: true})
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
+        if (response.data.id != 0) {
+          router.push("/admin")
+        }
       })
       .catch(function (error) {
         console.log(error);
