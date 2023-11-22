@@ -47,8 +47,17 @@ func Register(c *fiber.Ctx) error {
 	c.Accepts("application/json")
 	data := ParseBody(c)
 
+	// Check if email is not taken"
+	var user model.User
+	model.DB.Where("email = ?", data["email"]).First(&user)
+	if user.ID != 0 {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "email is already taken",
+		})
+	}
+
 	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 14)
-	user := model.User{
+	user = model.User{
 		Username:	data["username"],
 		Email:		data["email"],
 		Password:	password,
