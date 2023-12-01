@@ -29,4 +29,5 @@ func InitializeDB() {
 	DB = connection
 
 	connection.AutoMigrate(&User{})
+	connection.AutoMigrate(&Event{})
 }

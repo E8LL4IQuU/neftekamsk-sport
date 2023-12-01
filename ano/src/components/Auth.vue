@@ -106,8 +106,8 @@ onMounted(async () => {
   await axios
     .get(`${url}/api/user`, {
       withCredentials: true,
-      // 200 OK
     })
+    // 200 OK
     .then((response) => {
       if (response.data.id != 0) {
         router.push("/admin");
@@ -116,7 +116,7 @@ onMounted(async () => {
     })
     .catch((error) => {
       if (401 == error.response.status) {
-        console.log("Unauthorized");
+        // unauthorized
       }
     });
 });

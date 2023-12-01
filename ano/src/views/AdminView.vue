@@ -27,14 +27,21 @@ onMounted(async () => {
     });
 });
 
+
+// TODO: add event(meropriyatye) create method
+// POST igater.burger.moe/api/events
+// name         string
+// description  string
+// image        file
+
 </script>
 
 <template>
-<h2 class="text-black text-3xl">
+<h1 class="text-black text-3xl">
   Admin panel
-</h2>
-<h2>
-  Hello, {{ bebra }}
+</h1>
+<h2 class="text-black text-2xl">
+
 </h2>
 </template>
 

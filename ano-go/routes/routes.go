@@ -5,6 +5,9 @@ import (
 )
 
 func InitializeRoutes(app *fiber.App) {
+	// Every route should be added to nginx config at
+	// nginx/default.conf
+	// otherwise "404 Not found" will be returned
 
 	// Auth
 	app.Post("/api/register", Register)
@@ -13,5 +16,6 @@ func InitializeRoutes(app *fiber.App) {
 	app.Post("/api/logout", Logout)
 
 	// Content management
-	app.Post("/api/upload", Upload)
+	app.Get("/api/posts", GetEvents)
+	app.Post("/api/events", CreateEvent)
 }
