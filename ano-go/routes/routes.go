@@ -10,10 +10,11 @@ func InitializeRoutes(app *fiber.App) {
 	// otherwise "404 Not found" will be returned
 
 	// Auth
-	app.Post("/api/register", Register)
-	app.Post("/api/login", Login)
-	app.Get("/api/user", User)
-	app.Post("/api/logout", Logout)
+	// /api/auth routes are allowed to access without authorization
+	app.Post("/api/auth/register", Register)
+	app.Post("/api/auth/login", Login)
+	app.Get("/api/auth/user", User)
+	app.Post("/api/auth/logout", Logout)
 
 	// Content management
 	app.Get("/api/posts", GetEvents)

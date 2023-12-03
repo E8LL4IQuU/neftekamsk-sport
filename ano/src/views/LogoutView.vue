@@ -8,7 +8,7 @@ const router = useRouter()
 const url: string = import.meta.env.VITE_ENDPOINT
 
 onMounted(async () => {
-  await axios.post(`${url}/api/logout`, {
+  await axios.post(`${url}/api/auth/logout`, {
     withCredentials: true
   }).then((response) => {
       console.log(response.data)

@@ -104,7 +104,7 @@ const data = {
 
 onMounted(async () => {
   await axios
-    .get(`${url}/api/user`, {
+    .get(`${url}/api/auth/user`, {
       withCredentials: true,
     })
     // 200 OK
@@ -112,7 +112,6 @@ onMounted(async () => {
       if (response.data.id != 0) {
         router.push("/admin");
       }
-      console.log("then");
     })
     .catch((error) => {
       if (401 == error.response.status) {
@@ -124,7 +123,7 @@ onMounted(async () => {
 async function submit() {
 
   await axios
-    .post(`${url}/api/login`, data, { withCredentials: true })
+    .post(`${url}/api/auth/login`, data, { withCredentials: true })
     .then((response) => {
       router.push("/admin");
     })
@@ -138,7 +137,7 @@ async function submit() {
 }
 
 // Register
-// POST /api/register
+// POST /api/auth/register
 // {
 //     username:   string
 //     email:      string
@@ -146,16 +145,16 @@ async function submit() {
 // }
 
 // Login
-// POST /api/login
+// POST /api/auth/login
 // {
 //     email:      string
 //     password:   string
 // }
 
 // Logout
-// POST /api/logout
+// POST /api/auth/logout
 
 // Routes to be implemented
-// /api/user returns user json,
-// /api/healthcheck return if you are still logged in
+// /api/auth/user returns user json,
+// /api/auth/healthcheck return if you are still logged in
 </script>

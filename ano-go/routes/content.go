@@ -3,13 +3,19 @@ package routes
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"io"
 	"mime/multipart"
 	"path/filepath"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/E8LL4IQuU/ano-go/model"
+	"github.com/gofiber/fiber/v2"
 )
+
+type eventData struct {
+	Name		string	`json:"name"`
+	Description	string	`json:"description"`
+}
 
 func getFileExtension(file *multipart.FileHeader) string {
 	name := file.Filename
@@ -43,7 +49,7 @@ func CreateEvent(c *fiber.Ctx) error {
 	files := form.File["image"]	// "image" is the name of the input field in the form
 	if files == nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "image is required",
+			"message": "form file 'image' required",
 		})
 	}
 	if len(files) != 1 {
@@ -67,11 +73,18 @@ func CreateEvent(c *fiber.Ctx) error {
 		c.SaveFile(file, "./uploads/" + path)
 	}
 
-	data := ParseBody(c)
+	jsonData := form.Value["jsonData"][0]
+
+	data := new(eventData)
+
+	// Unmarshal JSON data into the 'data' struct
+	if err := json.Unmarshal([]byte(jsonData), data); err != nil {
+		return err
+	}
 
 	var event model.Event = model.Event{
-		Name:			data["name"],
-		Description:	data["description"],
+		Name:			data.Name,
+		Description:	data.Description,
 		ImagePath:		path,
 	}
 

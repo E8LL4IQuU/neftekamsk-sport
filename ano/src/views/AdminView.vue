@@ -2,6 +2,7 @@
 import { onMounted } from 'vue'
 import axios, { type AxiosResponse } from 'axios'
 import { useRouter } from 'vue-router'
+import EventManagement from '../components/EventManagement.vue'
 
 const router = useRouter()
 
@@ -11,7 +12,7 @@ let bebra: string = ""
 
 onMounted(async () => {
   await axios
-    .get(`${url}/api/user`, {
+    .get(`${url}/api/auth/user`, {
       withCredentials: true,
       // 200 OK
     })
@@ -40,6 +41,7 @@ onMounted(async () => {
 <h1 class="text-black text-3xl">
   Admin panel
 </h1>
+<EventManagement></EventManagement>
 <h2 class="text-black text-2xl">
 
 </h2>

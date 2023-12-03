@@ -22,7 +22,9 @@ func NewMiddleware() fiber.Handler {
 func AuthMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
-	if strings.Split(c.Path(), "/")[1] == "api" {
+
+	// Allow routes with "auth" as second segment of path
+	if (strings.Split(c.Path(), "/")[2] == "auth") {
 		return c.Next()
 	}
 
