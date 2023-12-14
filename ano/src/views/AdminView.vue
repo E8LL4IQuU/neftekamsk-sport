@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import axios, { type AxiosResponse } from 'axios'
 import { useRouter } from 'vue-router'
 import EventManagement from '../components/EventManagement.vue'
+import EventsList from '../components/EventsList.vue'
 
 const router = useRouter()
 
@@ -42,6 +43,7 @@ onMounted(async () => {
   Admin panel
 </h1>
 <EventManagement></EventManagement>
+<EventsList></EventsList>
 <h2 class="text-black text-2xl">
 
 </h2>

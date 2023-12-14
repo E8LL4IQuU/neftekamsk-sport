@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="submit" action="#">
+    <!-- FIXME: white text on white background on firefox -->
     <input type="text" v-model="name" placeholder="Название мероприятия" />
     <input type="text" v-model="description" placeholder="Описание мероприятия" />
     <input type="file" @change="onFileChange">
@@ -23,6 +24,7 @@ const onFileChange = (event: Event) => {
 };
 
 const submit = async () => {
+    // FIXME: 413 on big file name I'd guess
     try {
         const jsonData = {
             name: name,

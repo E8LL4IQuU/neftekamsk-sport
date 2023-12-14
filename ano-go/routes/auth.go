@@ -30,13 +30,13 @@ func AuthMiddleware(c *fiber.Ctx) error {
 
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map {
-			"message": "not authorized",
+			"message": "unauthorized",
 		})
 	}
 
 	if sess.Get(AUTH_KEY) == nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map {
-			"message": "not authorized",
+			"message": "unauthorized",
 		})
 	}
 

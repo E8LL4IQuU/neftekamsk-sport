@@ -33,7 +33,11 @@ func generateSHA256Name(file io.Reader) (string, error) {
 }
 
 func GetEvents(c *fiber.Ctx) error {
-	return nil
+	// TODO: control limit by c.Params() I guess
+	var events []model.Event
+	model.DB.Order("ID desc").Limit(10).Find(&events)
+
+	return c.Status(fiber.StatusOK).JSON(events)
 }
 
 func CreateEvent(c *fiber.Ctx) error {
