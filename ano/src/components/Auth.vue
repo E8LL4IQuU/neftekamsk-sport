@@ -23,6 +23,7 @@
     -->
   <div
     class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+    v-if="isLoginRequired"
   >
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <div class="flex justify-center">
@@ -88,14 +89,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Logo from "./icons/Logo.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const url: string = import.meta.env.VITE_ENDPOINT;
+
+const isLoginRequired = ref<number>(0)
 
 const data = {
   email: "",
@@ -115,7 +117,7 @@ onMounted(async () => {
     })
     .catch((error) => {
       if (401 == error.response.status) {
-        // unauthorized
+        isLoginRequired.value = 1
       }
     });
 });

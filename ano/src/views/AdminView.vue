@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import axios, { type AxiosResponse } from 'axios'
 import { useRouter } from 'vue-router'
 import EventManagement from '../components/EventManagement.vue'
 import EventsList from '../components/EventsList.vue'
 
 const router = useRouter()
-
 const url: string = import.meta.env.VITE_ENDPOINT
 
-let bebra: string = ""
+const isLoggedIn = ref<number>(0)
 
 onMounted(async () => {
   await axios
@@ -18,8 +17,8 @@ onMounted(async () => {
       // 200 OK
     })
     .then((response) => {
-      if (response.data.id != 0) {
-        bebra = response.data.name
+      if (response.data.id !== 0) {
+        isLoggedIn.value = 1
       }
     })
     .catch((error) => {
@@ -39,7 +38,9 @@ onMounted(async () => {
 </script>
 
 <template>
-<h1 class="text-black text-3xl">
+  <body class="h-full bg-white">
+<main v-if="isLoggedIn">
+  <h1 class="text-black text-3xl">
   Admin panel
 </h1>
 <EventManagement></EventManagement>
@@ -47,6 +48,7 @@ onMounted(async () => {
 <h2 class="text-black text-2xl">
 
 </h2>
+</main></body>
 </template>
 
 <style>
