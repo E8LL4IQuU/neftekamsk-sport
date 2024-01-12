@@ -95,7 +95,6 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const url: string = import.meta.env.VITE_ENDPOINT;
 
 const isLoginRequired = ref<number>(0)
 
@@ -106,7 +105,7 @@ const data = {
 
 onMounted(async () => {
   await axios
-    .get(`${url}/api/auth/user`, {
+    .get('/api/auth/user', {
       withCredentials: true,
     })
     // 200 OK
@@ -125,7 +124,7 @@ onMounted(async () => {
 async function submit() {
 
   await axios
-    .post(`${url}/api/auth/login`, data, { withCredentials: true })
+    .post('/api/auth/login', data, { withCredentials: true })
     .then((response) => {
       router.push("/admin");
     })

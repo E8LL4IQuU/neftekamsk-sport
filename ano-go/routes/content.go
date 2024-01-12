@@ -13,7 +13,7 @@ import (
 )
 
 type eventData struct {
-	Name		string	`json:"name"`
+	Title		string	`json:"title"`
 	Description	string	`json:"description"`
 }
 
@@ -87,7 +87,7 @@ func CreateEvent(c *fiber.Ctx) error {
 	}
 
 	var event model.Event = model.Event{
-		Name:			data.Name,
+		Title:			data.Title,
 		Description:	data.Description,
 		ImagePath:		path,
 	}

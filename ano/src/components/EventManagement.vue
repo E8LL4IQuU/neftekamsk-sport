@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="submit" action="#">
     <!-- FIXME: white text on white background on firefox -->
-    <input type="text" v-model="name" placeholder="Название мероприятия" />
+    <input type="text" v-model="title" placeholder="Название мероприятия" />
     <input type="text" v-model="description" placeholder="Описание мероприятия" />
     <input type="file" @change="onFileChange">
     <button type="submit">Create</button>
@@ -13,7 +13,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 const file = ref<File | null>(null);
-let name = '';
+let title = '';
 let description = '';
 
 const onFileChange = (event: Event) => {
@@ -27,7 +27,7 @@ const submit = async () => {
     // FIXME: 413 on big file name I'd guess
     try {
         const jsonData = {
-            name: name,
+            title: title,
             description: description
         };
 

@@ -4,18 +4,19 @@ import axios, { type AxiosResponse } from 'axios'
 import { useRouter } from 'vue-router'
 import EventManagement from '../components/EventManagement.vue'
 import EventsList from '../components/EventsList.vue'
+import AdminSlider from '../components/AdminSlider.vue'
 
 const router = useRouter()
-const url: string = import.meta.env.VITE_ENDPOINT
 
 const isLoggedIn = ref<number>(0)
+const events = ref([])
 
 onMounted(async () => {
   await axios
-    .get(`${url}/api/auth/user`, {
+    .get('/api/auth/user', {
       withCredentials: true,
-      // 200 OK
     })
+    // 200 OK
     .then((response) => {
       if (response.data.id !== 0) {
         isLoggedIn.value = 1
@@ -26,14 +27,19 @@ onMounted(async () => {
         router.push("/login")
       }
     });
+
+  await axios
+    .get('/api/events', {
+      withCredentials: true,
+    })
+    .then((response) => {
+      events.value = response.data
+      console.log(response.data)
+    })
+    .catch((error) => {
+      console.log("Error while fetching events:", error)
+    })
 });
-
-
-// TODO: add event(meropriyatye) create method
-// POST igater.burger.moe/api/events
-// name         string
-// description  string
-// image        file
 
 </script>
 
@@ -48,7 +54,9 @@ onMounted(async () => {
 <h2 class="text-black text-2xl">
 
 </h2>
-</main></body>
+<AdminSlider :SliderData="events" />
+</main>
+</body>
 </template>
 
 <style>
