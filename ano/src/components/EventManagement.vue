@@ -40,7 +40,7 @@ const submit = async () => {
         if (file.value !== null) {
             formData.append('image', file.value);
         } else {
-            // FIXME: this error is pretty big in console like (g, yh, Rt, qe)
+            // FIXME: this error is pretty big in console, prints out a lot of gibberish like "g, yh, Rt, qe"
             throw new Error('No image for event was choosen')
         }
 
@@ -50,8 +50,8 @@ const submit = async () => {
                 'Content-Type': 'multipart/form-data'
             }
         });
+        // TODO: Reload AdminSlider.vue (probably use .then section of axios request above)
 
-        console.log(formData)
         console.log('Response:', response.data);
     } catch (error) {
         console.error('Error', error);

@@ -96,3 +96,23 @@ func CreateEvent(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(event)
 }
+
+func DeleteEvent(c *fiber.Ctx) error {
+
+	eventID := c.Params("id")
+
+	// Find record in the database
+	var event model.Event
+	if err := model.DB.First(&event, eventID).Error; err != nil {
+		// Handle the error
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Record not found"})
+	}
+
+	// Delete the record
+	if err := model.DB.Delete(&event).Error; err != nil {
+		// Handle the error
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error deleting record"})
+	}
+
+	return c.JSON(fiber.Map{"message": "Record deleted successfully"})
+}

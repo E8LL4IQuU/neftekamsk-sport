@@ -34,7 +34,6 @@ onMounted(async () => {
     })
     .then((response) => {
       events.value = response.data
-      console.log(response.data)
     })
     .catch((error) => {
       console.log("Error while fetching events:", error)

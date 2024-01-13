@@ -16,7 +16,9 @@
               class="text-5xl mb-3 mobile:text-3xl block mx-auto text-center bg-black bg-opacity-60 border-0" />
               <input v-model="slide.description"
               class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
-              <button class="p-2 rounded-[4px] bg-slate-900 hover:bg-gray-700 duration-300">Применить</button>
+              <button class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
+              <!-- TODO: Implement event removal -->
+              <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300" @click="deleteEvent(slide.ID)">Удалить</button>
             </div>
             <img class="w-auto h-[100vh]  mobile:h-72" :src="`/uploads/${slide.img}`" alt="slider image"/>
             <!-- TODO: background image selector -->
@@ -28,6 +30,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import axios from 'axios';
 import {Swiper, SwiperSlide} from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
@@ -35,6 +38,7 @@ import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 
 interface ISlider {
+  ID: number;
   title: string;
   description: string;
   links: string;
@@ -49,6 +53,16 @@ const modules = [
   Pagination,
   Navigation
 ]
+
+const deleteEvent = async (id: number) => {
+  try {
+    const response = await axios.delete(`/api/events/${id}`)
+    .then((response) =>
+    console.log(response));
+  } catch (error) {
+    console.error('Error deleting record:', error)
+  }
+}
 </script>
 
 <style scoped lang="sass">
