@@ -45,20 +45,14 @@ onMounted(async () => {
 
 <template>
   <body class="h-full bg-white">
-<main v-if="isLoggedIn">
-  <h1 class="text-black text-3xl">
-  Admin panel
-</h1>
-<EventManagement></EventManagement>
-<EventsList></EventsList>
-<h2 class="text-black text-2xl">
-
-</h2>
-<AdminSlider :SliderData="events" />
-</main>
-</body>
+    <main v-if="isLoggedIn">
+      <h1 class="text-black text-3xl">
+        Admin panel
+      </h1>
+      <EventManagement></EventManagement>
+      <AdminSlider :SliderData="events" />
+    </main>
+  </body>
 </template>
 
-<style>
-
-</style>
+<style></style>

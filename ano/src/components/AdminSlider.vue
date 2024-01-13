@@ -1,24 +1,26 @@
 <template>
   <div>
-    <h3 class="text-6xl text-center pt-4 pb-3 text-gray-500 font-medium mobile:text-4xl">Мероприятия</h3>
+    <h3 class="text-4xl text-center pt-4 pb-3 text-gray-500 font-medium mobile:text-4xl">Редактирование мероприятий</h3>
     <div class="w-[100%] h-[100%]">
       <Swiper
           :spaceBetween="30"
           :centeredSlides="true"
-          :autoplay="{
-      delay: 2500,
-      disableOnInteraction: false,
-    }" :navigation="true"
+          :autoplay="false"
+          :navigation="true"
           :modules="modules"
       >
         <SwiperSlide v-for="(slide, index) in SliderData" :key="index">
           <div class="flex flex-col justify-center">
             <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
-              <h2 class="text-5xl pb-3 mobile:text-3xl">{{ slide.title }}</h2>
-              <p class="text-2xl pb-3 mobile:text-sm">{{ slide.description }}</p>
-              <a class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" :href="slide.links">Подробнее</a>
+              <input v-model="slide.title"
+              class="text-5xl mb-3 mobile:text-3xl block mx-auto text-center bg-black bg-opacity-60 border-0" />
+              <input v-model="slide.description"
+              class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
+              <button class="p-2 rounded-[4px] bg-slate-900 hover:bg-gray-700 duration-300">Применить</button>
             </div>
             <img class="w-auto h-[100vh]  mobile:h-72" :src="`/uploads/${slide.img}`" alt="slider image"/>
+            <!-- TODO: background image selector -->
+            <input type="file" />
           </div>
         </SwiperSlide>
       </Swiper>

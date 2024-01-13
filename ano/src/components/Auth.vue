@@ -129,6 +129,7 @@ async function submit() {
       router.push("/admin");
     })
     .catch(function (error) {
+      // TODO: add visual presentation that an action is required
       if (404 == error.response.status) {
         console.log("User not found");
       } else if (400 == error.response.status) {
