@@ -1,7 +1,10 @@
 package routes
 
 import (
+	"fmt"
+	"os"
 	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/session"
@@ -13,13 +16,23 @@ var (
 	USER_ID		string			= "user_id"
 )
 
+var environment string
+
 func InitializeFiber() {
 	app := fiber.New()
 
+	environment := os.Getenv("ENVIRONMENT")
+
+	var cookieSecure bool = false
+	if environment == "production" {
+		cookieSecure = true
+	} else {
+		fmt.Println("Warning: running in developer mode, security features disabled")
+	}
+
 	store = session.New(session.Config {
 		CookieHTTPOnly: true,
-		// export to dotenv, true on env=production
-		CookieSecure: true,
+		CookieSecure: cookieSecure,
 		Expiration: time.Hour * 2880,
 		CookieSameSite:	"None",
 	})

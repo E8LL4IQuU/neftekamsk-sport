@@ -6,8 +6,6 @@ import (
 )
 
 func main() {
-
 	model.InitializeDB()
 	routes.InitializeFiber()
-	
 }

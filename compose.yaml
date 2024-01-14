@@ -19,6 +19,7 @@ services:
       DATABASE_CONTAINER_NAME: ${DATABASE_CONTAINER_NAME}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_PORT: ${DATABASE_PORT}
+      ENVIRONMENT: ${ENVIRONMENT}
     build: ./ano-go
     ports:
       - "8000:8000"
