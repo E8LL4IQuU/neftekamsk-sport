@@ -2,3 +2,4 @@
 ano/.env
 ano-go/uploads/
 database/
+.vscode/

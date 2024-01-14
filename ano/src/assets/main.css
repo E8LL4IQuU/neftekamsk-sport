@@ -1,4 +1,5 @@
 @import './base.css';
+@import './vue-toastification.css';
 
 @tailwind base;
 @tailwind components;

@@ -29,7 +29,7 @@ import News from "@/components/News.vue";
 import Gallery from "@/components/Gallery.vue";
 import StoriesPeople from "@/components/StoriesPeople.vue";
 import Connect from "@/components/Connect.vue";
-// slider moc data
+// mock data
 const SliderData  = [{
   "title": "Мероприятие1",
   "description": "Это описание просто имба",
@@ -49,7 +49,6 @@ const SliderData  = [{
     "img": "https://rusclimbing.ru/upload/resize_cache/webp/iblock/9b3/IMG_20230611_000706.webp"
   }
 ]
-// news moc data
 const NewsData =[{
   "title": "Это заголовок новости",
   "img": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
