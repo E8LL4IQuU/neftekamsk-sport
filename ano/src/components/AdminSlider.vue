@@ -13,7 +13,7 @@
                   class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
                 <button type="submit"
                   class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
-                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300"
+                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
                   @click="deleteEvent(slide.ID)">Удалить</button>
                   <!-- TODO: visualize chaning background image -->
                   <!-- TODO: add image resizing or fix aspect ratio inside swiper -->
@@ -55,6 +55,8 @@ const modules = [
   Navigation
 ]
 
+const emit = defineEmits(['reloadSlider'])
+
 const file = ref<File | null>(null)
 const onFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
@@ -89,7 +91,10 @@ const deleteEvent = async (id: number) => {
   try {
     const response = await axios.delete(`${url}/api/events/${id}`)
       .then((response) =>
-        console.log(response));
+        console.log(response))
+      .finally(() => {
+        emit('reloadSlider')
+      })
   } catch (error) {
     console.error('Error deleting record:', error)
   }

@@ -12,6 +12,18 @@ const router = useRouter()
 const isLoggedIn = ref<number>(0)
 const events = ref([])
 
+const getEvents = async () =>
+  await axios
+    .get(`${url}/api/events`, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      events.value = response.data
+    })
+    .catch((error) => {
+      console.log("Error while fetching events:", error)
+    })
+
 onMounted(async () => {
   await axios
     .get(`${url}/api/auth/user`, {
@@ -29,16 +41,7 @@ onMounted(async () => {
       }
     });
 
-  await axios
-    .get(`${url}/api/events`, {
-      withCredentials: true,
-    })
-    .then((response) => {
-      events.value = response.data
-    })
-    .catch((error) => {
-      console.log("Error while fetching events:", error)
-    })
+  getEvents()
 });
 
 </script>
@@ -46,11 +49,8 @@ onMounted(async () => {
 <template>
   <body class="h-full bg-white">
     <main v-if="isLoggedIn">
-      <h1 class="text-black text-3xl">
-        Admin panel
-      </h1>
-      <EventManagement></EventManagement>
-      <AdminSlider :SliderData="events" />
+      <EventManagement @reloadSlider="getEvents"></EventManagement>
+      <AdminSlider :SliderData="events" @reloadSlider="getEvents" />
     </main>
   </body>
 </template>

@@ -1,6 +1,8 @@
 <template>
+    <h3 class="text-4xl text-center pt-4 pb-3 text-gray-500 font-medium mobile:text-4xl">Создание мероприятия</h3>
     <form @submit.prevent="submit" action="#">
     <!-- FIXME: white text on white background on firefox -->
+    <!-- TODO: add toast notification on errors -->
     <input type="text" v-model="title" placeholder="Название мероприятия" />
     <input type="text" v-model="description" placeholder="Описание мероприятия" />
     <input type="file" @change="onFileChange">
@@ -12,6 +14,9 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+const emit = defineEmits(['reloadSlider'])
+
+const url: string = import.meta.env.VITE_ENDPOINT;
 const file = ref<File | null>(null);
 let title = '';
 let description = '';
@@ -45,11 +50,14 @@ const submit = async () => {
         }
 
         // Make POST request using Axios
-        const response = await axios.post('/api/events', formData, {
+        const response = await axios.post(`${url}/api/events`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
-        });
+        })
+        .finally(() => {
+            emit('reloadSlider')
+        })
         // TODO: Reload AdminSlider.vue (probably use .then section of axios request above)
 
         console.log('Response:', response.data);
