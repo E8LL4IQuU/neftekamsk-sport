@@ -16,8 +16,6 @@ var (
 	USER_ID		string			= "user_id"
 )
 
-var environment string
-
 func InitializeFiber() {
 	app := fiber.New()
 
