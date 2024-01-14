@@ -8,6 +8,7 @@ import { useToast } from "vue-toastification"
 import ToastError from "../components/ToastError.vue"
 
 // TODO: footer/header flickering while loading page
+const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter();
 const toast = useToast();
 
@@ -20,7 +21,7 @@ const data = {
 
 onMounted(async () => {
     await axios
-        .get('/api/auth/user', {
+        .get(`${url}/api/auth/user`, {
             withCredentials: true,
         })
         // 200 OK
@@ -38,29 +39,47 @@ onMounted(async () => {
 
 async function submit() {
     await axios
-        .post('/api/auth/login', data, { withCredentials: true })
+        .post(`${url}/api/auth/login`, data, { withCredentials: true })
         .then((response) => {
             router.push("/admin");
         })
         .catch(function (error) {
+            // TODO: maybe make field "email" red for visibility
+            // make field normal back on input
             if (404 == error.response.status) {
-                // TODO: maybe make field "email" red for visibility
-                // make field normal on input
-                toast(toastStatusNotFound)
+                toast(StatusNotFound)
             } else if (400 == error.response.status) {
-                // TODO: add toast instead of console.log()
-                console.log("Incorrect password");
+                toast(StatusBadRequest)
+            } else {
+                toast(StatusInternalServerError)
+                console.log(error)
             }
         });
 }
 
 // Toast
-const toastStatusNotFound = {
+const StatusNotFound = {
     component: ToastError,
 
     props: {
         text: "Пользователь не найден",
         description: "Проверьте правильность написания логина",
+    }
+}
+const StatusBadRequest = {
+    component: ToastError,
+
+    props: {
+        text: "Неверный пароль",
+        description: "Проверьте правильность логина или пароля",
+    }
+}
+const StatusInternalServerError = {
+    component: ToastError,
+
+    props: {
+        text: "Ошибка сервера",
+        description: "Консоль может содержать подробную информацию",
     }
 }
 

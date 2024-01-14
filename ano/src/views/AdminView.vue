@@ -6,6 +6,7 @@ import EventManagement from '../components/EventManagement.vue'
 import EventsList from '../components/EventsList.vue'
 import AdminSlider from '../components/AdminSlider.vue'
 
+const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter()
 
 const isLoggedIn = ref<number>(0)
@@ -13,7 +14,7 @@ const events = ref([])
 
 onMounted(async () => {
   await axios
-    .get('/api/auth/user', {
+    .get(`${url}/api/auth/user`, {
       withCredentials: true,
     })
     // 200 OK
@@ -29,7 +30,7 @@ onMounted(async () => {
     });
 
   await axios
-    .get('/api/events', {
+    .get(`${url}/api/events`, {
       withCredentials: true,
     })
     .then((response) => {

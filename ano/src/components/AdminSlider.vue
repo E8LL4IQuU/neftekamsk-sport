@@ -16,8 +16,7 @@
               class="text-5xl mb-3 mobile:text-3xl block mx-auto text-center bg-black bg-opacity-60 border-0" />
               <input v-model="slide.description"
               class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
-              <button class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
-              <!-- TODO: Implement event removal -->
+              <button disabled class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
               <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300" @click="deleteEvent(slide.ID)">Удалить</button>
             </div>
             <img class="w-auto h-[100vh]  mobile:h-72" :src="`/uploads/${slide.img}`" alt="slider image"/>
