@@ -3,6 +3,7 @@ import {RouterLink, RouterView} from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import Page from "@/views/Page.vue";
 import Footer from "@/components/Footer.vue";
+import Sidebar from  "@/components/Sidebar.vue"
 
 const navbarItems: string[][] = [
 // [Navbar item name, Navbar item link]
@@ -43,6 +44,7 @@ const NavData = [
 
 <template>
   <div class="bg-white">
+    <Sidebar v-if="$route.meta.showSidebar"></Sidebar>
     <NavBar :navbarItems="navbarItems" v-if="!$route.meta.hideNavbar"/>
     <RouterView/>
     <Footer :NavData="NavData" v-if="!$route.meta.hideFooter"/>

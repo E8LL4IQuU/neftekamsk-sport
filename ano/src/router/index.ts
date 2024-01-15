@@ -73,6 +73,16 @@ const router = createRouter({
         hideNavbar: true,
       }
     },
+    {
+      path: '/manage',
+      name: 'manage',
+      component: () => import ('@/views/ManageView.vue'),
+      meta: {
+        hideNavbar:true,
+        hideFooter:true,
+        showSidebar: true,
+      }
+    }
    
   ]
 })

@@ -4,7 +4,7 @@
     <div class="flex text-center justify-center gap-[54px] pt-[72px] pb-[14px] tablet:gap-2 mobile:block mobile:pt-[10px]">
       <div v-for="(nav, index) in NavData" :key="index">
         <div>
-          <a class="tablet:text-[13px]" :href="nav.links">{{ nav.name }}</a>
+          <router-link class="tablet:text-[13px]" :to="nav.links">{{ nav.name }}</router-link>
         </div>
       </div>
     </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 interface INav {
   links: string;
   name: string
