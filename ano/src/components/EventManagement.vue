@@ -1,11 +1,12 @@
 <template>
     <h3 class="text-4xl text-center pt-4 pb-3 text-gray-500 font-medium mobile:text-4xl">Создание мероприятия</h3>
-    <form @submit.prevent="submit" action="#">
+    <form @submit.prevent="submit" class="flex gap-x-2" action="#">
     <!-- FIXME: white text on white background on firefox -->
-    <!-- TODO: add toast notification on errors -->
+    <!-- TODO: add toast notification on errors --> 
     <input type="text" v-model="title" placeholder="Название мероприятия" />
     <input type="text" v-model="description" placeholder="Описание мероприятия" />
-    <input type="file" @change="onFileChange">
+    <input type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
+    <button @click="openFileInput" class="text-black">+ Add a file</button>
     <button type="submit" class="rounded-md bg-indigo-600 bg- px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create</button>
     </form>
 </template>
@@ -20,6 +21,15 @@ const url: string = import.meta.env.VITE_ENDPOINT;
 const file = ref<File | null>(null);
 let title = '';
 let description = '';
+
+const openFileInput = (): void => {
+    // Trigger the hidden file input
+    if (fileInputRef.value instanceof HTMLInputElement) {
+        fileInputRef.value.click();
+    }
+}
+
+const fileInputRef = ref(null)
 
 const onFileChange = (event: Event) => {
     const input = event.target as HTMLInputElement;
@@ -58,7 +68,6 @@ const submit = async () => {
         .finally(() => {
             emit('reloadSlider')
         })
-        // TODO: Reload AdminSlider.vue (probably use .then section of axios request above)
 
         console.log('Response:', response.data);
     } catch (error) {

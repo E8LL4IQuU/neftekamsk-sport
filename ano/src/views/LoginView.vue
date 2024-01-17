@@ -7,7 +7,6 @@ import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification"
 import ToastError from "../components/ToastError.vue"
 
-// TODO: footer/header flickering while loading page
 const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter();
 const toast = useToast();
@@ -19,6 +18,8 @@ const data = {
     password: "",
 };
 
+// TODO: hide axios errors in console 
+// https://dev.to/zelig880/how-to-catch-the-body-of-an-axios-error-4lk0
 onMounted(async () => {
     await axios
         .get(`${url}/api/auth/user`, {

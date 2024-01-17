@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {RouterLink, RouterView} from 'vue-router'
-import NavBar from './components/NavBar.vue'
-import Page from "@/views/Page.vue";
-import Footer from "@/components/Footer.vue";
+import {RouterView} from 'vue-router'
+import NavBar from "./components/NavBar.vue"
+import Footer from "@/components/Footer.vue"
 import Sidebar from  "@/components/Sidebar.vue"
+import ManageView from "@/views/Manage/ManageView.vue"
 
 const navbarItems: string[][] = [
 // [Navbar item name, Navbar item link]
@@ -44,10 +44,10 @@ const NavData = [
 
 <template>
   <div class="bg-white">
-    <Sidebar v-if="$route.meta.showSidebar"></Sidebar>
+    <ManageView v-if="$route.meta.managementRoute"></ManageView>
     <NavBar :navbarItems="navbarItems" v-if="!$route.meta.hideNavbar"/>
-    <RouterView/>
-    <Footer :NavData="NavData" v-if="!$route.meta.hideFooter"/>
+    <RouterView v-if="!$route.meta.managementRoute" />
+    <Footer :NavData="NavData" v-if="!$route.meta.hideFooter" />
   </div>
 </template>
 

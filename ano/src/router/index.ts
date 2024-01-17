@@ -76,11 +76,30 @@ const router = createRouter({
     {
       path: '/manage',
       name: 'manage',
-      component: () => import ('@/views/ManageView.vue'),
+      component: () => import ('@/views/Manage/ManageView.vue'),
       meta: {
-        hideNavbar:true,
-        hideFooter:true,
-        showSidebar: true,
+        hideNavbar: true,
+        hideFooter: true,
+      }
+    },
+    {
+      path: '/manage/events',
+      name: 'manage.events',
+      component: () => import ('@/views/Manage/Events.vue'),
+      meta: {
+        hideNavbar: true,
+        hideFooter: true,
+        managementRoute: true,
+      }
+    },
+    {
+      path: '/manage/news',
+      name: 'manage.news',
+      component: () => import ('@/views/Manage/News.vue'),
+      meta: {
+        hideNavbar: true,
+        hideFooter: true,
+        managementRoute: true,
       }
     }
    
