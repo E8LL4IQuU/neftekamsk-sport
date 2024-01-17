@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 // TODO: We have duplicate src/assets/logo.svg and src/components/icons/Logo.vue
-import Logo from "../components/icons/Logo.vue";
+import Logo from "@/components/icons/Logo.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification"
-import ToastError from "../components/ToastError.vue"
+import ToastError from "@/components/ToastError.vue"
 
 const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter();

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import {RouterView} from 'vue-router'
-import NavBar from "./components/NavBar.vue"
+import NavBar from "@/components/NavBar.vue"
 import Footer from "@/components/Footer.vue"
-import Sidebar from  "@/components/Sidebar.vue"
 import ManageView from "@/views/Manage/ManageView.vue"
 
 const navbarItems: string[][] = [
