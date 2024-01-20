@@ -3,10 +3,10 @@
     <form @submit.prevent="submit" class="flex gap-x-2" action="#">
     <!-- FIXME: white text on white background on firefox -->
     <!-- TODO: add toast notification on errors --> 
-    <input type="text" v-model="title" placeholder="Название мероприятия" />
-    <input type="text" v-model="description" placeholder="Описание мероприятия" />
+    <input type="text" required v-model="title" placeholder="Название мероприятия" />
+    <input type="text" required v-model="description" placeholder="Описание мероприятия" />
     <input type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
-    <button @click="openFileInput" class="text-black">+ Add a file</button>
+    <button @click.prevent="openFileInput" class="text-black">+ Add a file</button>
     <button type="submit" class="rounded-md bg-indigo-600 bg- px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create</button>
     </form>
 </template>
@@ -19,8 +19,10 @@ const emit = defineEmits(['reloadSlider'])
 
 const url: string = import.meta.env.VITE_ENDPOINT;
 const file = ref<File | null>(null);
+// FIXME: I think these 2 variables aren't used
 let title = '';
 let description = '';
+const fileInputRef = ref<HTMLInputElement | null>(null)
 
 const openFileInput = (): void => {
     // Trigger the hidden file input
@@ -29,17 +31,14 @@ const openFileInput = (): void => {
     }
 }
 
-const fileInputRef = ref(null)
-
-const onFileChange = (event: Event) => {
+const onFileChange = (event: Event): void => {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
         file.value = input.files[0];
     }
 };
 
-const submit = async () => {
-    // FIXME: 413 on big file name I'd guess
+const submit = async (): Promise<void> => {
     try {
         const jsonData = {
             title: title,

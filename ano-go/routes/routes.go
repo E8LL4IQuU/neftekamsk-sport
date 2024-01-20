@@ -19,7 +19,6 @@ func InitializeRoutes(app *fiber.App) {
 	// Content management
 	app.Get("/api/posts", GetEvents)
 	app.Post("/api/events", CreateEvent)
-	// TODO: rewrite for rest api, app.Get("/api/events/:id")
 	app.Get("/api/events", GetEvents)
 	app.Put("/api/events/:id", UpdateEvent)
 	app.Delete("/api/events/:id", DeleteEvent)

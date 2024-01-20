@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import axios, { type AxiosResponse } from 'axios'
+import axios from 'axios'
 import { useRouter } from 'vue-router'
-import EventManagement from '../components/EventManagement.vue'
-import EventsList from '../components/EventsList.vue'
-import AdminSlider from '../components/AdminSlider.vue'
+import AddEvent from '@/components/AddEvent.vue'
+import AdminSlider from '@/components/AdminSlider.vue'
 
 const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter()
@@ -12,7 +11,7 @@ const router = useRouter()
 const isLoggedIn = ref<number>(0)
 const events = ref([])
 
-const getEvents = async () =>
+const getEvents = async (): Promise<void> =>
   await axios
     .get(`${url}/api/events`, {
       withCredentials: true,
@@ -24,7 +23,7 @@ const getEvents = async () =>
       console.log("Error while fetching events:", error)
     })
 
-onMounted(async () => {
+onMounted(async (): Promise<void> => {
   await axios
     .get(`${url}/api/auth/user`, {
       withCredentials: true,
@@ -49,7 +48,7 @@ onMounted(async () => {
 <template>
   <body class="h-full bg-white">
     <main v-if="isLoggedIn">
-      <EventManagement @reloadSlider="getEvents"></EventManagement>
+      <AddEvent @reloadSlider="getEvents"></AddEvent>
       <AdminSlider :SliderData="events" @reloadSlider="getEvents" />
     </main>
   </body>

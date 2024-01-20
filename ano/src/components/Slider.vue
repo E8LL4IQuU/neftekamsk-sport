@@ -18,7 +18,7 @@
               <p class="text-2xl pb-3 mobile:text-sm">{{ slide.description }}</p>
               <a class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" :href="slide.links">Подробнее</a>
             </div>
-            <img class="w-auto h-[100vh]  mobile:h-72" :src="slide.img" alt="slider image"/>
+            <img class="w-auto h-72 lg:h-screen object-cover" :src="slide.img" alt="slider image"/>
           </div>
         </SwiperSlide>
       </Swiper>

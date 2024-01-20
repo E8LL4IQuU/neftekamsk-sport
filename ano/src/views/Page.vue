@@ -29,6 +29,7 @@ import News from "@/components/News.vue";
 import Gallery from "@/components/Gallery.vue";
 import StoriesPeople from "@/components/StoriesPeople.vue";
 import Connect from "@/components/Connect.vue";
+// TODO: retrieve from database, as in AdminView.vue
 // mock data
 const SliderData  = [{
   "title": "Мероприятие1",
