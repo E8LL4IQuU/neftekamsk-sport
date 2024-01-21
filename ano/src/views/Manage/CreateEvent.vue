@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { ChevronLeftIcon, PlusIcon } from "@heroicons/vue/24/solid";
 
 import { ref } from 'vue';
 import axios from 'axios';
 
 const url: string = import.meta.env.VITE_ENDPOINT;
+const router = useRouter()
 const file = ref<File | null>(null);
 const fileInputRef = ref<HTMLInputElement | null>(null)
 const title = ref()
@@ -25,7 +26,7 @@ const onFileChange = (event: Event): void => {
   }
 }
 
-// TODO: return to '/manage/events' after successful submit
+// TODO: add toasts or something on errors
 const submit = async (): Promise<void> => {
   try {
     const formData = new FormData();
@@ -41,6 +42,9 @@ const submit = async (): Promise<void> => {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+    })
+    .then(() => {
+      router.push("/manage/events")
     })
     console.log(response)
   } catch (error) {
