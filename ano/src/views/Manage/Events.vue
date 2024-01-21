@@ -3,27 +3,27 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios'
 import { useRouter, RouterLink } from 'vue-router'
 import AdminSlider from '@/components/AdminSlider.vue'
-import { Event } from '@/types/apiTypes'
+import { type IRLEvent } from '@/types/apiTypes'
 
 const INVALID_USER_ID: number = 0;
 const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter()
 const isLoggedIn = ref<number>(0)
-const events = ref<Event[]>([]);
+const IRLEvents = ref<IRLEvent[]>([]);
 
-const fetchEvents = async (): Promise<void> => {
+const fetchIRLEvents = async (): Promise<void> => {
   try {
-    const response = await axios.get<Event[]>(`${url}/api/events`, {
+    const response = await axios.get<IRLEvent[]>(`${url}/api/events`, {
       withCredentials: true,
     })
-    events.value = response.data
+    IRLEvents.value = response.data
   } catch (error) {
-    console.error('Error fetching events:', error)
+    console.error('Error fetching IRLevents:', error)
   }
 }
 
 onMounted(async () => {
-  fetchEvents()
+  fetchIRLEvents()
 })
 </script>
 
@@ -36,7 +36,7 @@ onMounted(async () => {
         <button class="bg-black rounded text-white py-2 px-3 ml-auto">Создать</button>
       </router-link>
     </div>
-    <AdminSlider :SliderData="events" @reloadSlider="fetchEvents" />
+    <AdminSlider :SliderData="IRLEvents" @reloadSlider="fetchIRLEvents" />
   </div>
 </template>
 

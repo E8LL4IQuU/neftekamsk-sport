@@ -1,6 +1,6 @@
 // types/apiTypes.ts
 
-export interface Event {
+export interface IRLEvent {
     id: number
     title: string
     description: string
