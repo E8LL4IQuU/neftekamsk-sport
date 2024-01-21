@@ -25,6 +25,7 @@ const onFileChange = (event: Event): void => {
   }
 }
 
+// TODO: return to '/manage/events' after successful submit
 const submit = async (): Promise<void> => {
   try {
     const formData = new FormData();

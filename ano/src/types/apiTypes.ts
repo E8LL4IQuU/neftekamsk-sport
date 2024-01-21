@@ -1,7 +1,7 @@
 // types/apiTypes.ts
 
 export interface IRLEvent {
-    id: number
+    ID: number
     title: string
     description: string
     img: string

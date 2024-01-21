@@ -3,7 +3,7 @@
     <h3 class="text-4xl text-center pt-4 pb-3 text-gray-500 font-medium mobile:text-4xl">Редактирование мероприятий</h3>
     <div class="w-[100%] h-[100%]">
       <Swiper :spaceBetween="30" :centeredSlides="true" :autoplay="false" :navigation="true" :modules="modules">
-        <SwiperSlide v-for="(slide, index) in SliderData" :key="index">
+        <SwiperSlide v-for="(slide, index) in props.SliderData" :key="index">
           <div class="flex flex-col justify-center">
             <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
               <form @submit.prevent="updateEvent(slide)">
@@ -15,7 +15,7 @@
                   class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
                   <!-- FIXME: deleting not working -->
                 <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
-                  @click.prevent="deleteEvent(slide.id)">Удалить</button>
+                  @click.prevent="deleteEvent(slide.ID)">Удалить</button>
                 <!-- TODO: visualize changing background image -->
                 <input type="file" @change="onFileChange" accept="image/*" />
               </form>
@@ -68,7 +68,7 @@ const updateEvent = async (slide: IRLEvent) => {
       formData.append('image', file.value)
     }
 
-    const response = await axios.put(`${url}/api/events/${slide.id}`, formData, {
+    const response = await axios.put(`${url}/api/events/${slide.ID}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
