@@ -29,7 +29,7 @@ onMounted(async () => {
 
 <template>
   <!-- FIXME: template spans more than the screen width -->
-  <div class="py-8 px-12 w-full">
+  <div class="py-8 px-12">
     <div class="flex justify-between">
       <h1 class="text-3xl text-black font-bold">Мероприятия</h1>
       <router-link :to="'/manage/events/create'">

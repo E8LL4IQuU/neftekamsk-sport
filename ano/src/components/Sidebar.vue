@@ -3,7 +3,7 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
-    <div class="min-h-screen w-64 p-4 border-r">
+    <div class="min-h-screen p-4 border-r">
       <h1 class="text-3xl mb-5 text-black">Управление</h1>
       <nav>
         <ul>

@@ -20,7 +20,7 @@
                 <input type="file" @change="onFileChange" accept="image/*" />
               </form>
             </div>
-            <img class="w-auto h-72 lg:h-screen object-cover" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
+            <img class="w-auto h-72 lg:h-[75vh] object-cover" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
           </div>
         </SwiperSlide>
       </Swiper>
