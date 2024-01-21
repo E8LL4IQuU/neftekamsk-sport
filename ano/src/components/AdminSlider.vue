@@ -15,12 +15,12 @@
                   class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
                 <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
                   @click="deleteEvent(slide.ID)">Удалить</button>
-                  <!-- TODO: visualize chaning background image -->
-                  <!-- TODO: add image resizing or fix aspect ratio inside swiper -->
+                <!-- TODO: visualize chaning background image -->
+                <!-- TODO: add image resizing or fix aspect ratio inside swiper -->
                 <input type="file" @change="onFileChange" accept="image/*" />
               </form>
             </div>
-            <img class="w-auto h-[100vh]  mobile:h-72" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
+            <img class="w-auto h-72 lg:h-screen object-cover" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
           </div>
         </SwiperSlide>
       </Swiper>
@@ -32,22 +32,15 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { Event } from "@/types/apiTypes"
 import 'swiper/swiper-bundle.css';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 
 const url: string = import.meta.env.VITE_ENDPOINT;
 
-interface ISlider {
-  ID: number;
-  title: string;
-  description: string;
-  links: string;
-  img: string
-}
-
 const props = defineProps<{
-  SliderData: ISlider[]
+  SliderData: Event[]
 }>()
 const modules = [
   Autoplay,
@@ -65,7 +58,7 @@ const onFileChange = (event: Event) => {
   }
 }
 
-const updateEvent = async (slide: ISlider) => {
+const updateEvent = async (slide: Event) => {
   try {
     const formData = new FormData();
 

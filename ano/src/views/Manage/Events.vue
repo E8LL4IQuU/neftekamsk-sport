@@ -2,30 +2,33 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 import { useRouter, RouterLink } from 'vue-router'
+import AdminSlider from '@/components/AdminSlider.vue'
+import { Event } from '@/types/apiTypes'
 
 const INVALID_USER_ID: number = 0;
 const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter()
 const isLoggedIn = ref<number>(0)
+const events = ref<Event[]>([]);
 
-onMounted(async () => {
+const fetchEvents = async (): Promise<void> => {
   try {
-    const response = await axios.get<{ id: number }>(`${url}/api/auth/user`, {
+    const response = await axios.get<Event[]>(`${url}/api/events`, {
       withCredentials: true,
     })
-
-    if (response.data.id !== INVALID_USER_ID) {
-      isLoggedIn.value = 1;
-    }
+    events.value = response.data
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      router.push("/login");
-    }
+    console.error('Error fetching events:', error)
   }
+}
+
+onMounted(async () => {
+  fetchEvents()
 })
 </script>
 
 <template>
+  <!-- FIXME: template spans more than the screen width -->
   <div class="py-8 px-12 w-full">
     <div class="flex justify-between">
       <h1 class="text-3xl text-black font-bold">Мероприятия</h1>
@@ -33,6 +36,7 @@ onMounted(async () => {
         <button class="bg-black rounded text-white py-2 px-3 ml-auto">Создать</button>
       </router-link>
     </div>
+    <AdminSlider :SliderData="events" @reloadSlider="fetchEvents" />
   </div>
 </template>
 

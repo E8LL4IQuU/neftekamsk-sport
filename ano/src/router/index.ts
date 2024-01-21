@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/LoginView.vue'
-import AdminView from '@/views/AdminView.vue'
 import CreateEvent from '@/views/Manage/CreateEvent.vue'
 
 // TODO: I'd guess we'll have to remove all the lazy loads due to navbar/footer flickering while loading
@@ -54,15 +53,6 @@ const router = createRouter({
       name: 'login',
       // Not lazy loaded as it causes navbar/footer flickering while loading
       component: LoginView,
-      meta: {
-        hideNavbar: true,
-        hideFooter: true,
-      }
-    },
-    {
-      path: '/admin',
-      name: 'admin',
-      component: AdminView,
       meta: {
         hideNavbar: true,
         hideFooter: true,

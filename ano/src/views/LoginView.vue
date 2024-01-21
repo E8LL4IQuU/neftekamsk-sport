@@ -28,8 +28,8 @@ onMounted(async () => {
         // 200 OK
         .then((response) => {
             if (response.data.id != 0) {
-                // TODO: push to where the user came from
-                router.push("/admin");
+                // FIXME: push to where the user came from
+                router.push("/manage");
             }
         })
         .catch((error) => {
