@@ -76,11 +76,10 @@ const submit = async (): Promise<void> => {
           изображение</button>
       </div>
       <!-- TODO: remove outline when clicking -->
-      <input required v-model="title" class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3"
+      <input required v-model="title" class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
         placeholder="Название мероприятия" />
-      <input required v-model="description" class="text-xl placeholder-gray-400 border-none -ms-2"
-        placeholder="Начните писать описание..." />
-      <button type="submit">Создать</button>
+      <textarea required v-model="description" class="text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
+        placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
 
   </body>
