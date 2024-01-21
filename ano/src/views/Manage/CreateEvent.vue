@@ -43,9 +43,9 @@ const submit = async (): Promise<void> => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    .then(() => {
-      router.push("/manage/events")
-    })
+      .then(() => {
+        router.push("/manage/events")
+      })
     console.log(response)
   } catch (error) {
     console.error('Error updating event:', error)
@@ -67,20 +67,21 @@ const submit = async (): Promise<void> => {
         <!-- TODO: implement event creation -->
       </div>
     </header>
-      <form @submit.prevent="submit" class="flex flex-col ps-28 pt-8">
-        <input required type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
-        <div class="inline-flex group">
-          <PlusIcon class="h-5 pt-1 text-gray-500 group-hover:text-gray-600"></PlusIcon>
-          <button @click="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
-            изображение</button>
-        </div>
-        <!-- TODO: remove outline when clicking -->
-        <input required v-model="title" class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3"
-          placeholder="Название мероприятия" />
-        <input required v-model="description" class="text-xl placeholder-gray-400 border-none -ms-2"
-          placeholder="Начните писать описание..." />
-        <input type="submit" />
-      </form>
+    <form @submit.prevent="submit" @keydown.enter.prevent="submit" class="flex flex-col ps-28 pt-8">
+      <!-- TODO: check if fields are filled before submiting -->
+      <input required type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
+      <div class="inline-flex group">
+        <PlusIcon class="h-5 pt-1 text-gray-500 group-hover:text-gray-600"></PlusIcon>
+        <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
+          изображение</button>
+      </div>
+      <!-- TODO: remove outline when clicking -->
+      <input required v-model="title" class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3"
+        placeholder="Название мероприятия" />
+      <input required v-model="description" class="text-xl placeholder-gray-400 border-none -ms-2"
+        placeholder="Начните писать описание..." />
+      <button type="submit">Создать</button>
+    </form>
 
   </body>
 </template>
