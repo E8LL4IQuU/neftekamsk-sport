@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
-import AddEvent from '@/components/AddEvent.vue'
 import AdminSlider from '@/components/AdminSlider.vue'
 
 const url: string = import.meta.env.VITE_ENDPOINT
@@ -48,7 +47,6 @@ onMounted(async (): Promise<void> => {
 <template>
   <body class="h-full bg-white">
     <main v-if="isLoggedIn">
-      <AddEvent @reloadSlider="getEvents"></AddEvent>
       <AdminSlider :SliderData="events" @reloadSlider="getEvents" />
     </main>
   </body>

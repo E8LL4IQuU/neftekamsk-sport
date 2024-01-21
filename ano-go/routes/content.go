@@ -3,7 +3,6 @@ package routes
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"
 	"io"
 	"mime/multipart"
 	"path/filepath"
@@ -12,6 +11,8 @@ import (
 	"github.com/E8LL4IQuU/ano-go/model"
 	"github.com/gofiber/fiber/v2"
 )
+
+// TODO: We'll have to send random data to this server to check every possible panic it gives
 
 type eventData struct {
 	Title		string	`json:"title"`
@@ -97,18 +98,12 @@ func CreateEvent(c *fiber.Ctx) error {
 		return err
 	}
 
-	jsonData := form.Value["jsonData"][0]
-
-	data := new(eventData)
-
-	// Unmarshal JSON data into the 'data' struct
-	if err := json.Unmarshal([]byte(jsonData), data); err != nil {
-		return err
-	}
+	title := form.Value["title"][0]
+	description := form.Value["description"][0]
 
 	var event model.Event = model.Event{
-		Title:			data.Title,
-		Description:	data.Description,
+		Title:			title,
+		Description:	description,
 		ImagePath:		path,
 	}
 

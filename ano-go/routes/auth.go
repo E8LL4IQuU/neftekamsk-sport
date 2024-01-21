@@ -26,35 +26,7 @@ func AuthMiddleware(c *fiber.Ctx) error {
 	// We split url at "/" ["", "api", "auth", "login"] to disable auth on login, register routes
 	parts := strings.Split(c.Path(), "/")
 	// Allow routes with "auth" as second segment of path
-	// FIXME: probably "parts[2]" is unsafe and require try
-	// sport_backend  | 2024/01/20 08:38:51 stderr: panic: runtime error: index out of range [0] with length 0
-	// sport_backend  | 2024/01/20 08:38:51 stderr:
-	// sport_backend  | 2024/01/20 08:38:51 stderr: goroutine 10 [running]:
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/E8LL4IQuU/ano-go/routes.CreateEvent(0xc000004600)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /app/routes/content.go:100 +0x207
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/gofiber/fiber/v2.(*App).next(0xc000368000, 0xc000004600)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/gofiber/fiber/v2@v2.50.0/router.go:145 +0x1b2
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/gofiber/fiber/v2.(*Ctx).Next(0xc000288330?)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/gofiber/fiber/v2@v2.50.0/ctx.go:1014 +0x4d
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/gofiber/fiber/v2/middleware/cors.New.func1(0xc000004600)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/gofiber/fiber/v2@v2.50.0/middleware/cors/cors.go:165 +0x3d4
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/gofiber/fiber/v2.(*Ctx).Next(0xc000268ae0?)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/gofiber/fiber/v2@v2.50.0/ctx.go:1011 +0x3d
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/E8LL4IQuU/ano-go/routes.AuthMiddleware(0xc000004600)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /app/routes/auth.go:46 +0x165
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/gofiber/fiber/v2.(*App).next(0xc000368000, 0xc000004600)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/gofiber/fiber/v2@v2.50.0/router.go:145 +0x1b2
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/gofiber/fiber/v2.(*App).handler(0xc000368000, 0x4d1bef?)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/gofiber/fiber/v2@v2.50.0/router.go:172 +0x78
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/valyala/fasthttp.(*Server).serveConn(0xc000320600, {0xa6f338?, 0xc000046410})
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/valyala/fasthttp@v1.50.0/server.go:2359 +0x11d4
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/valyala/fasthttp.(*workerPool).workerFunc(0xc0003068c0, 0xc000268760)
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/valyala/fasthttp@v1.50.0/workerpool.go:224 +0xa4
-	// sport_backend  | 2024/01/20 08:38:51 stderr: github.com/valyala/fasthttp.(*workerPool).getCh.func1()
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/valyala/fasthttp@v1.50.0/workerpool.go:196 +0x32
-	// sport_backend  | 2024/01/20 08:38:51 stderr: created by github.com/valyala/fasthttp.(*workerPool).getCh in goroutine 1
-	// sport_backend  | 2024/01/20 08:38:51 stderr:    /go/pkg/mod/github.com/valyala/fasthttp@v1.50.0/workerpool.go:195 +0x1ab
-	if len(parts) > 0 && parts[2] == "auth" {
+	if len(parts) > 2 && parts[2] == "auth" {
 		return c.Next()
 	}
 
