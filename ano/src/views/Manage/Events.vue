@@ -5,10 +5,7 @@ import { useRouter, RouterLink } from 'vue-router'
 import AdminSlider from '@/components/AdminSlider.vue'
 import { type IRLEvent } from '@/types/apiTypes'
 
-const INVALID_USER_ID: number = 0;
 const url: string = import.meta.env.VITE_ENDPOINT
-const router = useRouter()
-const isLoggedIn = ref<number>(0)
 const IRLEvents = ref<IRLEvent[]>([]);
 
 const fetchIRLEvents = async (): Promise<void> => {

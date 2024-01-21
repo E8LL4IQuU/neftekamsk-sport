@@ -98,6 +98,14 @@ const router = createRouter({
         hideFooter: true,
         managementRoute: true,
       }
+    },
+    {
+      path: '/:catchAll(.*)',
+      redirect: '/',
+      meta: {
+        hideNavbar: true,
+        hideFooter: true,
+      }
     }
 
   ]

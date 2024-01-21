@@ -43,7 +43,8 @@ async function submit() {
     await axios
         .post(`${url}/api/auth/login`, data, { withCredentials: true })
         .then((response) => {
-            router.push("/admin");
+            // FIXME: push to where the user came from
+            router.push("/manage");
         })
         .catch(function (error) {
             // TODO: maybe make field "email" red for visibility
