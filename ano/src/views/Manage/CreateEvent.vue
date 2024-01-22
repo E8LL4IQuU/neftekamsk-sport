@@ -75,7 +75,7 @@ const submit = async (): Promise<void> => {
         <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
           изображение</button>
       </div>
-      <!-- TODO: remove outline when clicking -->
+      <!-- FIXME: white text on white background in firefox dark mode -->
       <input required v-model="title" class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
         placeholder="Название мероприятия" />
       <textarea required v-model="description" class="text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"

@@ -3,9 +3,11 @@ package routes
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"path/filepath"
+	"reflect"
 	"strconv"
 
 	"github.com/E8LL4IQuU/ano-go/model"
@@ -13,11 +15,6 @@ import (
 )
 
 // TODO: We'll have to send random data to this server to check every possible panic it gives
-
-type eventData struct {
-	Title		string	`json:"title"`
-	Description	string	`json:"description"`
-}
 
 func getFileExtension(file *multipart.FileHeader) string {
 	name := file.Filename
@@ -83,17 +80,32 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, err
 	return form, path, nil
 }
 
-func GetEvents(c *fiber.Ctx) error {
-	// TODO: control limit by c.Params() I guess
-	var events []model.Event
-	model.DB.Order("ID desc").Limit(10).Find(&events)
+func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
+	limit := 10
 
-	return c.Status(fiber.StatusOK).JSON(events)
+	// Check if a custom limit is provided in the request parameters
+	if limitParam := c.Params("limit"); limitParam != "" {
+		// Attempt to parse the limit parameter to an integer
+		if customLimit, err := strconv.Atoi(limitParam); err == nil && customLimit > 0 {
+			limit = customLimit
+		}
+	}
+
+	// Create a new instance of the modelType
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+
+	// Retrieve the value of the created instance
+	itemValue := reflect.ValueOf(item)
+
+	if err := model.DB.Order(orderByColumn + " desc").Limit(limit).Find(itemValue.Interface()).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
 }
 
-func CreateEvent(c *fiber.Ctx) error {
-
-	form, path, err := saveImage(c, true)
+func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error {
+	form, path, err := saveImage(c, isImageRequired)
 	if err != nil {
 		return err
 	}
@@ -101,34 +113,35 @@ func CreateEvent(c *fiber.Ctx) error {
 	title := form.Value["title"][0]
 	description := form.Value["description"][0]
 
-	var event model.Event = model.Event{
-		Title:			title,
-		Description:	description,
-		ImagePath:		path,
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	reflect.ValueOf(item).Elem().FieldByName("Title").SetString(title)
+	reflect.ValueOf(item).Elem().FieldByName("Description").SetString(description)
+	reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(path)
+
+	if err := model.DB.Create(item).Error; err != nil {
+		return fmt.Errorf("error creating item in the database: %w", err)
 	}
 
-	model.DB.Create(&event)
-
-	return c.Status(fiber.StatusOK).JSON(event)
+	return c.Status(fiber.StatusOK).JSON(item)
 }
 
-func UpdateEvent(c *fiber.Ctx) error {
-	// Parse event ID from the request params
+func updateItem(c *fiber.Ctx, modelType interface{}) error {
+	// Parse item ID from the request params
 	id, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
 	}
 
-	// Find the event by ID in the database
-	var event model.Event
-	if err := model.DB.First(&event, id).Error; err != nil {
+	// Find the existing item by ID in the database
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	if err := model.DB.First(item, id).Error; err != nil {
 		// Handle the error
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Event not found"})
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
 	}
 
-	// Parse the event details
-	var updatedEvent model.Event
-	if err := c.BodyParser(&updatedEvent); err != nil {
+	// Parse the item details
+	updatedItem := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	if err := c.BodyParser(updatedItem); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
 	}
 
@@ -138,39 +151,79 @@ func UpdateEvent(c *fiber.Ctx) error {
 		return err
 	}
 
-	// Update the book details
-	if updatedEvent.Title != "" {
-		event.Title = updatedEvent.Title
+	// Update the existing item's details
+	itemValue := reflect.ValueOf(item).Elem()
+	updatedItemValue := reflect.ValueOf(updatedItem).Elem()
+
+	for i := 0; i < itemValue.NumField(); i++ {
+		field := itemValue.Type().Field(i).Name
+		if updatedItemValue.FieldByName(field).Interface() != "" {
+			itemValue.FieldByName(field).Set(updatedItemValue.FieldByName(field))
+		}
 	}
-	if updatedEvent.Description != "" {
-		event.Description = updatedEvent.Description
-	}
+
+	// Update the image path if provided
 	if updatedPath != "" {
-		event.ImagePath = updatedPath
+		itemValue.FieldByName("ImagePath").SetString(updatedPath)
 	}
 
-	// Save the updated event back to the database
-	model.DB.Save(&event)
-
-	return c.Status(fiber.StatusOK).JSON(event)
+	// Save the updated item back to the database
+	model.DB.Save(item)
+	return c.Status(fiber.StatusOK).JSON(item)
 }
 
-func DeleteEvent(c *fiber.Ctx) error {
 
-	eventID := c.Params("id")
+func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
+	recordID := c.Params("id")
 
-	// Find record in the database
-	var event model.Event
-	if err := model.DB.First(&event, eventID).Error; err != nil {
+	// Find the record in the database by ID
+	record := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	if err := model.DB.First(record, recordID).Error; err != nil {
 		// Handle the error
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Record not found"})
 	}
 
 	// Delete the record
-	if err := model.DB.Delete(&event).Error; err != nil {
+	if err := model.DB.Delete(record).Error; err != nil {
 		// Handle the error
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error deleting record"})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Record deleted successfully"})
+}
+
+func GetEvents(c *fiber.Ctx) error {
+	var events []model.Event
+	return getItems(c, &events, "ID")
+}
+
+
+func CreateEvent(c *fiber.Ctx) error {
+	return createItem(c, true, &model.Event{})
+}
+
+func UpdateEvent(c *fiber.Ctx) error {
+	return updateItem(c, &model.Event{})
+}
+
+func DeleteEvent(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.Event{})
+}
+
+
+func GetNews(c *fiber.Ctx) error {
+	var news []model.News
+	return getItems(c, &news, "ID")
+}
+
+func CreateNews(c *fiber.Ctx) error {
+	return createItem(c, true, &model.Event{})
+}
+
+func UpdateNews(c *fiber.Ctx) error {
+	return updateItem(c, &model.News{})
+}
+
+func DeleteNews(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.News{})
 }
