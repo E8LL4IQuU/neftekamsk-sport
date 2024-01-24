@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
-import { useRouter, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import AdminSlider from '@/components/AdminSlider.vue'
 import { type IRLEvent } from '@/types/apiTypes'
 
@@ -19,13 +19,12 @@ const fetchIRLEvents = async (): Promise<void> => {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   fetchIRLEvents()
 })
 </script>
 
 <template>
-  <!-- FIXME: template spans more than the screen width -->
   <div class="py-8 px-12">
     <div class="flex justify-between">
       <h1 class="text-3xl text-black font-bold">Мероприятия</h1>

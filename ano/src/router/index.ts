@@ -82,7 +82,7 @@ const router = createRouter({
     },
     {
       path: '/manage/events/create',
-      name: 'manage.events/create',
+      name: 'manage.events.create',
       component: CreateEvent,
       meta: {
         hideNavbar: true,
@@ -97,6 +97,15 @@ const router = createRouter({
         hideNavbar: true,
         hideFooter: true,
         managementRoute: true,
+      }
+    },
+    {
+      path: '/manage/news/:id',
+      name: 'newsEdit',
+      component: () => import('@/views/Manage/NewsEdit.vue'),
+      meta : {
+      hideNavbar: true,
+      hideFooter: true,
       }
     },
     {

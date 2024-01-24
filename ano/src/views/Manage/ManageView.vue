@@ -29,8 +29,8 @@ onMounted( async () => {
 
 <template>
 <div class="flex">
-    <Sidebar class=" w-2/12"></Sidebar>
-    <RouterView class="w-10/12"></RouterView>
+    <Sidebar v-if="isLoggedIn" class=" w-2/12"></Sidebar>
+    <RouterView v-if="isLoggedIn" class="w-10/12"></RouterView>
 </div>
 </template>
 

@@ -12,9 +12,7 @@
                 <input v-model="slide.description"
                   class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
                 <button type="submit"
-                  class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
-                  <!-- FIXME: deleting not working -->
-                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
+                  class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
                   @click.prevent="deleteEvent(slide.ID)">Удалить</button>
                 <!-- TODO: visualize changing background image -->
                 <input type="file" @change="onFileChange" accept="image/*" />

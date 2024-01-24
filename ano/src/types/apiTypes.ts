@@ -9,3 +9,13 @@ export interface IRLEvent {
     updatedAt: number
     // link to event
 }
+
+export interface News {
+    ID: number
+    Title: string
+    Description: string
+    ImagePath: string
+    CreatedAt: number
+    UpdatedAt: number
+    // link
+}

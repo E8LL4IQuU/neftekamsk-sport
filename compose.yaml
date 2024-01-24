@@ -1,5 +1,6 @@
 version: "3.8"
 
+# TODO: change routes to absolute path, as composing not from root folder fails to find .env
 services:
   web:
     container_name: "sport_web"

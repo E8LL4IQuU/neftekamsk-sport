@@ -217,7 +217,7 @@ func GetNews(c *fiber.Ctx) error {
 }
 
 func CreateNews(c *fiber.Ctx) error {
-	return createItem(c, true, &model.Event{})
+	return createItem(c, true, &model.News{})
 }
 
 func UpdateNews(c *fiber.Ctx) error {
