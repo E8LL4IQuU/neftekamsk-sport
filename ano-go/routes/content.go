@@ -105,6 +105,7 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 }
 
 func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error {
+	// FIXME: crashes when sending an empty json
 	form, path, err := saveImage(c, isImageRequired)
 	if err != nil {
 		return err

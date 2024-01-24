@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, defineProps, onMounted } from 'vue';
+import { ref, defineProps } from 'vue';
 import axios from 'axios';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/vue/24/solid';
 
 const ItemForm = defineProps(['requestType', 'url']);
 
+const url: string = import.meta.env.VITE_ENDPOINT;
 const router = useRouter();
 const route = useRoute();
 const file = ref<File | null>(null);
@@ -46,11 +47,11 @@ const submit = async (): Promise<void> => {
 
     const requestConfig =
       ItemForm.requestType === 'post'
-        ? { method: 'post', url: `/api/${ItemForm.url}`, config }
-        : { method: 'put', url: `/api/${ItemForm.url}/${itemId}`, config };
+        ? { method: 'post', url: `${url}/api/${ItemForm.url}`, data: formData, config }
+        : { method: 'put', url: `${url}/api/${ItemForm.url}/${itemId}`, config };
 
     const response = await axios(requestConfig).then(() => {
-      router.push('/manage/${itemForm.url}');
+      router.push(`/manage/${ItemForm.url}`);
     });
 
     console.log(response);
@@ -64,7 +65,7 @@ const submit = async (): Promise<void> => {
   <body class="bg-white">
     <header class="pe-auto">
       <div class="flex items-center pe-auto p-3 h-100">
-        <router-link :to="'/manage/Items'" class="flex p-4 gap-x-3 text-black items-center">
+        <router-link :to="`/manage/${ItemForm.url}`" class="flex p-4 gap-x-3 text-black items-center">
           <ChevronLeftIcon class="h-4 pt-1"></ChevronLeftIcon>
           <p class="font-bold text-sm text-gray-700">Мероприятия</p>
         </router-link>
@@ -86,4 +87,6 @@ const submit = async (): Promise<void> => {
   </body>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
