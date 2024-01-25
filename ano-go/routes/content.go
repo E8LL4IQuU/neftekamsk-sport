@@ -143,50 +143,39 @@ func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error
 }
 
 func updateItem(c *fiber.Ctx, modelType interface{}) error {
-	// Parse item ID from the request params
-	id, err := strconv.Atoi(c.Params("id"))
-	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
-	}
+    // Parse item ID from the request params
+    id, err := strconv.Atoi(c.Params("id"))
+    if err != nil {
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
+    }
 
-	// Find the existing item by ID in the database
-	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
-	if err := model.DB.First(item, id).Error; err != nil {
-		// Handle the error
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
-	}
+    // Find the existing item by ID in the database
+    item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+    if err := model.DB.First(item, id).Error; err != nil {
+        // Handle the error
+        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
+    }
 
-	// Parse the item details
-	updatedItem := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
-	if err := c.BodyParser(updatedItem); err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
-	}
+    // Parse the item details directly into the existing item
+    if err := c.BodyParser(item); err != nil {
+        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
+    }
 
-	// Parse the image
-	_, updatedPath, err := saveImage(c, false)
-	if err != nil {
-		return err
-	}
+    // Parse the image
+    _, updatedPath, err := saveImage(c, false)
+    if err != nil {
+        return err
+    }
 
-	// Update the existing item's details
-	itemValue := reflect.ValueOf(item).Elem()
-	updatedItemValue := reflect.ValueOf(updatedItem).Elem()
+    // Update the image path if provided
+    if updatedPath != "" {
+        // Assuming "ImagePath" is a field in your model
+        reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(updatedPath)
+    }
 
-	for i := 0; i < itemValue.NumField(); i++ {
-		field := itemValue.Type().Field(i).Name
-		if updatedItemValue.FieldByName(field).Interface() != "" {
-			itemValue.FieldByName(field).Set(updatedItemValue.FieldByName(field))
-		}
-	}
-
-	// Update the image path if provided
-	if updatedPath != "" {
-		itemValue.FieldByName("ImagePath").SetString(updatedPath)
-	}
-
-	// Save the updated item back to the database
-	model.DB.Save(item)
-	return c.Status(fiber.StatusOK).JSON(item)
+    // Save the updated item back to the database
+    model.DB.Save(item)
+    return c.Status(fiber.StatusOK).JSON(item)
 }
 
 

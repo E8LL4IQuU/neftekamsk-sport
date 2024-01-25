@@ -62,6 +62,7 @@ onMounted(() => {
                         <span class="text-gray-500">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
                     </div>
                     <p class="text-gray-700">{{ newsItem.Description }}</p>
+                    <!-- TODO: delete button (I'd make it look like a red button with trash bin icon) -->
                 </div>
             </router-link>
         </div>
