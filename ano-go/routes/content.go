@@ -210,8 +210,7 @@ func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
 }
 
 func GetEvents(c *fiber.Ctx) error {
-	var events []model.Event // FIXME: this line may be negligible
-	return getItems(c, &events, "ID")
+	return getItems(c, &[]model.Event{}, "ID")
 }
 
 func GetEventsByID(c *fiber.Ctx) error {
@@ -232,8 +231,7 @@ func DeleteEvent(c *fiber.Ctx) error {
 
 
 func GetNews(c *fiber.Ctx) error {
-	var news []model.News // FIXME: this line may be negligible
-	return getItems(c, &news, "ID")
+	return getItems(c, &[]model.News{}, "ID")
 }
 
 func GetNewsByID(c *fiber.Ctx) error {
