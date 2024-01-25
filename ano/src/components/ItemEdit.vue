@@ -62,16 +62,17 @@ const submit = async (): Promise<void> => {
 };
 
 const getFields = async (): Promise<void> => {
-  if (isNaN(itemId.value)) {
+  if (isNaN(itemId)) {
     return
   }
 
   try {
-    const response = await axios.get<News>(`${url}/api/events`, {
+    const response = await axios.get<News>(`${url}/api/${ItemForm.url}/${itemId}`, {
       withCredentials: true,
     })
-    title = response.data.Title
-    description = response.data.Description
+    title.value = response.data.Title
+    console.log(title)
+    description.value = response.data.Description
   } catch (error) {
     console.error('Error fetching news: ', error)
   }

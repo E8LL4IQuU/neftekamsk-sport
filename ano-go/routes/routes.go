@@ -18,11 +18,13 @@ func InitializeRoutes(app *fiber.App) {
 
 	// Content management
 	app.Get("/api/events", GetEvents)
+	// app.Get("/api/events/:id", GetEventByID)
 	app.Post("/api/events", CreateEvent)
 	app.Put("/api/events/:id", UpdateEvent)
 	app.Delete("/api/events/:id", DeleteEvent)
 
 	app.Get("/api/news", GetNews)
+	app.Get("/api/news/:id", GetNewsByID)
 	app.Post("/api/news", CreateNews)
 	app.Put("/api/news/:id", UpdateNews)
 	app.Delete("/api/news/:id", DeleteNews)

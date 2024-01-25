@@ -104,6 +104,22 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
 }
 
+func getItemByID(c *fiber.Ctx, modelType interface{}) error {
+	recordID := c.Params("id")
+
+	// Create a new instance of the modelType
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+
+	// Retrieve the value of the created instance
+	itemValue := reflect.ValueOf(item)
+
+	if err := model.DB.First(itemValue.Interface(), recordID).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
+}
+
 func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error {
 	// FIXME: crashes when sending an empty json
 	form, path, err := saveImage(c, isImageRequired)
@@ -194,10 +210,13 @@ func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
 }
 
 func GetEvents(c *fiber.Ctx) error {
-	var events []model.Event
+	var events []model.Event // FIXME: this line may be negligible
 	return getItems(c, &events, "ID")
 }
 
+func GetEventsByID(c *fiber.Ctx) error {
+	return getItemByID(c, model.Event{})
+}
 
 func CreateEvent(c *fiber.Ctx) error {
 	return createItem(c, true, &model.Event{})
@@ -213,8 +232,12 @@ func DeleteEvent(c *fiber.Ctx) error {
 
 
 func GetNews(c *fiber.Ctx) error {
-	var news []model.News
+	var news []model.News // FIXME: this line may be negligible
 	return getItems(c, &news, "ID")
+}
+
+func GetNewsByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.News{})
 }
 
 func CreateNews(c *fiber.Ctx) error {
