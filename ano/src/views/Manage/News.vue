@@ -64,7 +64,6 @@ onMounted(() => {
                     </div>
                     <div class="flex justify-between items-center">
                         <p class="text-gray-700">{{ newsItem.Description }}</p>
-                    <!-- FIXME: unclickable -->
                     <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
                     </div>
                 </div>
