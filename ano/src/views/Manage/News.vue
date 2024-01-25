@@ -8,9 +8,26 @@ const url: string = import.meta.env.VITE_ENDPOINT
 const news = ref<News[]>([])
 
 const formatTimestamp = (timestamp: number): string => {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString();
-}
+    const date = new Date(timestamp * 1000);
+
+    // Get the time zone offset in minutes
+    const timeZoneOffset = date.getTimezoneOffset();
+    
+    // Use the offset to create a new date with the local time zone
+    const localDate = new Date(date.getTime() - timeZoneOffset * 60 * 1000);
+
+    const options: Intl.DateTimeFormatOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+    };
+    
+    return localDate.toLocaleString('en-US', options);
+};
+
 
 const fetchNews = async (): Promise<void> => {
     try {

@@ -49,7 +49,7 @@ const submit = async (): Promise<void> => {
     const requestConfig =
       ItemForm.requestType === 'post'
         ? { method: 'post', url: `${url}/api/${ItemForm.url}`, data: formData, config }
-        : { method: 'put', url: `${url}/api/${ItemForm.url}/${itemId}`, config };
+        : { method: 'put', url: `${url}/api/${ItemForm.url}/${itemId}`, data: formData, config };
 
     const response = await axios(requestConfig).then(() => {
       router.push(`/manage/${ItemForm.url}`);
@@ -74,7 +74,11 @@ const getFields = async (): Promise<void> => {
     console.log(title)
     description.value = response.data.Description
   } catch (error) {
-    console.error('Error fetching news: ', error)
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      router.push("/login")
+    } else {
+      console.error('Error fetching news: ', error)
+    }
   }
 
 }
