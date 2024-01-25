@@ -100,6 +100,15 @@ const router = createRouter({
       }
     },
     {
+      path: '/manage/news/create',
+      name: 'manage.news.create',
+      component: () => import('@/views/Manage/CreateNews.vue'),
+      meta: {
+        hideNavbar: true,
+        hideFooter: true,
+      }
+    },
+    {
       path: '/manage/news/:id',
       name: 'newsEdit',
       component: () => import('@/views/Manage/NewsEdit.vue'),

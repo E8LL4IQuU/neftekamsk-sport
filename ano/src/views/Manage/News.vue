@@ -32,7 +32,7 @@ onMounted(() => {
     <div class="py-8 px-12">
         <div class="flex justify-between">
             <h1 class="text-3xl text-black font-bold">Новости</h1>
-            <router-link :to="'/manage/news'">
+            <router-link :to="'/manage/news/create'">
                 <button class="bg-black rounded text-white py-2 px-3 ml-auto">Создать</button>
             </router-link>
         </div>
@@ -41,6 +41,7 @@ onMounted(() => {
                 <div class="mb-8 p-4 bg-white shadow-md rounded-md cursor-pointer">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-bold text-gray-700">{{ newsItem.Title }}</h2>
+                        <!-- FIXME: timestamp is incorrect -->
                         <span class="text-gray-500">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
                     </div>
                     <p class="text-gray-700">{{ newsItem.Description }}</p>
