@@ -17,7 +17,9 @@ var (
 )
 
 func InitializeFiber() {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		BodyLimit: 100 * 1024 * 1024,
+	})
 
 	environment := os.Getenv("ENVIRONMENT")
 

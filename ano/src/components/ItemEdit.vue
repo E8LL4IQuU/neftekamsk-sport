@@ -62,6 +62,7 @@ const submit = async (): Promise<void> => {
 </script>
 
 <template>
+  <!-- TODO: add image upload progress -->
   <body class="bg-white">
     <header class="pe-auto">
       <div class="flex items-center pe-auto p-3 h-100">

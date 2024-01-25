@@ -20,7 +20,6 @@ onMounted( async () => {
     }
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
-      console.log("pushing to /login")
       router.push("/login");
     }
   }
