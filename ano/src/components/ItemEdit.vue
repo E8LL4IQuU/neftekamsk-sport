@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, defineProps } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import { type News } from '@/types/apiTypes';
 
 const ItemForm = defineProps(['requestType', 'url']);
 
@@ -59,6 +60,28 @@ const submit = async (): Promise<void> => {
     console.error('Error updating Item:', error);
   }
 };
+
+const getFields = async (): Promise<void> => {
+  if (isNaN(itemId.value)) {
+    return
+  }
+
+  try {
+    const response = await axios.get<News>(`${url}/api/events`, {
+      withCredentials: true,
+    })
+    title = response.data.Title
+    description = response.data.Description
+  } catch (error) {
+    console.error('Error fetching news: ', error)
+  }
+
+}
+
+onMounted( () => {
+  getFields()
+}
+)
 </script>
 
 <template>
