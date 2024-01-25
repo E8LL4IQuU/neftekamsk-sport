@@ -6,7 +6,6 @@ import { ChevronLeftIcon, PlusIcon } from '@heroicons/vue/24/solid';
 import { type News } from '@/types/apiTypes';
 
 const ItemForm = defineProps(['requestType', 'url']);
-
 const url: string = import.meta.env.VITE_ENDPOINT;
 const router = useRouter();
 const route = useRoute();

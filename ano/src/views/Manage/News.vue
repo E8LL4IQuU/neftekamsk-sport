@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { RouterLink } from 'vue-router'
 import { type News } from '@/types/apiTypes'
+import TrashButton from '@/components/TrashButton.vue'
 
 const url: string = import.meta.env.VITE_ENDPOINT
 const news = ref<News[]>([])
@@ -55,14 +56,17 @@ onMounted(() => {
         </div>
         <div class="news-list">
             <router-link v-for="newsItem in news" :key="newsItem.ID" :to="{ name: 'newsEdit', params: { id: newsItem.ID } }">
-                <div class="mb-8 p-4 bg-white shadow-md rounded-md cursor-pointer">
+                <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-bold text-gray-700">{{ newsItem.Title }}</h2>
                         <!-- FIXME: timestamp is incorrect -->
                         <span class="text-gray-500">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
                     </div>
-                    <p class="text-gray-700">{{ newsItem.Description }}</p>
-                    <!-- TODO: delete button (I'd make it look like a red button with trash bin icon) -->
+                    <div class="flex justify-between items-center">
+                        <p class="text-gray-700">{{ newsItem.Description }}</p>
+                    <!-- FIXME: unclickable -->
+                    <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+                    </div>
                 </div>
             </router-link>
         </div>
