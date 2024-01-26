@@ -5,7 +5,7 @@ import (
 )
 
 type News struct {
-	ID	uint
+	ID	uint64
 	Title string
 	Description string
 	ImagePath string

@@ -202,7 +202,7 @@ func GetEvents(c *fiber.Ctx) error {
 	return getItems(c, &[]model.Event{}, "ID")
 }
 
-func GetEventsByID(c *fiber.Ctx) error {
+func GetEventByID(c *fiber.Ctx) error {
 	return getItemByID(c, model.Event{})
 }
 
@@ -238,3 +238,17 @@ func UpdateNews(c *fiber.Ctx) error {
 func DeleteNews(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.News{})
 }
+
+
+func GetSignups(c *fiber.Ctx) error {
+	return getItems(c, &[]model.Signup{}, "ID")
+}
+
+func GetSignupByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.Signup{})
+}
+
+func CreateSignup(c *fiber.Ctx) error {
+	return createItem(c, false, &model.Signup{})
+}
+

@@ -10,7 +10,7 @@ func InitializeRoutes(app *fiber.App) {
 	// otherwise "404 Not found" will be returned
 
 	// Auth
-	// /api/auth routes are allowed to access without authorization
+	// /api/auth routes are skipping auth middleware
 	app.Post("/api/auth/register", Register)
 	app.Post("/api/auth/login", Login)
 	app.Get("/api/auth/user", User)
@@ -18,7 +18,7 @@ func InitializeRoutes(app *fiber.App) {
 
 	// Content management
 	app.Get("/api/events", GetEvents)
-	// app.Get("/api/events/:id", GetEventByID)
+	app.Get("/api/events/:id", GetEventByID)
 	app.Post("/api/events", CreateEvent)
 	app.Put("/api/events/:id", UpdateEvent)
 	app.Delete("/api/events/:id", DeleteEvent)
@@ -28,4 +28,8 @@ func InitializeRoutes(app *fiber.App) {
 	app.Post("/api/news", CreateNews)
 	app.Put("/api/news/:id", UpdateNews)
 	app.Delete("/api/news/:id", DeleteNews)
+
+	app.Get("/api/signups", GetSignups)
+	app.Get("/api/signups/:id", GetSignupByID)
+	app.Post("/api/signups", CreateSignup)
 }

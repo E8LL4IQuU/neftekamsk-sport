@@ -24,7 +24,7 @@ export interface Signup {
     ID: number
     FirstName: string
     LastName: string
-    PhoneNumber: number
+    PhoneNumber: string
     Email: string
     CreatedAt: number
 }
