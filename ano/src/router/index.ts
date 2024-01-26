@@ -112,9 +112,18 @@ const router = createRouter({
       path: '/manage/news/:id',
       name: 'newsEdit',
       component: () => import('@/views/Manage/NewsEdit.vue'),
-      meta : {
-      hideNavbar: true,
-      hideFooter: true,
+      meta: {
+        hideNavbar: true,
+        hideFooter: true,
+      }
+    },
+    {
+      path: '/manage/signups',
+      name: 'manage.signups',
+      component: () => import('@/views/Manage/Signups.vue'),  
+      meta: {
+        hideNavbar: true,
+        hideFooter: true,
       }
     },
     {

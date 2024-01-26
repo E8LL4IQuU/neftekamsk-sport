@@ -11,6 +11,7 @@ import { RouterLink } from "vue-router";
           <li class="flex flex-col">
             <router-link :to="'/manage/events'" :class="{ 'text-black font-bold' : $route.path === '/manage/events', 'text-gray-700' : $route.path !== '/manage/events'}">Мероприятия</router-link>
             <router-link :to="'/manage/news'" :class="{ 'text-black font-bold' : $route.path === '/manage/news', 'text-gray-700' : $route.path !== '/manage/news'}">Новости</router-link>
+            <router-link :to="'/manage/signups'" :class="{ 'text-black font-bold' : $route.path === '/manage/signups', 'text-gray-700' : $route.path !== '/manage/signups'}">Записи</router-link>
           </li>
         </ul>
       </nav>

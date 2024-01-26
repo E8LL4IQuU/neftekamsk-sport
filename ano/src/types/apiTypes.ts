@@ -19,3 +19,12 @@ export interface News {
     UpdatedAt: number
     // link
 }
+
+export interface Signup {
+    ID: number
+    FirstName: string
+    LastName: string
+    PhoneNumber: number
+    Email: string
+    CreatedAt: number
+}
