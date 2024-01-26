@@ -8,6 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// FIXME: not al function in this file should be Uppercase (exported)
 func ParseBody(c *fiber.Ctx) map[string]string {
 	var data map[string]string
 

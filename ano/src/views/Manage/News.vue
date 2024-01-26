@@ -59,7 +59,6 @@ onMounted(() => {
                 <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-bold text-gray-700">{{ newsItem.Title }}</h2>
-                        <!-- FIXME: timestamp is incorrect -->
                         <span class="text-gray-500">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
                     </div>
                     <div class="flex justify-between items-center">

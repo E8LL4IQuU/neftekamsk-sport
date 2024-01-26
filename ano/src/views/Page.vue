@@ -1,22 +1,22 @@
 <template>
   <div class="wrapper">
-    <Hero/>
-    <Slider :SliderData="SliderData"/>
+    <Hero />
+    <Slider :SliderData="IRLEvents" />
     <div>
       <h3 class="text-6xl pt-4 pb-3 text-center text-black font-normal">Новости</h3>
       <div class="flex flex-wrap justify-center">
-        <News :NewsData="NewsData"/>
+        <NewsComponent :NewsData="News" />
       </div>
       <h3 class="text-6xl pt-4 pb-3 text-center text-black font-normal">Галерея</h3>
       <div>
-        <Gallery :GalleryData="GalleryData"/>
+        <Gallery :GalleryData="GalleryData" />
       </div>
       <h3 class="text-6xl pt-4 pb-3 text-center text-black font-normal">Истории людей</h3>
       <div>
-        <StoriesPeople :PeopleData="PeopleData"/>
+        <StoriesPeople :PeopleData="PeopleData" />
       </div>
       <div>
-        <Connect/>
+        <Connect />
       </div>
     </div>
   </div>
@@ -25,58 +25,51 @@
 <script setup lang="ts">
 import Hero from "@/components/Hero.vue";
 import Slider from "@/components/Slider.vue";
-import News from "@/components/News.vue";
+import NewsComponent from "@/components/News.vue";
 import Gallery from "@/components/Gallery.vue";
 import StoriesPeople from "@/components/StoriesPeople.vue";
 import Connect from "@/components/Connect.vue";
-// TODO: retrieve from database, as in AdminView.vue
+import { onMounted, ref } from "vue";
+import axios from 'axios'
+import { type IRLEvent, type News } from '@/types/apiTypes'
+
+const url: string = import.meta.env.VITE_ENDPOINT;
+const IRLEvents = ref<IRLEvent[]>([]);
+const News = ref<News[]>([])
+
+const fetchIRLEvents = async (): Promise<void> => {
+  try {
+    const response = await axios.get<IRLEvent[]>(`${url}/api/events`, {
+      withCredentials: true,
+    })
+    IRLEvents.value = response.data
+  } catch (error) {
+    console.log('Error fetching IRLEvents: ', error)
+  }
+}
+
+const fetchNews = async (): Promise<void> => {
+    try {
+        const response = await axios.get<News[]>(`${url}/api/news`, {
+            withCredentials: true,
+        })
+        News.value = response.data
+    } catch (error) {
+        console.error('Error fetching news:', error)
+    }
+}
+
+onMounted(async () => {
+  fetchIRLEvents()
+  fetchNews()
+})
+
 // mock data
-const SliderData  = [{
-  "title": "Мероприятие1",
-  "description": "Это описание просто имба",
-  "links": "events",
-  "img": "https://white-rainbow.ru/upload/iblock/b26/7sf66d03tagu4tqpxywzr9e18325c05v/BSA_3747_Pano_copy.750.jpg"
-},
-  {
-    "title": "Мероприятие2",
-    "description": "Это описание просто имба",
-    "links": "events",
-    "img": "https://www.rgo.ru/sites/default/files/styles/head_image_article/public/node/26417/fucking-finger-array-usvinskie-pillars-sergei-afanasev-0.jpg?itok=StYRWb9k"
-  },
-  {
-    "title": "Мероприятие3",
-    "description": "Это описание просто имба",
-    "links": "events",
-    "img": "https://rusclimbing.ru/upload/resize_cache/webp/iblock/9b3/IMG_20230611_000706.webp"
-  }
-]
-const NewsData =[{
-  "title": "Это заголовок новости",
-  "img": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-  "description": "Это краткое описание новости , которое поможет, понять нравится ли вам наш сайтец",
-  "links": "news",
-  "date" : "21.09.2023"
-},
-  {
-    "title": "Это заголовок новости",
-    "img": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-    "description": "Это краткое описание новости , которое поможет, понять нравится ли вам наш сайтец",
-    "links": "news",
-    "date" : "21.09.2023"
-  },
-  {
-    "title": "Это заголовок новости",
-    "img": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-    "description": "Это краткое описание новости , которое поможет, понять нравится ли вам наш сайтец",
-    "links": "news",
-    "date" : "21.09.2023"
-  }
-]
 const GalleryData = {
   "linkImgOne": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
   "linkImgTwo": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
   "linkImgThree": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-    "videos": "https://res.cloudinary.com/demo/video/upload/q_auto,f_auto/dog.mp4"
+  "videos": "https://res.cloudinary.com/demo/video/upload/q_auto,f_auto/dog.mp4"
 }
 const PeopleData = [
   {
@@ -100,7 +93,7 @@ const PeopleData = [
 ]
 </script>
 <style scoped>
-.wrapper{
+.wrapper {
   max-width: 1380px;
   padding: 18px 0px;
   margin: 0 auto;
