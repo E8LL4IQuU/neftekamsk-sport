@@ -1,9 +1,12 @@
 <script setup lang="ts">
 
+import EventsPage from "@/components/Events-page.vue";
 </script>
 
 <template>
-    <h2>Events view</h2>
+    <div>
+      <events-page/>
+    </div>
 </template>
 
 <style>

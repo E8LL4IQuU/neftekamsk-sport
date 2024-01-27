@@ -38,6 +38,11 @@ const router = createRouter({
       component: () => import('../views/EventsView.vue')
     },
     {
+      path: '/events-page-item',
+      name: 'events-page-item',
+      component: () => import('../components/Events-page.vue')
+    },
+    {
       path: '/documents',
       name: 'documents',
       component: () => import('../views/DocumentsView.vue')
