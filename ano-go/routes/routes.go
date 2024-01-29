@@ -13,6 +13,7 @@ func InitializeRoutes(app *fiber.App) {
 	// /api/auth routes are skipping auth middleware
 	app.Post("/api/auth/register", Register)
 	app.Post("/api/auth/login", Login)
+	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)
 	app.Post("/api/auth/logout", Logout)
 

@@ -8,8 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// FIXME: not al function in this file should be Uppercase (exported)
-func ParseBody(c *fiber.Ctx) map[string]string {
+func parseBody(c *fiber.Ctx) map[string]string {
 	var data map[string]string
 
 	c.BodyParser(&data)
@@ -18,10 +17,10 @@ func ParseBody(c *fiber.Ctx) map[string]string {
 }
 
 func NewMiddleware() fiber.Handler {
-	return AuthMiddleware
+	return authMiddleware
 }
 
-func AuthMiddleware(c *fiber.Ctx) error {
+func authMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
 	// We split url at "/" ["", "api", "auth", "login"] to disable auth on login, register routes
@@ -51,7 +50,7 @@ func Register(c *fiber.Ctx) error {
 	// TODO: check if username, email, password field not empty
 
 	c.Accepts("application/json")
-	data := ParseBody(c)
+	data := parseBody(c)
 
 	// Check if email is not taken"
 	var user model.User
@@ -75,7 +74,7 @@ func Register(c *fiber.Ctx) error {
 }
 
 func Login(c *fiber.Ctx) error {
-	data := ParseBody(c)
+	data := parseBody(c)
 
 	var user model.User
 

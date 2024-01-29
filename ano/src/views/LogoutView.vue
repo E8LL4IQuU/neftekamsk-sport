@@ -1,3 +1,4 @@
+<!-- FIXME: do we even need this page? maybe just redirect to "/" -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
@@ -22,6 +23,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!-- FIXME: white text on white background -->
 <h2>{{ message }}</h2>
 </template>
 
