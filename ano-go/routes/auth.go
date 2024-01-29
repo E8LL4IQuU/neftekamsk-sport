@@ -27,7 +27,8 @@ func AuthMiddleware(c *fiber.Ctx) error {
 	// We split url at "/" ["", "api", "auth", "login"] to disable auth on login, register routes
 	parts := strings.Split(c.Path(), "/")
 	// Allow routes with "auth" as second segment of path
-	if len(parts) > 2 && parts[2] == "auth" {
+	// Only check for auth if we're in production mode
+	if ENVIRONMENT == "dev" || (len(parts) > 2 && parts[2] == "auth") {
 		return c.Next()
 	}
 

@@ -14,6 +14,7 @@ var (
 	store		*session.Store
 	AUTH_KEY	string			= "authenticated"
 	USER_ID		string			= "user_id"
+	ENVIRONMENT	string			= os.Getenv("ENVIRONMENT")
 )
 
 func InitializeFiber() {
@@ -21,10 +22,8 @@ func InitializeFiber() {
 		BodyLimit: 100 * 1024 * 1024,
 	})
 
-	environment := os.Getenv("ENVIRONMENT")
-
 	var cookieSecure bool = false
-	if environment == "production" {
+	if ENVIRONMENT == "production" {
 		cookieSecure = true
 	} else {
 		fmt.Println("Warning: running in developer mode, security features disabled")
