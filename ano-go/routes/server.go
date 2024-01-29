@@ -26,7 +26,7 @@ func InitializeFiber() {
 	if ENVIRONMENT == "production" {
 		cookieSecure = true
 	} else {
-		fmt.Println("Warning: running in developer mode, security features disabled")
+		fmt.Println("Warning: running in developer mode, security and auth features disabled")
 	}
 
 	store = session.New(session.Config {
@@ -36,12 +36,13 @@ func InitializeFiber() {
 		CookieSameSite:	"None",
 	})
 
-	app.Use(NewMiddleware(), cors.New(cors.Config{
+	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
 		AllowOrigins: "http://localhost:5173",
 		AllowHeaders: "Access-Control-Allow-Origin, Content-Type, Origin, Accept",
 	}))
 
+	// Auth is inside routes as NewMiddeware()
 	InitializeRoutes(app)
 
 	app.Listen(":8000")

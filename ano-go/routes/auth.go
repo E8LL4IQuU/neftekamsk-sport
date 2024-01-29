@@ -16,14 +16,11 @@ func parseBody(c *fiber.Ctx) map[string]string {
 	return data
 }
 
-func NewMiddleware() fiber.Handler {
-	return authMiddleware
-}
-
 func authMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
-	// We split url at "/" ["", "api", "auth", "login"] to disable auth on login, register routes
+	// We were splitting url at "/" ["", "api", "auth", "login"] to disable auth on login routes
+	// TODO: remove path checking after we remove "auth" from url path
 	parts := strings.Split(c.Path(), "/")
 	// Allow routes with "auth" as second segment of path
 	// Only check for auth if we're in production mode
@@ -44,6 +41,10 @@ func authMiddleware(c *fiber.Ctx) error {
 	}
 
 	return c.Next()
+}
+
+func NewMiddleware() fiber.Handler {
+	return authMiddleware
 }
 
 func Register(c *fiber.Ctx) error {
