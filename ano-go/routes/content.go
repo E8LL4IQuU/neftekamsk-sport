@@ -81,14 +81,11 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, err
 }
 
 func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
-	limit := 10
+	var limit int
 
-	// Check if a custom limit is provided in the request parameters
-	if limitParam := c.Params("limit"); limitParam != "" {
-		// Attempt to parse the limit parameter to an integer
-		if customLimit, err := strconv.Atoi(limitParam); err == nil && customLimit > 0 {
-			limit = customLimit
-		}
+	limitParam := c.Query("limit", "10")
+	if customLimit, err := strconv.Atoi(limitParam); err == nil {
+		limit = customLimit
 	}
 
 	// Create a new instance of the modelType

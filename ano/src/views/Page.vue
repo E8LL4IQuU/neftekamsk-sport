@@ -50,7 +50,7 @@ const fetchIRLEvents = async (): Promise<void> => {
 
 const fetchNews = async (): Promise<void> => {
     try {
-        const response = await axios.get<News[]>(`${url}/api/news`, {
+        const response = await axios.get<News[]>(`${url}/api/news?limit=3`, {
             withCredentials: true,
         })
         News.value = response.data
