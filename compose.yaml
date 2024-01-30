@@ -3,11 +3,13 @@ version: "3.8"
 # FIXME: running not from project root causes .env to not be loaded
 services:
   web:
-    container_name: "sport_web"
+    container_name: ${WEB_CONTAINER_NAME} 
     build: ./ano
     ports:
       # local:docker
       - "${LOCAL_PORT}:80"
+    environment:
+      BACKEND: ${BACKEND_CONTAINER_NAME}
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -15,7 +17,7 @@ services:
     depends_on:
       - backend
   backend:
-    container_name: "sport_backend"
+    container_name: ${BACKEND_CONTAINER_NAME}
     environment:
       DATABASE_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       DATABASE_CONTAINER_NAME: ${DATABASE_CONTAINER_NAME}
@@ -28,7 +30,7 @@ services:
     volumes:
       - ./ano-go/:/app/
   db:
-    container_name: "sport_db"
+    container_name: ${DATABASE_CONTAINER_NAME}
     build: ./database
     environment:
       MARIADB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
