@@ -77,6 +77,7 @@ const router = createRouter({
       meta: {
         hideNavbar: true,
         hideFooter: true,
+        // FIXME: meaning is unclear
         managementRoute: true,
       }
     },
@@ -124,6 +125,7 @@ const router = createRouter({
       meta: {
         hideNavbar: true,
         hideFooter: true,
+        managementRoute: true,
       }
     },
     {

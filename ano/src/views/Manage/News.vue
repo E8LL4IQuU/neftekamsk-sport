@@ -32,9 +32,7 @@ const formatTimestamp = (timestamp: number): string => {
 
 const fetchNews = async (): Promise<void> => {
     try {
-        const response = await axios.get<News[]>(`${url}/api/news`, {
-            withCredentials: true,
-        })
+        const response = await axios.get<News[]>(`${url}/api/news`)
         news.value = response.data
     } catch (error) {
         console.error('Error fetching news:', error)

@@ -66,9 +66,7 @@ const getFields = async (): Promise<void> => {
   }
 
   try {
-    const response = await axios.get<News>(`${url}/api/${ItemForm.url}/${itemId}`, {
-      withCredentials: true,
-    })
+    const response = await axios.get<News>(`${url}/api/${ItemForm.url}/${itemId}`)
     title.value = response.data.Title
     console.log(title)
     description.value = response.data.Description

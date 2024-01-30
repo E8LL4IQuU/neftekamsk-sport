@@ -39,9 +39,7 @@ const News = ref<News[]>([])
 
 const fetchIRLEvents = async (): Promise<void> => {
   try {
-    const response = await axios.get<IRLEvent[]>(`${url}/api/events`, {
-      withCredentials: true,
-    })
+    const response = await axios.get<IRLEvent[]>(`${url}/api/events`)
     IRLEvents.value = response.data
   } catch (error) {
     console.log('Error fetching IRLEvents: ', error)
@@ -50,9 +48,7 @@ const fetchIRLEvents = async (): Promise<void> => {
 
 const fetchNews = async (): Promise<void> => {
     try {
-        const response = await axios.get<News[]>(`${url}/api/news?limit=3`, {
-            withCredentials: true,
-        })
+        const response = await axios.get<News[]>(`${url}/api/news?limit=3`)
         News.value = response.data
     } catch (error) {
         console.error('Error fetching news:', error)

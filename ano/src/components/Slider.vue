@@ -7,19 +7,19 @@
           :centeredSlides="true"
           :autoplay="{
       delay: 2500,
-      disableOnInteraction: false,
+      disableOnInteraction: true,
     }" :navigation="true"
           :modules="modules"
       >
         <SwiperSlide v-for="(slide, index) in SliderData" :key="index">
           <div class="flex flex-col justify-center">
+            <img class="w-auto h-72 lg:h-screen object-cover brightness-75" :src="`${url}/uploads/${slide.img}`" alt="slider image"/>
             <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
               <h2 class="text-5xl pb-3 mobile:text-3xl">{{ slide.title }}</h2>
               <p class="text-2xl pb-3 mobile:text-sm">{{ slide.description }}</p>
-              <!-- TODO: imlement, make router-link -->
-              <a disabled class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" :href="'#'">Подробнее</a>
+              <!-- TODO: implement, make router-link -->
+              <router-link disabled class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" to="/events">Подробнее</router-link>
             </div>
-            <img class="w-auto h-72 lg:h-screen object-cover" :src="`${url}/uploads/${slide.img}`" alt="slider image"/>
           </div>
         </SwiperSlide>
       </Swiper>

@@ -32,9 +32,7 @@ const formatTimestamp = (timestamp: number): string => {
 
 const fetchSignups = async (): Promise<void> => {
     try {
-        const response = await axios.get<Signup[]>(`${url}/api/signups`, {
-            withCredentials: true,
-        })
+        const response = await axios.get<Signup[]>(`${url}/api/signups`)
         signups.value = response.data
     } catch (error) {
         console.error('Error fetching signups:', error)

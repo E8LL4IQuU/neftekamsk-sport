@@ -10,9 +10,7 @@ const IRLEvents = ref<IRLEvent[]>([]);
 
 const fetchIRLEvents = async (): Promise<void> => {
   try {
-    const response = await axios.get<IRLEvent[]>(`${url}/api/events`, {
-      withCredentials: true,
-    })
+    const response = await axios.get<IRLEvent[]>(`${url}/api/events`)
     IRLEvents.value = response.data
   } catch (error) {
     console.error('Error fetching IRLevents:', error)
