@@ -1,5 +1,14 @@
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 .env
 ano/.env
 ano-go/uploads/
 database/
-.vscode/

@@ -200,7 +200,7 @@ func GetEvents(c *fiber.Ctx) error {
 }
 
 func GetEventByID(c *fiber.Ctx) error {
-	return getItemByID(c, model.Event{})
+	return getItemByID(c, &model.Event{})
 }
 
 func CreateEvent(c *fiber.Ctx) error {

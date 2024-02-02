@@ -8,7 +8,7 @@
       </div>
     </div>
     <div v-if="IRLEvents.length > 0" class="flex flex-wrap gap-5 justify-center tablet:p-5">
-      <router-link v-for="(event, index) in IRLEvents" to="#" :key="index" >
+      <router-link v-for="(event, index) in IRLEvents" :to="`/events/${event.ID}`" :key="index" >
       <div style="position: relative;" class="hover:opacity-[85%]">
         <img class="w-[600px] h-[350px] object-cover" :src="`${url}/uploads/${event.img}`">
       </div>
@@ -22,6 +22,7 @@
       </div>
     </router-link>
     </div>
+    <!-- FIXME: this text flickers while loading -->
     <div v-else class="text-gray-500 text-6xl">Мероприятия не найдены</div>
   </div>
 </template>

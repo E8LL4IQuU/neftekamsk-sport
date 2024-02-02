@@ -18,7 +18,7 @@
               <h2 class="text-5xl pb-3 mobile:text-3xl">{{ slide.title }}</h2>
               <p class="text-2xl pb-3 mobile:text-sm">{{ slide.description }}</p>
               <!-- TODO: implement, make router-link -->
-              <router-link disabled class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" to="/events">Подробнее</router-link>
+              <router-link disabled class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" :to="`/events/${slide.ID}`">Подробнее</router-link>
             </div>
           </div>
         </SwiperSlide>
