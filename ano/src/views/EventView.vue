@@ -51,7 +51,7 @@ onMounted(() => {
         <h1 class="text-black text-3xl font-bold pb-3">{{ IRLEvent.title }}</h1>
         <p class="text-black max-w-7xl">{{ IRLEvent.description }}</p>
         <div>
-          <button class="px-2 py-2 mt-3 rounded bg-red-400 text-white" @click="openRegistrationPopup">Записаться</button>
+          <button class="px-2 py-2 mt-3 rounded bg-red-400 text-white hover:bg-red-500" @click="openRegistrationPopup">Записаться</button>
 
           <!-- Registration Popup -->
           <div v-if="isRegistrationPopupOpen"

@@ -22,7 +22,7 @@ import {
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 const events = [
-  { name: 'name', description: 'your description here', href: '/documents', icon: ChartPieIcon },
+  { name: 'name', description: 'your description here', href: '/events', icon: ChartPieIcon },
 ]
 
 const mobileMenuOpen = ref(false)
