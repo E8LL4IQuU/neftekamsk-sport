@@ -8,6 +8,7 @@ module.exports = {
     extend: {},
     screens: {
       'pc': {'max': '1300px'},
+      'mac': {'max': '1440px'},
       'laptop':{'max':'935px'},
       'tablet':{'max':'760px'},
       'mobile':{'max':'520px'},
