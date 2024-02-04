@@ -1,6 +1,5 @@
 <template>
-  <!-- FIXME: dark text on dark background in firefox -->
-  <div class="bg-[#242424]">
+  <div class="bg-[#242424] text-white">
     <div class="flex text-center justify-center gap-[54px] pt-[72px] pb-[14px] tablet:gap-2 mobile:block mobile:pt-[10px]">
       <div v-for="(nav, index) in NavData" :key="index">
         <div>

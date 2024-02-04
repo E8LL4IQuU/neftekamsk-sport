@@ -16,7 +16,6 @@ func InitializeRoutes(app *fiber.App) {
 	app.Post("/api/auth/login", Login)
 	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)
-	// FIXME: change to get
 	app.Post("/api/auth/logout", Logout)
 
 	// Content management

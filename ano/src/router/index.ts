@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '@/views/LoginView.vue'
-import CreateEvent from '@/views/Manage/CreateEvent.vue'
+import Page from '@/views/Page.vue'
+import Events from '@/views/Manage/Events.vue'
 
-// TODO: I'd guess we'll have to remove all the lazy loads due to navbar/footer flickering while loading
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,7 +11,8 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (news.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/Page.vue')
+      // routes that are the first to be loaded when visiting website are imported the usual way
+      component: () => Page
     },
     {
       path: '/news',
@@ -55,8 +55,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      // Not lazy loaded as it causes navbar/footer flickering while loading
-      component: LoginView,
+      component: import('@/views/LoginView.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -77,7 +76,7 @@ const router = createRouter({
     {
       path: '/manage/events',
       name: 'manage.events',
-      component: () => import('@/views/Manage/Events.vue'),
+      component: () => Events,
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -88,7 +87,7 @@ const router = createRouter({
     {
       path: '/manage/events/create',
       name: 'manage.events.create',
-      component: CreateEvent,
+      component: import('@/views/Manage/CreateEvent.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -125,7 +124,7 @@ const router = createRouter({
     {
       path: '/manage/signups',
       name: 'manage.signups',
-      component: () => import('@/views/Manage/Signups.vue'),  
+      component: () => import('@/views/Manage/Signups.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,

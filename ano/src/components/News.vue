@@ -1,17 +1,16 @@
 <template>
   <div class="pt-5" v-for="(news, index) in props.NewsData" :key="index">
     <div class="w-[406px] h-[445px] hover:-translate-y-5 duration-300 mobile:w-[300px]">
-      <!-- TODO: implement, change to router-link -->
-      <a  :href="'#'">
+      <!-- TODO: implement -->
+      <router-link  :to="'#'">
         <img class="w-[350px]" :src='`${url}/uploads/${news.ImagePath}`'>
-      </a>
+      </router-link>
       <div class="w-[350px] mobile:w-[300px]">
         <div class="flex items-center justify-between">
         <h5 class="text-black font-semibold text-[24px]">{{news.Title}}</h5>
         <span class="text-gray-400 font-normal text-[20px]"><span>{{ formatTimestamp(news.CreatedAt) }}</span></span>
       </div>
         <p class="text-gray-500 font-medium text-[20px]">{{news.Description}}</p>
-        <!-- FIXME: change date display to conform to '@/views/Manage/News.vue' -->
       </div>
     </div>
   </div>

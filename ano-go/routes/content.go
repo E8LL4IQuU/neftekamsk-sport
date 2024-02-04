@@ -139,7 +139,6 @@ func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error
 	
 	hasImagePath := hasField(item, "ImagePath")
 
-	// TODO: do not return first _
 	path, err := saveImage(c, isImageRequired)
 	if err != nil {
 		return err
