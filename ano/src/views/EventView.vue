@@ -14,17 +14,32 @@ const LastName = ref<string>('');
 const PhoneNumber = ref<string>('');
 const Email = ref<string>('');
 
-const openRegistrationPopup = () => {
+const openRegistrationPopup = (): void => {
   isRegistrationPopupOpen.value = true;
 };
 
-const closeRegistrationPopup = () => {
+const closeRegistrationPopup = (): void => {
   isRegistrationPopupOpen.value = false;
 };
 
-const submitRegistrationForm = () => {
-  console.log('Submitting Registration Form');
-  closeRegistrationPopup();
+const submitRegistrationForm = async (): Promise<void> => {
+  try {
+    const formData = new FormData()
+
+    formData.append('FirstName', FirstName.value);
+    formData.append('LastName', LastName.value);
+    formData.append('PhoneNumber', PhoneNumber.value);
+    formData.append('Email', Email.value);
+
+    const requestConfig = { method: 'post', url: `${url}/api/signups/`, data: formData }
+
+    const reponse = await axios(requestConfig).then(() => {
+      closeRegistrationPopup();
+    })
+
+  } catch (error) {
+    console.error('Error signing up for event: ', error);
+  }
 };
 
 const fetchIRLEvents = async (): Promise<void> => {

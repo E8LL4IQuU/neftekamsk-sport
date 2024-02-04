@@ -31,10 +31,23 @@ func generateSHA256Name(file io.Reader) (string, error) {
 	return hex.EncodeToString(hashInBytes), nil
 }
 
-func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, error) {
+func hasField(obj interface{}, fieldName string) bool {
+	val := reflect.ValueOf(obj).Elem()
+	typ := val.Type()
+
+	for i := 0; i < val.NumField(); i++ {
+		if typ.Field(i).Name == fieldName {
+			return true
+		}
+	}
+
+	return false
+}
+
+func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 	form, err := c.MultipartForm()
 	if err != nil {
-		return nil, "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+		return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
 			"message": "" + err.Error(),
 		})
 	}
@@ -45,19 +58,19 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, err
 
 	if isImageRequired {
 		if files == nil {
-			return nil, "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"message": "form file 'image' required",
 			})
 		}
 	} else {
 		if files == nil {
-			return nil, "", nil
+			return "", nil
 		}
 	}
 
 
 	if len(files) != 1 {
-		return nil, "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "only one image allowed",
 		})
 	}
@@ -66,7 +79,7 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, err
 	for _, file := range files {
 		uploadedFile, err := file.Open()
 		if err != nil {
-			return nil, "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
 				"message": "" + err.Error(),
 			})
 		}
@@ -77,7 +90,7 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, err
 		c.SaveFile(file, "./uploads/" + path)
 	}
 
-	return form, path, nil
+	return path, nil
 }
 
 func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
@@ -118,19 +131,23 @@ func getItemByID(c *fiber.Ctx, modelType interface{}) error {
 }
 
 func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error {
-	// FIXME: crashes when sending an empty json
-	form, path, err := saveImage(c, isImageRequired)
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+
+	if err := c.BodyParser(item); err != nil {
+		return err
+	}
+	
+	hasImagePath := hasField(item, "ImagePath")
+
+	// TODO: do not return first _
+	path, err := saveImage(c, isImageRequired)
 	if err != nil {
 		return err
 	}
 
-	title := form.Value["title"][0]
-	description := form.Value["description"][0]
-
-	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
-	reflect.ValueOf(item).Elem().FieldByName("Title").SetString(title)
-	reflect.ValueOf(item).Elem().FieldByName("Description").SetString(description)
-	reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(path)
+	if hasImagePath {
+		reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(path)
+	}
 
 	if err := model.DB.Create(item).Error; err != nil {
 		return fmt.Errorf("error creating item in the database: %w", err)
@@ -159,7 +176,7 @@ func updateItem(c *fiber.Ctx, modelType interface{}) error {
     }
 
     // Parse the image
-    _, updatedPath, err := saveImage(c, false)
+	updatedPath, err := saveImage(c, false)
     if err != nil {
         return err
     }
@@ -191,6 +208,8 @@ func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
 		// Handle the error
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error deleting record"})
 	}
+
+	// TODO: Delete associated image
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Record deleted successfully"})
 }
@@ -247,5 +266,9 @@ func GetSignupByID(c *fiber.Ctx) error {
 
 func CreateSignup(c *fiber.Ctx) error {
 	return createItem(c, false, &model.Signup{})
+}
+
+func DeleteSignup(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.Signup{})
 }
 

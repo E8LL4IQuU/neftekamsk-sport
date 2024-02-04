@@ -68,7 +68,6 @@ const getFields = async (): Promise<void> => {
   try {
     const response = await axios.get<News>(`${url}/api/${ItemForm.url}/${itemId}`)
     title.value = response.data.Title
-    console.log(title)
     description.value = response.data.Description
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {

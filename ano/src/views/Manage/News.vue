@@ -61,7 +61,8 @@ onMounted(() => {
                     </div>
                     <div class="flex justify-between items-center">
                         <p class="text-gray-700">{{ newsItem.Description }}</p>
-                    <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+                        <!-- TODO: deleting doesn't update the page -->
+                        <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
                     </div>
                 </div>
             </router-link>

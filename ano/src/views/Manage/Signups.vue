@@ -13,7 +13,7 @@ const formatTimestamp = (timestamp: number): string => {
 
     // Get the time zone offset in minutes
     const timeZoneOffset = date.getTimezoneOffset();
-    
+
     // Use the offset to create a new date with the local time zone
     const localDate = new Date(date.getTime() - timeZoneOffset * 60 * 1000);
 
@@ -25,7 +25,7 @@ const formatTimestamp = (timestamp: number): string => {
         minute: 'numeric',
         second: 'numeric',
     };
-    
+
     return localDate.toLocaleString('en-US', options);
 };
 
@@ -47,25 +47,24 @@ onMounted(() => {
 <template>
     <div class="py-8 px-12">
         <div class="flex justify-between">
-            <h1 class="text-3xl text-black font-bold">Новости</h1>
-            <router-link :to="'/manage/signups/create'">
-                <button class="bg-black rounded text-white py-2 px-3 ml-auto">Создать</button>
-            </router-link>
+            <h1 class="text-3xl text-black font-bold">Записи</h1>
         </div>
         <div class="signups-list">
-            <router-link v-for="signupItem in signups" :key="signupItem.ID" :to="{ name: 'signupsEdit', params: { id: signupItem.ID } }">
-                <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-2xl font-bold text-gray-700">{{ signupItem.FirstName }}  {{ signupItem.LastName }}</h2>
-                        <!-- FIXME: timestamp is incorrect -->
-                        <span class="text-gray-500">{{ formatTimestamp(signupItem.CreatedAt) }}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <p class="text-gray-700">{{ signupItem.PhoneNumber }}</p>
-                    <TrashButton @reloadItems="fetchSignups" :id="signupItem.ID" type="signups"></TrashButton>
-                    </div>
+            <div v-for="signupItem in signups" key="signupItem.ID" class="mb-4 p-4 bg-white shadow-md rounded-md">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-700">{{ signupItem.FirstName }} {{ signupItem.LastName }}</h2>
+                    <!-- FIXME: timestamp is incorrect -->
+                    <span class="text-gray-500">{{ formatTimestamp(signupItem.CreatedAt) }}</span>
                 </div>
-            </router-link>
+                <div class="flex justify-between items-center">
+                    <div class="flex gap-x-5"> 
+                        <span class="text-gray-700">{{ signupItem.PhoneNumber }}</span>
+                        <span class="text-gray-700">{{ signupItem.Email }}</span>
+                    </div>
+                    <!-- FIXME: 405 Method not allowed -->
+                    <TrashButton @reloadItems="fetchSignups" :id="signupItem.ID" type="signups"></TrashButton>
+                </div>
+            </div>
         </div>
     </div>
 </template>

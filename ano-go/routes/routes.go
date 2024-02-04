@@ -16,6 +16,7 @@ func InitializeRoutes(app *fiber.App) {
 	app.Post("/api/auth/login", Login)
 	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)
+	// FIXME: change to get
 	app.Post("/api/auth/logout", Logout)
 
 	// Content management
@@ -28,6 +29,8 @@ func InitializeRoutes(app *fiber.App) {
 	app.Get("/api/signups", GetSignups)
 	app.Get("/api/signups/:id", GetSignupByID)
 
+	app.Post("/api/signups", CreateSignup)
+
 	// Authenticated only routes ahead
 	app.Use(NewMiddleware())
 
@@ -39,5 +42,5 @@ func InitializeRoutes(app *fiber.App) {
 	app.Put("/api/news/:id", UpdateNews)
 	app.Delete("/api/news/:id", DeleteNews)
 
-	app.Post("/api/signups", CreateSignup)
+	app.Delete("/api/signups", DeleteSignup)
 }
