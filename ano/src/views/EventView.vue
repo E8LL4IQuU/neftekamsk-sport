@@ -60,8 +60,8 @@ onMounted(() => {
 
 <template>
   <div class="px-1 sm:px-0 sm:container mx-auto pb-20">
-    <div class="sm:flex gap-x-12 justify-between" v-if="IRLEvent">
-      <img class="w-full" :src="`${url}/uploads/${IRLEvent.img}`" alt="">
+    <div class="lg:flex gap-x-12 justify-between" v-if="IRLEvent">
+      <img class="sm:w-full" :src="`${url}/uploads/${IRLEvent.img}`" alt="">
       <div class="mobile:text-center">
         <h1 class="text-black text-3xl font-bold pb-3">{{ IRLEvent.title }}</h1>
         <p class="text-black max-w-7xl">{{ IRLEvent.description }}</p>
@@ -96,7 +96,6 @@ onMounted(() => {
                     placeholder="Номер телефона">
                 </div>
 
-                <!-- FIXME: make it optional -->
                 <div class="mb-4">
                   <input v-model="Email" type="text" id="Email"
                     class="w-full text-black mt-[30px] px-[15px] py-[15px] border-none rounded-[20px] bg-stone-200 placeholder-black placeholder-shown:font-bold text-[24px] mac:mt-[10px] mobile:text-[16px]"
