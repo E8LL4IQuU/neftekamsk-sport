@@ -17,6 +17,7 @@ const data = {
     email: "",
     password: "",
 };
+// TODO: login field autofocus or focus on input
 
 // TODO: hide axios errors in console 
 // https://dev.to/zelig880/how-to-catch-the-body-of-an-axios-error-4lk0
@@ -85,11 +86,6 @@ const StatusInternalServerError = {
         description: "Консоль может содержать подробную информацию",
     }
 }
-
-
-// TODO: add logout button somewhere
-// Logout
-// GET /api/auth/logout
 </script>
 
 

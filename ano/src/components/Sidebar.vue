@@ -15,6 +15,8 @@ import { RouterLink } from "vue-router";
           </li>
         </ul>
       </nav>
+      <!-- TODO: add logout button
+      POST /api/auth/logout -->
     </div>
 </template>
 

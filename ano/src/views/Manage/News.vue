@@ -56,13 +56,15 @@ onMounted(() => {
             <router-link v-for="newsItem in news" :key="newsItem.ID" :to="{ name: 'newsEdit', params: { id: newsItem.ID } }">
                 <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">
                     <div class="flex justify-between items-center mb-4">
-                        <h2 class="text-2xl font-bold text-gray-700">{{ newsItem.Title }}</h2>
-                        <span class="text-gray-500">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
+                        <h2 class="text-2xl font-bold text-gray-700 line-clamp-1">{{ newsItem.Title }}</h2>
+                        <span class="text-gray-500 min-w-fit">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <p class="text-gray-700">{{ newsItem.Description }}</p>
+                        <p class="text-gray-700 line-clamp-2">{{ newsItem.Description }}</p>
                         <!-- TODO: deleting doesn't update the page -->
-                        <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+                        <div class="min-w-fit">
+                            <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+                        </div>
                     </div>
                 </div>
             </router-link>

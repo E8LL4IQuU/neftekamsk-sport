@@ -30,8 +30,7 @@ onMounted(() => {
         <div class="max-w-[665px] mac:max-w-[500px] laptop:mx-auto mobile:w-full">
           <h4 class="text-black text-center text-[36px] pb-[14px] mac:text-[30px]">{{ item.Title }}</h4>
           <hr class="max-w-[540px] bg-[#E4E4E4] mx-auto">
-          <!-- TODO: truncate text -->
-          <p class="text-[#6F6F6F] text-[28px] pt-[14px] text-right  mac:text-[20px] laptop:text-center">{{ item.Description }}</p>
+          <p class="text-[#6F6F6F] text-[28px] pt-[14px] text-right  mac:text-[20px] laptop:text-center line-clamp-[10]">{{ item.Description }}</p>
         </div>
       </div>
     </div>
