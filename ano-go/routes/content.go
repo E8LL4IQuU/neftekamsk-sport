@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/E8LL4IQuU/ano-go/model"
 	"github.com/gofiber/fiber/v2"
@@ -47,14 +48,13 @@ func hasField(obj interface{}, fieldName string) bool {
 func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 	form, err := c.MultipartForm()
 	if err != nil {
-		return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+		return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "" + err.Error(),
 		})
 	}
 	defer form.RemoveAll()
 
-
-	files := form.File["image"]	// "image" is the name of the input field in the form
+	files := form.File["image"] // "image" is the name of the input field in the form
 
 	if isImageRequired {
 		if files == nil {
@@ -68,18 +68,17 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 		}
 	}
 
-
 	if len(files) != 1 {
 		return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "only one image allowed",
 		})
 	}
-	
+
 	var path string
 	for _, file := range files {
 		uploadedFile, err := file.Open()
 		if err != nil {
-			return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "" + err.Error(),
 			})
 		}
@@ -87,7 +86,7 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 
 		filename, _ := generateSHA256Name(uploadedFile)
 		path = filename + getFileExtension(file)
-		c.SaveFile(file, "./uploads/" + path)
+		c.SaveFile(file, "./uploads/"+path)
 	}
 
 	return path, nil
@@ -95,10 +94,27 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 
 func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 	var limit int
+	var excludedIDs []uint
 
 	limitParam := c.Query("limit", "10")
-	if customLimit, err := strconv.Atoi(limitParam); err == nil {
-		limit = customLimit
+	customLimit, err := strconv.Atoi(limitParam)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid limit format"})
+	}
+	limit = customLimit
+
+	excludedIDParam := c.Query("exclude")
+
+	if excludedIDParam != "" {
+		ids := strings.Split(excludedIDParam, ",")
+
+		for _, id := range ids {
+			parsedID, err := strconv.ParseUint(id, 10, 64)
+			if err != nil {
+				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID format"})
+			}
+			excludedIDs = append(excludedIDs, uint(parsedID))
+		}
 	}
 
 	// Create a new instance of the modelType
@@ -107,7 +123,14 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 	// Retrieve the value of the created instance
 	itemValue := reflect.ValueOf(item)
 
-	if err := model.DB.Order(orderByColumn + " desc").Limit(limit).Find(itemValue.Interface()).Error; err != nil {
+	query := model.DB.Order(orderByColumn + " desc").Limit(limit)
+
+	fmt.Println(excludedIDs)
+	if len(excludedIDs) > 0 {
+		query = query.Not("id", excludedIDs)
+	}
+
+	if err := query.Find(itemValue.Interface()).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
@@ -136,7 +159,7 @@ func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error
 	if err := c.BodyParser(item); err != nil {
 		return err
 	}
-	
+
 	hasImagePath := hasField(item, "ImagePath")
 
 	path, err := saveImage(c, isImageRequired)
@@ -156,41 +179,40 @@ func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error
 }
 
 func updateItem(c *fiber.Ctx, modelType interface{}) error {
-    // Parse item ID from the request params
-    id, err := strconv.Atoi(c.Params("id"))
-    if err != nil {
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
-    }
+	// Parse item ID from the request params
+	id, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
+	}
 
-    // Find the existing item by ID in the database
-    item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
-    if err := model.DB.First(item, id).Error; err != nil {
-        // Handle the error
-        return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
-    }
+	// Find the existing item by ID in the database
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	if err := model.DB.First(item, id).Error; err != nil {
+		// Handle the error
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
+	}
 
-    // Parse the item details directly into the existing item
-    if err := c.BodyParser(item); err != nil {
-        return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
-    }
+	// Parse the item details directly into the existing item
+	if err := c.BodyParser(item); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
+	}
 
-    // Parse the image
+	// Parse the image
 	updatedPath, err := saveImage(c, false)
-    if err != nil {
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    // Update the image path if provided
-    if updatedPath != "" {
-        // Assuming "ImagePath" is a field in your model
-        reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(updatedPath)
-    }
+	// Update the image path if provided
+	if updatedPath != "" {
+		// Assuming "ImagePath" is a field in your model
+		reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(updatedPath)
+	}
 
-    // Save the updated item back to the database
-    model.DB.Save(item)
-    return c.Status(fiber.StatusOK).JSON(item)
+	// Save the updated item back to the database
+	model.DB.Save(item)
+	return c.Status(fiber.StatusOK).JSON(item)
 }
-
 
 func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
 	recordID := c.Params("id")
@@ -233,7 +255,6 @@ func DeleteEvent(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Event{})
 }
 
-
 func GetNews(c *fiber.Ctx) error {
 	return getItems(c, &[]model.News{}, "ID")
 }
@@ -254,7 +275,6 @@ func DeleteNews(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.News{})
 }
 
-
 func GetSignups(c *fiber.Ctx) error {
 	return getItems(c, &[]model.Signup{}, "ID")
 }
@@ -270,4 +290,3 @@ func CreateSignup(c *fiber.Ctx) error {
 func DeleteSignup(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Signup{})
 }
-

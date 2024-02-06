@@ -104,7 +104,7 @@ onMounted(() => {
                 <!-- TODO: add styling -->
                 <router-link
                   to="/events"
-                  class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                  class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 text-black font-bold"
                 >
                   Все мероприятия
                 </router-link>
@@ -176,7 +176,7 @@ onMounted(() => {
                   <router-link to="events">
                     <DisclosureButton
                       as="div"
-                      class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50 text-black font-bold"
                     >
                       Все мероприятия
                     </DisclosureButton>

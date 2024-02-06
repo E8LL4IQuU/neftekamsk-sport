@@ -1,47 +1,69 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { type News } from '@/types/apiTypes'
-import axios from 'axios'
+import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import axios from "axios";
+import { type News } from "@/types/apiTypes";
 
-const url: string = import.meta.env.VITE_ENDPOINT
-const news = ref<News[]>([])
+const url: string = import.meta.env.VITE_ENDPOINT;
+const news = ref<News>();
+const newsBulk = ref<News[]>([])
+const route = useRoute();
+const newsID: number = Number(route.params.id);
+
+const fetchNewsBulk = async (): Promise<void> => {
+  try {
+    const response = await axios.get<News[]>(`${url}/api/news?limit=4&exclude=${newsID}`)
+    newsBulk.value = response.data
+  } catch (error) {
+    console.error('Error fetching news:', error)
+  }
+}
 
 const fetchNews = async (): Promise<void> => {
-    try {
-        const response = await axios.get<News[]>(`${url}/api/news`)
-        news.value = response.data
-    } catch (error) {
-        console.error('Error fetching news:', error)
-    }
+  try {
+    const response = await axios.get<News>(`${url}/api/news/${newsID}`)
+    news.value = response.data
+  } catch (error) {
+    console.error('Error fetching news:', error)
+  }
 }
 
 onMounted(() => {
-    fetchNews()
+  fetchNews()
+  fetchNewsBulk()
 })
 </script>
 
 <template>
-  <router-link v-for="item in news" :to="`${url}/news/${item.ID}`">
-  <div class="containers hover:bg-slate-200 transition-colors">
-    <div class="flex justify-between mt-5 py-9 gap-3 laptop:block laptop:text-center mobile:py-[35px]" >
-      <div>
-          <img class="w-[650px] h-[520px] rounded-[30px] mac:w-[500px] mac:h-[400px] laptop:mx-auto mobile:w-full object-contain" :src="`${url}/uploads/${item.ImagePath}`"/>
-        </div>
-        <div class="max-w-[665px] mac:max-w-[500px] laptop:mx-auto mobile:w-full">
-          <h4 class="text-black text-center text-[36px] pb-[14px] mac:text-[30px]">{{ item.Title }}</h4>
-          <hr class="max-w-[540px] bg-[#E4E4E4] mx-auto">
-          <p class="text-[#6F6F6F] text-[28px] pt-[14px] text-right  mac:text-[20px] laptop:text-center line-clamp-[10]">{{ item.Description }}</p>
-        </div>
+  <div class="lg:grid lg:grid-cols-12 sm:px-0 sm:container mx-auto pb-20">
+    <div class="sm:col-span-8 gap-x-12 justify-between" v-if="news">
+      <img class="sm:w-full sm:h-[600px] object-cover" :src="`${url}/uploads/${news.ImagePath}`" alt="">
+      <div class="px-3 pt-3">
+        <h1 class="text-black text-3xl font-bold mb-3 line-clamp-5">{{ news.Title }}</h1>
+        <p class="leading-6 text-black max-w-7xl">{{ news.Description }}</p>
       </div>
     </div>
-  </router-link>
+    <div class="sm:col-span-4 mt-32 lg:mt-0">
+      <p class="text-center text-2xl font-bold">Последние новости</p>
+      <router-link v-for="item in newsBulk" :to="`${url}/news/${item.ID}`">
+        <div class="hover:bg-slate-100 transition-colors">
+          <div class="sm:grid sm:grid-cols-12 mt-1 py-4 px-3 gap-3 laptop:block laptop:text-center mobile:py-[35px]">
+            <div class="sm:col-span-4">
+              <img
+                class="sm:w-48 sm:h-32 rounded-[30px] laptop:mx-auto object-cover"
+                :src="`${url}/uploads/${item.ImagePath}`" />
+            </div>
+            <div class="sm:col-span-8 sm:w-fit">
+              <h4 class="text-black mb-4 font-bold mac:text-[30px] line-clamp-2">{{ item.Title }}</h4>
+              <p
+                class="text-[#6F6F6F] mac:text-[20px] laptop:text-center line-clamp-5">
+                {{ item.Description }}</p>
+            </div>
+          </div>
+        </div>
+      </router-link>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-.containers{
-  max-width: 1450px;
-  margin: 0 auto;
-  padding: 0px 30px;
-  border-radius: 10px;
-}
-</style>
+<style scoped></style>

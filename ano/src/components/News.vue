@@ -1,8 +1,8 @@
 <template>
   <div class="pt-5" v-for="(news, index) in props.NewsData" :key="index">
+    <!-- FIXME: the whole block shold probably be a link -->
     <div class="w-[406px] h-[445px] hover:-translate-y-5 duration-300 mobile:w-[300px]">
-      <!-- TODO: implement -->
-      <router-link  :to="'#'">
+      <router-link  :to="`/news/${news.ID}`">
         <img class="w-[350px] h-[260px] object-cover" :src='`${url}/uploads/${news.ImagePath}`'>
       </router-link>
       <div class="w-[350px] mobile:w-[300px]">

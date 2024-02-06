@@ -1,4 +1,3 @@
-<!-- FIXME: unused view-->
 <script setup lang="ts">
 
 import EventsPage from "@/components/Events-page.vue";
