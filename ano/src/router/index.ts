@@ -8,15 +8,15 @@ const router = createRouter({
     {
       path: '/',
       name: '',
-      // route level code-splitting
-      // this generates a separate chunk (news.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // routes that are the first to be loaded when visiting website are imported the usual way
-      component: () => Page
+      component: Page
     },
     {
       path: '/events',
       name: 'events',
+      // route level code-splitting
+      // this generates a separate chunk (news.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      // routes that are the first to be loaded when visiting website are imported the usual way
       component: () => import('@/views/EventsView.vue')
     },
     {
@@ -61,7 +61,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: import('@/views/LoginView.vue'),
+      component: () => import('@/views/LoginView.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -82,7 +82,7 @@ const router = createRouter({
     {
       path: '/manage/events',
       name: 'manage.events',
-      component: () => Events,
+      component: Events,
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -93,7 +93,7 @@ const router = createRouter({
     {
       path: '/manage/events/create',
       name: 'manage.events.create',
-      component: import('@/views/Manage/CreateEvent.vue'),
+      component: () => import('@/views/Manage/CreateEvent.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,
