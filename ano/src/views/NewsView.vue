@@ -44,7 +44,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="sm:col-span-4 mt-32 lg:mt-0">
-      <p class="text-center text-2xl font-bold">Последние новости</p>
+      <p class="text-center text-2xl font-bold text-slate-700 mb-12">Последние новости</p>
       <router-link v-for="item in newsBulk" :to="`${url}/news/${item.ID}`">
         <div class="hover:bg-slate-100 transition-colors">
           <div class="sm:grid sm:grid-cols-12 mt-1 py-4 px-3 gap-3 laptop:block laptop:text-center mobile:py-[35px]">
