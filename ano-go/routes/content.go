@@ -125,7 +125,6 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 
 	query := model.DB.Order(orderByColumn + " desc").Limit(limit)
 
-	fmt.Println(excludedIDs)
 	if len(excludedIDs) > 0 {
 		query = query.Not("id", excludedIDs)
 	}
