@@ -4,6 +4,8 @@ import axios from 'axios';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/vue/24/solid';
 import { type News } from '@/types/apiTypes';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 const ItemForm = defineProps(['requestType', 'url']);
 const url: string = import.meta.env.VITE_ENDPOINT;
@@ -14,6 +16,7 @@ const fileInputRef = ref<HTMLInputElement | null>(null);
 const title = ref<string>('');
 const description = ref<string>('');
 const itemId: number = Number(route.params.id)
+const selectedDate = ref<Date>();
 
 const openFileInput = (): void => {
   if (fileInputRef.value instanceof HTMLInputElement) {
@@ -79,7 +82,7 @@ const getFields = async (): Promise<void> => {
 
 }
 
-onMounted( () => {
+onMounted(() => {
   getFields()
 }
 )
@@ -87,6 +90,7 @@ onMounted( () => {
 
 <template>
   <!-- TODO: add image upload progress -->
+
   <body class="bg-white">
     <header class="pe-auto">
       <div class="flex items-center pe-auto p-3 h-100">
@@ -98,13 +102,19 @@ onMounted( () => {
       </div>
     </header>
     <form @submit.prevent="submit" @keydown.enter.prevent="submit" class="flex flex-col ps-28 pt-8">
-      <input required type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
-      <div class="inline-flex group">
-        <PlusIcon class="h-5 pt-1 text-gray-500 group-hover:text-gray-600"></PlusIcon>
-        <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
-          изображение</button>
+      <div class="flex items-center gap-x-5">
+        <input required type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
+        <div class="inline-flex group">
+          <PlusIcon class="h-5 pt-1 text-gray-500 group-hover:text-gray-600"></PlusIcon>
+          <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
+            изображение</button>
+        </div>
+        <div class=" w-64">
+          <VueDatePicker v-model="selectedDate" placeholder="Выберите дату" text-input></VueDatePicker>
+        </div>
       </div>
-      <input required v-model="title" class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
+      <input required v-model="title"
+        class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
         placeholder="Название мероприятия" />
       <textarea required v-model="description" class="text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
@@ -112,6 +122,9 @@ onMounted( () => {
   </body>
 </template>
 
-<style scoped>
+<style>
 
+.dp__input {
+  border: 0px;
+}
 </style>
