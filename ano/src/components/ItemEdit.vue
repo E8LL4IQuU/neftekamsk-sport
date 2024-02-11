@@ -13,10 +13,11 @@ const router = useRouter();
 const route = useRoute();
 const file = ref<File | null>(null);
 const fileInputRef = ref<HTMLInputElement | null>(null);
+const itemId: number = Number(route.params.id)
+
 const title = ref<string>('');
 const description = ref<string>('');
-const itemId: number = Number(route.params.id)
-const selectedDate = ref<Date>();
+const date = ref<Date | null>(null);
 
 const openFileInput = (): void => {
   if (fileInputRef.value instanceof HTMLInputElement) {
@@ -37,7 +38,9 @@ const submit = async (): Promise<void> => {
 
     formData.append('title', title.value);
     formData.append('description', description.value);
-
+    if (date.value !== null) {
+      formData.append('date', date.value.toISOString());
+    }
     if (file.value !== null) {
       formData.append('image', file.value);
     }
@@ -72,6 +75,7 @@ const getFields = async (): Promise<void> => {
     const response = await axios.get<News>(`${url}/api/${ItemForm.url}/${itemId}`)
     title.value = response.data.Title
     description.value = response.data.Description
+    date.value = response.data.Date
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       router.push("/login")
@@ -109,8 +113,9 @@ onMounted(() => {
           <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
             изображение</button>
         </div>
-        <div class=" w-64">
-          <VueDatePicker v-model="selectedDate" placeholder="Выберите дату" text-input></VueDatePicker>
+        <!-- TODO: remove outline on focus -->
+        <div class="w-64">
+          <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
         </div>
       </div>
       <input required v-model="title"

@@ -5,6 +5,7 @@ export interface IRLEvent {
     title: string
     description: string
     img: string
+    date: string
     createdAt: number
     updatedAt: number
     // link to event
@@ -17,7 +18,6 @@ export interface News {
     ImagePath: string
     CreatedAt: number
     UpdatedAt: number
-    // link
 }
 
 export interface Signup {
