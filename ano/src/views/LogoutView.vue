@@ -1,3 +1,4 @@
+<!-- FIXME: do we even need this page? maybe just redirect to "/" -->
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
@@ -9,6 +10,7 @@ const url: string = import.meta.env.VITE_ENDPOINT
 const message = ref<string>()
 
 onMounted(async () => {
+  // FIXME: why post
   await axios.post(`${url}/api/auth/logout`, {
     withCredentials: true
   })
@@ -22,6 +24,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <!-- FIXME: white text on white background -->
 <h2>{{ message }}</h2>
 </template>
 

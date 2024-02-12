@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 // TODO: We have duplicate src/assets/logo.svg and src/components/icons/Logo.vue
-import Logo from "../components/icons/Logo.vue";
+import Logo from "@/components/icons/Logo.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification"
-import ToastError from "../components/ToastError.vue"
+import ToastError from "@/components/ToastError.vue"
 
-// TODO: footer/header flickering while loading page
 const url: string = import.meta.env.VITE_ENDPOINT
 const router = useRouter();
 const toast = useToast();
@@ -18,7 +17,10 @@ const data = {
     email: "",
     password: "",
 };
+// TODO: login field autofocus or focus on input
 
+// TODO: hide axios errors in console 
+// https://dev.to/zelig880/how-to-catch-the-body-of-an-axios-error-4lk0
 onMounted(async () => {
     await axios
         .get(`${url}/api/auth/user`, {
@@ -27,7 +29,8 @@ onMounted(async () => {
         // 200 OK
         .then((response) => {
             if (response.data.id != 0) {
-                router.push("/admin");
+                // FIXME: push to where the user came from
+                router.push("/manage");
             }
         })
         .catch((error) => {
@@ -41,7 +44,8 @@ async function submit() {
     await axios
         .post(`${url}/api/auth/login`, data, { withCredentials: true })
         .then((response) => {
-            router.push("/admin");
+            // FIXME: push to where the user came from
+            router.push("/manage");
         })
         .catch(function (error) {
             // TODO: maybe make field "email" red for visibility
@@ -82,11 +86,6 @@ const StatusInternalServerError = {
         description: "Консоль может содержать подробную информацию",
     }
 }
-
-
-// TODO: add logout button somewhere
-// Logout
-// GET /api/auth/logout
 </script>
 
 
@@ -129,7 +128,7 @@ const StatusInternalServerError = {
                     <div>
                         <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                         <div class="mt-2">
-                            <input v-model="data.email" id="email" name="email" autocomplete="email"
+                            <input required v-model="data.email" id="email" name="email" autocomplete="email"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                         </div>
                     </div>
@@ -139,7 +138,7 @@ const StatusInternalServerError = {
                             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
                         </div>
                         <div class="mt-2">
-                            <input v-model="data.password" id="password" name="password" type="password"
+                            <input required v-model="data.password" id="password" name="password" type="password"
                                 autocomplete="current-password"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
                         </div>

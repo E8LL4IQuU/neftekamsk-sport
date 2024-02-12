@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func ParseBody(c *fiber.Ctx) map[string]string {
+func parseBody(c *fiber.Ctx) map[string]string {
 	var data map[string]string
 
 	c.BodyParser(&data)
@@ -16,17 +16,15 @@ func ParseBody(c *fiber.Ctx) map[string]string {
 	return data
 }
 
-func NewMiddleware() fiber.Handler {
-	return AuthMiddleware
-}
-
-func AuthMiddleware(c *fiber.Ctx) error {
+func authMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
-	// We split url at "/" ["", "api", "auth", "login"] to disable auth on login, register routes
+	// We were splitting url at "/" ["", "api", "auth", "login"] to disable auth on login routes
+	// TODO: remove path checking after we remove "auth" from url path
 	parts := strings.Split(c.Path(), "/")
 	// Allow routes with "auth" as second segment of path
-	if len(parts) >= 3 && parts[2] == "auth" {
+	// Only check for auth if we're in production mode
+	if ENVIRONMENT == "dev" || (len(parts) > 2 && parts[2] == "auth") {
 		return c.Next()
 	}
 
@@ -45,11 +43,15 @@ func AuthMiddleware(c *fiber.Ctx) error {
 	return c.Next()
 }
 
+func NewMiddleware() fiber.Handler {
+	return authMiddleware
+}
+
 func Register(c *fiber.Ctx) error {
 	// TODO: check if username, email, password field not empty
 
 	c.Accepts("application/json")
-	data := ParseBody(c)
+	data := parseBody(c)
 
 	// Check if email is not taken"
 	var user model.User
@@ -73,7 +75,7 @@ func Register(c *fiber.Ctx) error {
 }
 
 func Login(c *fiber.Ctx) error {
-	data := ParseBody(c)
+	data := parseBody(c)
 
 	var user model.User
 

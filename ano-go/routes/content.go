@@ -3,20 +3,19 @@ package routes
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"
+	"fmt"
 	"io"
 	"mime/multipart"
 	"path/filepath"
+	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/E8LL4IQuU/ano-go/model"
 	"github.com/gofiber/fiber/v2"
 )
 
-type eventData struct {
-	Title		string	`json:"title"`
-	Description	string	`json:"description"`
-}
+// TODO: We'll have to send random data to this server to check every possible panic it gives
 
 func getFileExtension(file *multipart.FileHeader) string {
 	name := file.Filename
@@ -33,42 +32,53 @@ func generateSHA256Name(file io.Reader) (string, error) {
 	return hex.EncodeToString(hashInBytes), nil
 }
 
-func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, error) {
+func hasField(obj interface{}, fieldName string) bool {
+	val := reflect.ValueOf(obj).Elem()
+	typ := val.Type()
+
+	for i := 0; i < val.NumField(); i++ {
+		if typ.Field(i).Name == fieldName {
+			return true
+		}
+	}
+
+	return false
+}
+
+func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 	form, err := c.MultipartForm()
 	if err != nil {
-		return nil, "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+		return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": "" + err.Error(),
 		})
 	}
 	defer form.RemoveAll()
 
-
-	files := form.File["image"]	// "image" is the name of the input field in the form
+	files := form.File["image"] // "image" is the name of the input field in the form
 
 	if isImageRequired {
 		if files == nil {
-			return nil, "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"message": "form file 'image' required",
 			})
 		}
 	} else {
 		if files == nil {
-			return nil, "", nil
+			return "", nil
 		}
 	}
 
-
 	if len(files) != 1 {
-		return nil, "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"message": "only one image allowed",
 		})
 	}
-	
+
 	var path string
 	for _, file := range files {
 		uploadedFile, err := file.Open()
 		if err != nil {
-			return nil, "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map {
+			return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "" + err.Error(),
 			})
 		}
@@ -76,106 +86,206 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (*multipart.Form, string, err
 
 		filename, _ := generateSHA256Name(uploadedFile)
 		path = filename + getFileExtension(file)
-		c.SaveFile(file, "./uploads/" + path)
+		c.SaveFile(file, "./uploads/"+path)
 	}
 
-	return form, path, nil
+	return path, nil
 }
 
-func GetEvents(c *fiber.Ctx) error {
-	// TODO: control limit by c.Params() I guess
-	var events []model.Event
-	model.DB.Order("ID desc").Limit(10).Find(&events)
+func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
+	var limit int
+	var excludedIDs []uint
 
-	return c.Status(fiber.StatusOK).JSON(events)
+	limitParam := c.Query("limit", "10")
+	customLimit, err := strconv.Atoi(limitParam)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid limit format"})
+	}
+	limit = customLimit
+
+	excludedIDParam := c.Query("exclude")
+
+	if excludedIDParam != "" {
+		ids := strings.Split(excludedIDParam, ",")
+
+		for _, id := range ids {
+			parsedID, err := strconv.ParseUint(id, 10, 64)
+			if err != nil {
+				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID format"})
+			}
+			excludedIDs = append(excludedIDs, uint(parsedID))
+		}
+	}
+
+	// Create a new instance of the modelType
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+
+	// Retrieve the value of the created instance
+	itemValue := reflect.ValueOf(item)
+
+	query := model.DB.Order(orderByColumn + " desc").Limit(limit)
+
+	if len(excludedIDs) > 0 {
+		query = query.Not("id", excludedIDs)
+	}
+
+	if err := query.Find(itemValue.Interface()).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
 }
 
-func CreateEvent(c *fiber.Ctx) error {
+func getItemByID(c *fiber.Ctx, modelType interface{}) error {
+	recordID := c.Params("id")
 
-	form, path, err := saveImage(c, true)
+	// Create a new instance of the modelType
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+
+	// Retrieve the value of the created instance
+	itemValue := reflect.ValueOf(item)
+
+	if err := model.DB.First(itemValue.Interface(), recordID).Error; err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+	}
+
+	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
+}
+
+func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error {
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+
+	if err := c.BodyParser(item); err != nil {
+		return err
+	}
+
+	hasImagePath := hasField(item, "ImagePath")
+
+	path, err := saveImage(c, isImageRequired)
 	if err != nil {
 		return err
 	}
 
-	jsonData := form.Value["jsonData"][0]
-
-	data := new(eventData)
-
-	// Unmarshal JSON data into the 'data' struct
-	if err := json.Unmarshal([]byte(jsonData), data); err != nil {
-		return err
+	if hasImagePath {
+		reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(path)
 	}
 
-	var event model.Event = model.Event{
-		Title:			data.Title,
-		Description:	data.Description,
-		ImagePath:		path,
+	if err := model.DB.Create(item).Error; err != nil {
+		return fmt.Errorf("error creating item in the database: %w", err)
 	}
 
-	model.DB.Create(&event)
-
-	return c.Status(fiber.StatusOK).JSON(event)
+	return c.Status(fiber.StatusOK).JSON(item)
 }
 
-func UpdateEvent(c *fiber.Ctx) error {
-	// Parse event ID from the request params
+func updateItem(c *fiber.Ctx, modelType interface{}) error {
+	// Parse item ID from the request params
 	id, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
 	}
 
-	// Find the event by ID in the database
-	var event model.Event
-	if err := model.DB.First(&event, id).Error; err != nil {
+	// Find the existing item by ID in the database
+	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	if err := model.DB.First(item, id).Error; err != nil {
 		// Handle the error
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Event not found"})
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
 	}
 
-	// Parse the event details
-	var updatedEvent model.Event
-	if err := c.BodyParser(&updatedEvent); err != nil {
+	// Parse the item details directly into the existing item
+	if err := c.BodyParser(item); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
 	}
 
 	// Parse the image
-	_, updatedPath, err := saveImage(c, false)
+	updatedPath, err := saveImage(c, false)
 	if err != nil {
 		return err
 	}
 
-	// Update the book details
-	if updatedEvent.Title != "" {
-		event.Title = updatedEvent.Title
-	}
-	if updatedEvent.Description != "" {
-		event.Description = updatedEvent.Description
-	}
+	// Update the image path if provided
 	if updatedPath != "" {
-		event.ImagePath = updatedPath
+		// Assuming "ImagePath" is a field in your model
+		reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(updatedPath)
 	}
 
-	// Save the updated event back to the database
-	model.DB.Save(&event)
-
-	return c.Status(fiber.StatusOK).JSON(event)
+	// Save the updated item back to the database
+	model.DB.Save(item)
+	return c.Status(fiber.StatusOK).JSON(item)
 }
 
-func DeleteEvent(c *fiber.Ctx) error {
+func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
+	recordID := c.Params("id")
 
-	eventID := c.Params("id")
-
-	// Find record in the database
-	var event model.Event
-	if err := model.DB.First(&event, eventID).Error; err != nil {
+	// Find the record in the database by ID
+	record := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
+	if err := model.DB.First(record, recordID).Error; err != nil {
 		// Handle the error
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Record not found"})
 	}
 
 	// Delete the record
-	if err := model.DB.Delete(&event).Error; err != nil {
+	if err := model.DB.Delete(record).Error; err != nil {
 		// Handle the error
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error deleting record"})
 	}
 
+	// TODO: Delete associated image, but if we do the image will be deleted for every post that uses it
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Record deleted successfully"})
+}
+
+func GetEvents(c *fiber.Ctx) error {
+	return getItems(c, &[]model.Event{}, "ID")
+}
+
+func GetEventByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.Event{})
+}
+
+func CreateEvent(c *fiber.Ctx) error {
+	return createItem(c, true, &model.Event{})
+}
+
+func UpdateEvent(c *fiber.Ctx) error {
+	return updateItem(c, &model.Event{})
+}
+
+func DeleteEvent(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.Event{})
+}
+
+func GetNews(c *fiber.Ctx) error {
+	return getItems(c, &[]model.News{}, "ID")
+}
+
+func GetNewsByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.News{})
+}
+
+func CreateNews(c *fiber.Ctx) error {
+	return createItem(c, true, &model.News{})
+}
+
+func UpdateNews(c *fiber.Ctx) error {
+	return updateItem(c, &model.News{})
+}
+
+func DeleteNews(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.News{})
+}
+
+func GetSignups(c *fiber.Ctx) error {
+	return getItems(c, &[]model.Signup{}, "ID")
+}
+
+func GetSignupByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.Signup{})
+}
+
+func CreateSignup(c *fiber.Ctx) error {
+	return createItem(c, false, &model.Signup{})
+}
+
+func DeleteSignup(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.Signup{})
 }

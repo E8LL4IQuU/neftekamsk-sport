@@ -30,4 +30,6 @@ func InitializeDB() {
 
 	connection.AutoMigrate(&User{})
 	connection.AutoMigrate(&Event{})
+	connection.AutoMigrate(&News{})
+	connection.AutoMigrate(&Signup{})
 }

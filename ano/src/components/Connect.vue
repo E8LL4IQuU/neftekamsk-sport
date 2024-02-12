@@ -12,17 +12,17 @@
     <div class="flex gap-2 items-center justify-center flex-wrap pt-4 pb-4">
       <div>
         <a href="https://vk.com/public214155233">
-          <img class="tablet:w-[40px]" src="../assets/vk.svg" alt="vk">
+          <img class="tablet:w-[40px]" src="@/assets/vk.svg" alt="vk">
         </a>
       </div>
       <div>
         <a href="https://ok.ru/group/70000001779554">
-          <img class="tablet:w-[40px]" src="../assets/ok.ru.svg" alt="ok">
+          <img class="tablet:w-[40px]" src="@/assets/ok.ru.svg" alt="ok">
         </a>
       </div>
       <div>
         <a href="https://api.whatsapp.com/send/?phone=79173522080&text&type=phone_number&app_absent=0">
-          <img class="tablet:w-[40px]" src="../assets/wats.svg" alt="whatsapp">
+          <img class="tablet:w-[40px]" src="@/assets/wats.svg" alt="whatsapp">
         </a>
       </div>
     </div>

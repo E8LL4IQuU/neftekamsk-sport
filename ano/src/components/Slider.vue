@@ -7,18 +7,17 @@
           :centeredSlides="true"
           :autoplay="{
       delay: 2500,
-      disableOnInteraction: false,
+      disableOnInteraction: true,
     }" :navigation="true"
           :modules="modules"
       >
         <SwiperSlide v-for="(slide, index) in SliderData" :key="index">
           <div class="flex flex-col justify-center">
-            <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
-              <h2 class="text-5xl pb-3 mobile:text-3xl">{{ slide.title }}</h2>
-              <p class="text-2xl pb-3 mobile:text-sm">{{ slide.description }}</p>
-              <a class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" :href="slide.links">Подробнее</a>
+            <img class="w-auto h-72 lg:h-screen object-cover brightness-75" :src="`${url}/uploads/${slide.img}`" alt="slider image"/>
+            <div class="w-full text-white absolute text-center justify-center">
+              <h2 class="text-5xl pb-5 mobile:text-3xl line-clamp-1">{{ slide.title }}</h2>
+              <router-link disabled class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300" :to="`/events/${slide.ID}`">Подробнее</router-link>
             </div>
-            <img class="w-auto h-[100vh]  mobile:h-72" :src="slide.img" alt="slider image"/>
           </div>
         </SwiperSlide>
       </Swiper>
@@ -31,16 +30,11 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
+import type { IRLEvent } from "@/types/apiTypes";
 
-interface ISlider {
-  title: string;
-  description: string;
-  links: string;
-  img: string
-}
-
+const url: string = import.meta.env.VITE_ENDPOINT
 const props = defineProps<{
-  SliderData: ISlider[]
+  SliderData: IRLEvent[]
 }>()
 const modules = [
   Autoplay,

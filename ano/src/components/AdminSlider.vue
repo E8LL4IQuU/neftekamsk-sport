@@ -3,7 +3,7 @@
     <h3 class="text-4xl text-center pt-4 pb-3 text-gray-500 font-medium mobile:text-4xl">Редактирование мероприятий</h3>
     <div class="w-[100%] h-[100%]">
       <Swiper :spaceBetween="30" :centeredSlides="true" :autoplay="false" :navigation="true" :modules="modules">
-        <SwiperSlide v-for="(slide, index) in SliderData" :key="index">
+        <SwiperSlide v-for="(slide, index) in props.SliderData" :key="index">
           <div class="flex flex-col justify-center">
             <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
               <form @submit.prevent="updateEvent(slide)">
@@ -12,15 +12,13 @@
                 <input v-model="slide.description"
                   class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
                 <button type="submit"
-                  class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>
-                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
-                  @click="deleteEvent(slide.ID)">Удалить</button>
-                  <!-- TODO: visualize chaning background image -->
-                  <!-- TODO: add image resizing or fix aspect ratio inside swiper -->
+                  class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
+                  @click.prevent="deleteEvent(slide.ID)">Удалить</button>
+                <!-- TODO: visualize changing background image -->
                 <input type="file" @change="onFileChange" accept="image/*" />
               </form>
             </div>
-            <img class="w-auto h-[100vh]  mobile:h-72" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
+            <img class="w-auto h-72 lg:h-[75vh] object-cover" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
           </div>
         </SwiperSlide>
       </Swiper>
@@ -32,22 +30,16 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { type IRLEvent } from "@/types/apiTypes"
 import 'swiper/swiper-bundle.css';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
 
 const url: string = import.meta.env.VITE_ENDPOINT;
-
-interface ISlider {
-  ID: number;
-  title: string;
-  description: string;
-  links: string;
-  img: string
-}
-
+const emit = defineEmits(['reloadSlider'])
+const file = ref<File | null>(null)
 const props = defineProps<{
-  SliderData: ISlider[]
+  SliderData: IRLEvent[]
 }>()
 const modules = [
   Autoplay,
@@ -55,17 +47,15 @@ const modules = [
   Navigation
 ]
 
-const emit = defineEmits(['reloadSlider'])
-
-const file = ref<File | null>(null)
 const onFileChange = (event: Event) => {
   const input = event.target as HTMLInputElement;
+
   if (input.files && input.files.length) {
     file.value = input.files[0];
   }
 }
 
-const updateEvent = async (slide: ISlider) => {
+const updateEvent = async (slide: IRLEvent) => {
   try {
     const formData = new FormData();
 

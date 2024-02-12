@@ -10,13 +10,14 @@
       <img class="rounded-[30px] w-[700px] h-[426px] pc:m-auto tablet:w-[500px] tablet:h-[313px] mobile:w-[83%]  mobile:h-98vh]" :src="props.GalleryData.linkImgThree">
     </div>
     <div class="pc:pt-2 ">
-      <video class=" w-[700px] h-[426px] pc:m-auto tablet:w-[500px] tablet:h-[313px] mobile:w-[83%]  mobile:h-98vh]" :src="props.GalleryData.videos" controls autoplay></video>
+      <video class=" w-[700px] h-[426px] pc:m-auto tablet:w-[500px] tablet:h-[313px] mobile:w-[83%]  mobile:h-98vh]" :src="props.GalleryData.videos" controls autoplay muted="true"></video>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 interface IGallery{
+  // FIXME: how about link[]
   linkImgOne: string;
   linkImgTwo: string;
   linkImgThree: string;
