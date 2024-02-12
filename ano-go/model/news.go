@@ -5,11 +5,11 @@ import (
 )
 
 type News struct {
-	ID	uint64
-	Title string
+	ID          uint64
+	Title       string
 	Description string
-	ImagePath string
-	CreatedAt uint64
-	UpdatedAt uint64
-	DeletedAt gorm.DeletedAt
+	ImagePath   string
+	CreatedAt   uint64
+	UpdatedAt   uint64
+	DeletedAt   gorm.DeletedAt
 }

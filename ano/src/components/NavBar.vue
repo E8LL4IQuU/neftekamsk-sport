@@ -88,7 +88,7 @@ onMounted(() => {
               <div class="p-4">
                 <div
                   v-for="item in IRLEvents"
-                  :key="item.title"
+                  :key="item.Title"
                   class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                 >
                   <div class="flex-auto">
@@ -96,7 +96,7 @@ onMounted(() => {
                       :to="`/events/${item.ID}`"
                       class="block font-semibold text-gray-900"
                     >
-                      {{ item.title }}
+                      {{ item.Title }}
                       <span class="absolute inset-0" />
                     </router-link>
                   </div>
@@ -162,14 +162,14 @@ onMounted(() => {
                 <DisclosurePanel class="mt-2 space-y-2">
                   <router-link
                     v-for="item in [...IRLEvents]"
-                    :key="item.title"
+                    :key="item.Title"
                     :to="`/events/${item.ID}`"
                     @click="mobileMenuOpen = false"
                   >
                     <DisclosureButton
                       as="div"
                       class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                      >{{ item.title }}
+                      >{{ item.Title }}
                     </DisclosureButton>
                   </router-link>
                   <!-- TODO: add styling -->

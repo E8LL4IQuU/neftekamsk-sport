@@ -61,10 +61,10 @@ onMounted(() => {
 <template>
   <div class="px-1 sm:px-0 sm:container mx-auto pb-20">
     <div class="lg:flex gap-x-12 justify-between" v-if="IRLEvent">
-      <img class="sm:w-full" :src="`${url}/uploads/${IRLEvent.img}`" alt="">
+      <img class="sm:w-full" :src="`${url}/uploads/${IRLEvent.ImagePath}`" alt="">
       <div class="mobile:text-center">
-        <h1 class="text-black text-3xl font-bold pb-3">{{ IRLEvent.title }}</h1>
-        <p class="text-black max-w-7xl">{{ IRLEvent.description }}</p>
+        <h1 class="text-black text-3xl font-bold pb-3">{{ IRLEvent.Title }}</h1>
+        <p class="text-black max-w-7xl">{{ IRLEvent.Description }}</p>
         <div>
           <button class="px-2 py-2 mt-3 rounded bg-red-400 text-white hover:bg-red-500" @click="openRegistrationPopup">Записаться</button>
 

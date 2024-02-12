@@ -5,12 +5,12 @@ import (
 )
 
 type Event struct {
-	ID			uint			`jsom:"id" gorm:"primaryKey"`
-	Title		string			`json:"title"`
-	Description	string			`json:"description"`
-	ImagePath	string			`json:"img"`
-	Date		string			`json:"date"`
-	CreatedAt	uint64			`json:"createdAt" gorm:"autoCreateTime"`
-	UpdatedAt	uint64			`json:"updatedAt" gorm:"autoUpdateTime"`
-	DeletedAt	gorm.DeletedAt	`json:"-" gorm:"index"`
+	ID			uint
+	Title		string
+	Description	string
+	ImagePath	string
+	Date		string
+	CreatedAt	uint64
+	UpdatedAt	uint64
+	DeletedAt	gorm.DeletedAt
 }

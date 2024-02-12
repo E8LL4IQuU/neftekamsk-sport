@@ -7,9 +7,9 @@
           <div class="flex flex-col justify-center">
             <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
               <form @submit.prevent="updateEvent(slide)">
-                <input v-model="slide.title"
+                <input v-model="slide.Title"
                   class="text-5xl mb-3 mobile:text-3xl block mx-auto text-center bg-black bg-opacity-60 border-0" />
-                <input v-model="slide.description"
+                <input v-model="slide.Description"
                   class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
                 <button type="submit"
                   class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
@@ -18,7 +18,7 @@
                 <input type="file" @change="onFileChange" accept="image/*" />
               </form>
             </div>
-            <img class="w-auto h-72 lg:h-[75vh] object-cover" :src="`${url}/uploads/${slide.img}`" alt="slider image" />
+            <img class="w-auto h-72 lg:h-[75vh] object-cover" :src="`${url}/uploads/${slide.ImagePath}`" alt="slider image" />
           </div>
         </SwiperSlide>
       </Swiper>
@@ -59,8 +59,8 @@ const updateEvent = async (slide: IRLEvent) => {
   try {
     const formData = new FormData();
 
-    formData.append('title', slide.title)
-    formData.append('description', slide.description)
+    formData.append('title', slide.Title)
+    formData.append('description', slide.Description)
 
     if (file.value !== null) {
       formData.append('image', file.value)

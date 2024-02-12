@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { ChevronLeftIcon, PlusIcon } from '@heroicons/vue/24/solid';
-import { type News } from '@/types/apiTypes';
+import { type IRLEvent, type News } from '@/types/apiTypes';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
@@ -68,14 +68,16 @@ const submit = async (): Promise<void> => {
 
 const getFields = async (): Promise<void> => {
   if (isNaN(itemId)) {
-    return
+    return;
   }
 
   try {
-    const response = await axios.get<News>(`${url}/api/${ItemForm.url}/${itemId}`)
-    title.value = response.data.Title
-    description.value = response.data.Description
-    date.value = response.data.Date
+    const response = await axios.get<News | IRLEvent>(`${url}/api/${ItemForm.url}/${itemId}`)
+    title.value = response.data.Title;
+    description.value = response.data.Description;
+    if ('Date' in response.data) {
+      date.value = new Date(response.data.Date)
+    }
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       router.push("/login")
@@ -93,6 +95,8 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- TODO: mobile layout -->
+  <!-- FIXME: after selecting date, enter is not submitting the form, if fixing please do not use event listeners -->
   <!-- TODO: add image upload progress -->
 
   <body class="bg-white">
@@ -113,10 +117,13 @@ onMounted(() => {
           <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
             изображение</button>
         </div>
+
+        <!-- TODO: hide when model is 'News' -->
         <!-- TODO: remove outline on focus -->
         <div class="w-64">
           <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
         </div>
+
       </div>
       <input required v-model="title"
         class="text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
@@ -128,7 +135,6 @@ onMounted(() => {
 </template>
 
 <style>
-
 .dp__input {
   border: 0px;
 }

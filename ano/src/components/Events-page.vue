@@ -15,25 +15,25 @@
     <div v-if="IRLEvents.length > 0" class="flex flex-wrap gap-5 justify-center tablet:p-5">
       <router-link v-for="event in IRLEvents" :to="`/events/${event.ID}`" :key="event.ID">
         <div
-          v-if="selectedFilter === 'all' || (isStale(event.date) === false && selectedFilter === 'current') || (isStale(event.date) && selectedFilter === 'previous')">
+          v-if="selectedFilter === 'all' || (isStale(event.Date) === false && selectedFilter === 'current') || (isStale(event.Date) && selectedFilter === 'previous')">
           <div style="position: relative;" class="hover:opacity-[85%]">
-            <img class="w-[600px] h-[350px] object-cover" :src="`${url}/uploads/${event.img}`"
-              :class="{ 'opacity-50': isStale(event.date) }">
+            <img class="w-[600px] h-[350px] object-cover" :src="`${url}/uploads/${event.ImagePath}`"
+              :class="{ 'opacity-50': isStale(event.Date) }">
             <div class="bg-white bg-opacity-[80%] absolute top-2 left-2 rounded-2xl">
-              <span class="font-light text-black text-base pb-[5px] pt-[5px] pr-[18px] pl-[18px]">{{ isStale(event.date) ?
+              <span class="font-light text-black text-base pb-[5px] pt-[5px] pr-[18px] pl-[18px]">{{ isStale(event.Date) ?
                 'Прошедшее' : 'Текущее' }}</span>
             </div>
           </div>
           <div class="text-black flex justify-between max-w-[600px] pb-2 pt-[10px]">
             <div>
-              <h3 class="text-xl font-bold uppercase mobile:text-[16px]">{{ event.title }}</h3>
+              <h3 class="text-xl font-bold uppercase mobile:text-[16px]">{{ event.Title }}</h3>
             </div>
             <div>
-              <span class="text-gray-600 text-base font-light mobile:text-[14px]">{{ formatTimestamp(event.date) }}</span>
+              <span class="text-gray-600 text-base font-light mobile:text-[14px]">{{ formatTimestamp(event.Date) }}</span>
             </div>
           </div>
           <div class="text-gray-500">
-            <p class="max-w-[600px]">{{ event.description }}</p>
+            <p class="max-w-[600px]">{{ event.Description }}</p>
           </div>
         </div>
       </router-link>
