@@ -39,7 +39,7 @@ const formatTimestamp = (timestamp: number): string => {
         day: 'numeric',
     };
 
-    return localDate.toLocaleString('en-US', options);
+    return localDate.toLocaleString('ru-RU', options);
 };
 
 

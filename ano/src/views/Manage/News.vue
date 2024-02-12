@@ -22,11 +22,10 @@ const formatTimestamp = (timestamp: number): string => {
         month: 'long',
         day: 'numeric',
         hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
+        minute: 'numeric'
     };
     
-    return localDate.toLocaleString('en-US', options);
+    return localDate.toLocaleString('ru-RU', options);
 };
 
 
