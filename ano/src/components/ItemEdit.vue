@@ -129,6 +129,7 @@ onMounted(() => {
       <textarea required v-model="description" class="md:text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
+    <!-- TODO: submit button -->
   </body>
 </template>
 

@@ -27,10 +27,12 @@ onMounted( async () => {
 </script>
 
 <template>
-<div class="flex">
-    <Sidebar v-if="isLoggedIn" class=" w-2/12"></Sidebar>
-    <RouterView v-if="isLoggedIn" class="w-10/12"></RouterView>
+<body class="bg-white">
+  <div class="flex">
+    <Sidebar v-if="isLoggedIn"></Sidebar>
+    <RouterView v-if="isLoggedIn" class="max-w-full lg:w-10/12"></RouterView>
 </div>
+</body>
 </template>
 
 <style scoped style="scss">
