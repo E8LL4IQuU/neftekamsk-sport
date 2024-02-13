@@ -22,6 +22,7 @@ import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon } from '@heroicons/vue/24/s
   </nav>
 
   <!-- Mobile -->
+  <!-- FIXME: overlaps with content -->
   <nav class="lg:hidden text-start fixed bottom-0 w-full bg-white p-2">
     <ul class="grid grid-cols-3 text-center justify-between gap-x-3">
       <router-link class="h-20 rounded-lg flex flex-col justify-center" :to="'/manage/events'"

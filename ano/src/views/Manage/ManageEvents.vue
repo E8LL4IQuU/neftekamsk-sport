@@ -24,8 +24,8 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="p-4 lg:py-5 lg:px-12 flex justify-between items-center">
-      <h1 class="text-3xl text-black font-bold">Мероприятия</h1>
+    <div class="p-4 lg:py-5 lg:px-12 flex justify-between">
+      <h1 class="text-3xl text-black font-bold mb-3">Мероприятия</h1>
       <router-link :to="'/manage/events/create'">
         <button class="bg-black rounded-xl text-xl lg:text-base lg:rounded text-white py-2 px-3 ml-auto">Создать</button>
       </router-link>

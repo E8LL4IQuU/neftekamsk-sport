@@ -45,7 +45,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="py-8 px-12">
+    <div class="p-4 lg:py-5 lg:px-12 w-full">
         <div class="flex justify-between">
             <h1 class="text-3xl text-black font-bold mb-3">Записи</h1>
         </div>
