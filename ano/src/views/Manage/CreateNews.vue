@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ItemEdit from '@/components/ItemEdit.vue'
+import ItemEdit from '@/components/Manage/EditItem.vue'
 
 </script>
 

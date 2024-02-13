@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios'
 import { RouterLink } from 'vue-router'
-import AdminSlider from '@/components/AdminSlider.vue'
+import AdminSlider from '@/components/Manage/Slider.vue'
 import { type IRLEvent } from '@/types/apiTypes'
 
 const url: string = import.meta.env.VITE_ENDPOINT

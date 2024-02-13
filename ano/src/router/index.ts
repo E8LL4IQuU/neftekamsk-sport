@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Page from '@/views/Page.vue'
-import Events from '@/views/Manage/Events.vue'
+import Events from '@/views/Manage/ManageEvents.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +63,7 @@ const router = createRouter({
       name: 'people',
       component: () => import('@/views/PeoplePage.vue')
     },
+
     {
       path: '/login',
       name: 'login',
@@ -107,7 +108,7 @@ const router = createRouter({
     {
       path: '/manage/news',
       name: 'manage.news',
-      component: () => import('@/views/Manage/News.vue'),
+      component: () => import('@/views/Manage/ManageNews.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -126,7 +127,7 @@ const router = createRouter({
     {
       path: '/manage/news/:id',
       name: 'newsEdit',
-      component: () => import('@/views/Manage/NewsEdit.vue'),
+      component: () => import('@/views/Manage/EditNews.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,
@@ -135,7 +136,7 @@ const router = createRouter({
     {
       path: '/manage/signups',
       name: 'manage.signups',
-      component: () => import('@/views/Manage/Signups.vue'),
+      component: () => import('@/views/Manage/ManageSignups.vue'),
       meta: {
         hideNavbar: true,
         hideFooter: true,

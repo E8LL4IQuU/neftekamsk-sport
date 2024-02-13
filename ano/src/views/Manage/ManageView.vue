@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import Sidebar from '@/components/Sidebar.vue'
+import Sidebar from '@/components/Manage/Sidebar.vue'
 import axios from 'axios'
 
 const url: string = import.meta.env.VITE_ENDPOINT

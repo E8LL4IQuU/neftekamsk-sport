@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios'
 import { RouterLink } from 'vue-router'
 import { type News } from '@/types/apiTypes'
-import TrashButton from '@/components/TrashButton.vue'
+import TrashButton from '@/components/Manage/TrashButton.vue'
 
 const url: string = import.meta.env.VITE_ENDPOINT
 const news = ref<News[]>([])
