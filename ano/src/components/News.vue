@@ -1,6 +1,7 @@
 <template>
   <div class="pt-5" v-for="(news, index) in props.NewsData" :key="index">
     <!-- FIXME: the whole block shold probably be a link -->
+    <!-- FIXME: mobile layout: too big y-gap between news -->
     <div class="w-[406px] h-[445px] hover:-translate-y-5 duration-300 mobile:w-[300px]">
       <router-link  :to="`/news/${news.ID}`">
         <img class="w-[350px] h-[260px] object-cover" :src='`${url}/uploads/${news.ImagePath}`'>

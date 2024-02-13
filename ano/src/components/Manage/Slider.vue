@@ -5,20 +5,24 @@
       <Swiper :spaceBetween="30" :centeredSlides="true" :autoplay="false" :navigation="true" :modules="modules">
         <SwiperSlide v-for="(slide, index) in props.SliderData" :key="index">
           <div class="flex flex-col justify-center">
-            <div class="w-[100%] text-white absolute text-center justify-center top-[36%]">
+            <div class="w-[100%] text-white absolute text-center justify-center">
               <form @submit.prevent="updateEvent(slide)">
                 <input v-model="slide.Title"
                   class="text-5xl mb-3 mobile:text-3xl block mx-auto text-center bg-black bg-opacity-60 border-0" />
                 <input v-model="slide.Description"
                   class="text-2xl block mx-auto text-center mb-3 mobile:text-sm bg-black bg-opacity-60 border-0" />
-                <button type="submit"
-                  class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button>                <button class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
-                  @click.prevent="deleteEvent(slide.ID)">Удалить</button>
-                <!-- TODO: visualize changing background image -->
-                <input type="file" @change="onFileChange" accept="image/*" />
+                <input class="mb-3 lg:mt-0 bg-black bg-opacity-50 rounded-xl" type="file" @change="onFileChange"
+                  accept="image/*" />
+                <div>
+                  <button type="submit"
+                    class="p-2 rounded-[4px] bg-slate-700 hover:bg-gray-900 duration-300 mr-3">Применить</button> <button
+                    class="p-2 rounded-[4px] bg-red-500 hover:bg-red-900 duration-300 mr-3"
+                    @click.prevent="deleteEvent(slide.ID)">Удалить</button>
+                </div>
               </form>
             </div>
-            <img class="w-auto h-72 lg:h-[75vh] object-cover" :src="`${url}/uploads/${slide.ImagePath}`" alt="slider image" />
+            <img class="w-auto h-72 lg:h-[75vh] object-cover" :src="`${url}/uploads/${slide.ImagePath}`"
+              alt="slider image" />
           </div>
         </SwiperSlide>
       </Swiper>

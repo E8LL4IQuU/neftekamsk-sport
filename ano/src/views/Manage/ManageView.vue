@@ -30,6 +30,7 @@ onMounted( async () => {
 <body class="bg-white">
   <div class="flex">
     <Sidebar v-if="isLoggedIn"></Sidebar>
+    <!-- FIXME: make it take up all the available space -->
     <RouterView v-if="isLoggedIn" class="max-w-full lg:w-10/12"></RouterView>
 </div>
 </body>
