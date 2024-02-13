@@ -24,7 +24,7 @@ const handleClick = async () => {
 
 <template>
     <!-- We use `click.prevent` to prevent redirection since the TrashButton is typically placed inside a `router-link` component -->
-    <TrashIcon @click.prevent="handleClick" class="text-white bg-red-500 h-7 p-1 rounded hover:bg-red-800"></TrashIcon>
+    <TrashIcon @click.prevent="handleClick" class="text-white bg-red-500 w-full h-9 mt-2 lg:w-7 lg:h-7 lg:mt-0 p-1 rounded hover:bg-red-800"></TrashIcon>
 </template>
 
 <style scoped></style>
