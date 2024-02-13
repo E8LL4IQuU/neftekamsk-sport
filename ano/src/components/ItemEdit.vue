@@ -118,9 +118,8 @@ onMounted(() => {
             изображение</button>
         </div>
 
-        <!-- TODO: hide when model is 'News' -->
         <!-- TODO: remove outline on focus -->
-        <div class="w-64">
+        <div v-if="ItemForm.url === 'events'" class="w-64">
           <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
         </div>
 
