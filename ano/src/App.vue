@@ -40,9 +40,6 @@ const NavData = [
 
 <template>
   <div class="bg-white">
-    <!-- Management -->
-    <RouterView name="manageSidebar"></RouterView>
-
     <RouterView name="navbar" :navbarItems="navbarItems"></RouterView>
     <RouterView />
     <RouterView name="footer" :NavData="NavData"></RouterView>

@@ -106,30 +106,28 @@ const router = createRouter({
       name: 'logout',
       component: () => import('@/views/LogoutView.vue'),
     },
+
     {
       path: '/manage',
-      redirect: '/manage/events'
-    },
-    {
-      path: '/manage/events',
-      name: 'manage.events',
-      components: {
-        default: () => import('@/views/Manage/ManageEvents.vue'),
-        manageSidebar: () => import('@/components/Manage/Sidebar.vue')
-      }
+      redirect: '/manage/events',
+      component: () => import('@/views/Manage/ManageView.vue'),
+      children: [{
+        path: 'events',
+        component: () => import('@/views/Manage/ManageEvents.vue')
+      },
+      {
+        path: 'news',
+        component: () => import('@/views/Manage/ManageNews.vue')
+      },
+      {
+        path: 'signups',
+        component: () => import('@/views/Manage/ManageSignups.vue')
+      }]
     },
     {
       path: '/manage/events/create',
       name: 'manage.events.create',
       component: () => import('@/views/Manage/CreateEvent.vue'),
-    },
-    {
-      path: '/manage/news',
-      name: 'manage.news',
-      components: {
-        default: () => import('@/views/Manage/ManageNews.vue'),
-        manageSidebar: () => import('@/components/Manage/Sidebar.vue')
-      }
     },
     {
       path: '/manage/news/create',
@@ -140,14 +138,6 @@ const router = createRouter({
       path: '/manage/news/:id',
       name: 'newsEdit',
       component: () => import('@/views/Manage/EditNews.vue'),
-    },
-    {
-      path: '/manage/signups',
-      name: 'manage.signups',
-      components: {
-        default: () => import('@/views/Manage/ManageSignups.vue'),
-        manageSidebar: () => import('@/components/Manage/Sidebar.vue')
-      }
     },
     {
       path: '/:catchAll(.*)',
