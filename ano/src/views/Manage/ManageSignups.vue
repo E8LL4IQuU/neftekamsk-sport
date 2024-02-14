@@ -45,24 +45,27 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="p-4 lg:py-5 lg:px-12 w-full">
-        <div class="flex justify-between">
-            <h1 class="text-3xl text-black font-bold mb-3">Записи</h1>
-        </div>
-        <div class="signups-list">
-            <div v-for="signupItem in signups" key="signupItem.ID" class="mb-4 p-4 bg-white shadow-md rounded-md">
-                <div class="lg:flex lg:justify-between lg:items-center mb-4">
-                    <h2 class="text-2xl font-bold text-gray-700 line-clamp-1">{{ signupItem.FirstName }} {{ signupItem.LastName }}</h2>
-                    <!-- FIXME: timestamp is incorrect -->
-                    <span class="text-gray-500">{{ formatTimestamp(signupItem.CreatedAt) }}</span>
-                </div>
-                <div class="lg:flex lg:justify-between lg:items-center">
-                    <div class="lg:flex lg:gap-x-5"> 
-                        <span class="text-gray-700 line-clamp-1">{{ signupItem.PhoneNumber }}</span>
-                        <span class="text-gray-700 line-clamp-1">{{ signupItem.Email }}</span>
+    <div class="lg:ps-52">
+        <div class="p-4 lg:py-5 lg:px-12 w-full">
+            <div class="flex justify-between">
+                <h1 class="text-3xl text-black font-bold mb-3">Записи</h1>
+            </div>
+            <div class="signups-list">
+                <div v-for="signupItem in signups" key="signupItem.ID" class="mb-4 p-4 bg-white shadow-md rounded-md">
+                    <div class="lg:flex lg:justify-between lg:items-center mb-4">
+                        <h2 class="text-2xl font-bold text-gray-700 line-clamp-1">{{ signupItem.FirstName }} {{
+                            signupItem.LastName }}</h2>
+                        <!-- FIXME: timestamp is incorrect -->
+                        <span class="text-gray-500">{{ formatTimestamp(signupItem.CreatedAt) }}</span>
                     </div>
-                    <!-- FIXME: 405 Method not allowed -->
-                    <TrashButton @reloadItems="fetchSignups" :id="signupItem.ID" type="signups"></TrashButton>
+                    <div class="lg:flex lg:justify-between lg:items-center">
+                        <div class="lg:flex lg:gap-x-5">
+                            <span class="text-gray-700 line-clamp-1">{{ signupItem.PhoneNumber }}</span>
+                            <span class="text-gray-700 line-clamp-1">{{ signupItem.Email }}</span>
+                        </div>
+                        <!-- FIXME: 405 Method not allowed -->
+                        <TrashButton @reloadItems="fetchSignups" :id="signupItem.ID" type="signups"></TrashButton>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +74,7 @@ onMounted(() => {
 
 <style scoped>
 .signups-list {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 </style>

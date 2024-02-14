@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="lg:ps-52 lg:pe-1">
     <div class="p-4 lg:py-5 lg:px-12 flex justify-between">
       <h1 class="text-3xl text-black font-bold mb-3">Мероприятия</h1>
       <router-link :to="'/manage/events/create'">

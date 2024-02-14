@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {RouterView, routeLocationKey} from 'vue-router'
-import NavBar from "@/components/NavBar.vue"
-import Footer from "@/components/Footer.vue"
-import ManageView from "@/views/Manage/ManageView.vue"
+import { RouterView } from 'vue-router'
 
 const navbarItems: string[][] = [
-// [Navbar item name, Navbar item link]
+  // [Navbar item name, Navbar item link]
   ["Новости", "/news"],
   ["Расписание", "/schedule"],
   ["Направления", "/sections"],
@@ -43,13 +40,13 @@ const NavData = [
 
 <template>
   <div class="bg-white">
-    <ManageView v-if="$route.meta.managementRoute"></ManageView>
-    <NavBar :navbarItems="navbarItems" v-if="!$route.meta.hideNavbar"/>
-    <RouterView v-if="!$route.meta.managementRoute" />
-    <Footer :NavData="NavData" v-if="!$route.meta.hideFooter" />
+    <!-- Management -->
+    <RouterView name="manageSidebar"></RouterView>
+
+    <RouterView name="navbar" :navbarItems="navbarItems"></RouterView>
+    <RouterView />
+    <RouterView name="footer" :NavData="NavData"></RouterView>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

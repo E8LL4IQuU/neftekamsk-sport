@@ -13,7 +13,7 @@ const formatTimestamp = (timestamp: number): string => {
 
     // Get the time zone offset in minutes
     const timeZoneOffset = date.getTimezoneOffset();
-    
+
     // Use the offset to create a new date with the local time zone
     const localDate = new Date(date.getTime() - timeZoneOffset * 60 * 1000);
 
@@ -24,7 +24,7 @@ const formatTimestamp = (timestamp: number): string => {
         hour: 'numeric',
         minute: 'numeric'
     };
-    
+
     return localDate.toLocaleString('ru-RU', options);
 };
 
@@ -44,36 +44,40 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="p-4 lg:py-5 lg:px-12">
-        <div class="flex justify-between">
-            <h1 class="text-3xl text-black font-bold mb-3">Новости</h1>
-            <router-link :to="'/manage/news/create'">
-                <button class="bg-black rounded-xl text-xl lg:text-base lg:rounded text-white py-2 px-3 ml-auto">Создать</button>
-            </router-link>
-        </div>
-        <div class="news-list">
-            <router-link v-for="newsItem in news" :key="newsItem.ID" :to="{ name: 'newsEdit', params: { id: newsItem.ID } }">
-                <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">
-                    <div class="lg:flex lg:justify-between lg:items-center mb-4">
-                        <h2 class="text-2xl font-bold text-gray-700 line-clamp-1">{{ newsItem.Title }}</h2>
-                        <span class="text-gray-500 min-w-fit">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
-                    </div>
-                    <div class="lg:flex lg:justify-between lg:items-center">
-                        <p class="text-gray-700 line-clamp-2">{{ newsItem.Description }}</p>
-                        <!-- TODO: deleting doesn't update the page -->
-                        <div class="min-w-fit">
-                            <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+    <div class="lg:ps-52">
+        <div class="p-4 lg:py-5 lg:px-12">
+            <div class="flex justify-between">
+                <h1 class="text-3xl text-black font-bold mb-3">Новости</h1>
+                <router-link :to="'/manage/news/create'">
+                    <button
+                        class="bg-black rounded-xl text-xl lg:text-base lg:rounded text-white py-2 px-3 ml-auto">Создать</button>
+                </router-link>
+            </div>
+            <div class="news-list">
+                <router-link v-for="newsItem in news" :key="newsItem.ID"
+                    :to="{ name: 'newsEdit', params: { id: newsItem.ID } }">
+                    <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">
+                        <div class="lg:flex lg:justify-between lg:items-center mb-4">
+                            <h2 class="text-2xl font-bold text-gray-700 line-clamp-1">{{ newsItem.Title }}</h2>
+                            <span class="text-gray-500 min-w-fit">{{ formatTimestamp(newsItem.CreatedAt) }}</span>
+                        </div>
+                        <div class="lg:flex lg:justify-between lg:items-center">
+                            <p class="text-gray-700 line-clamp-2">{{ newsItem.Description }}</p>
+                            <!-- TODO: deleting doesn't update the page -->
+                            <div class="min-w-fit">
+                                <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </router-link>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
 .news-list {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 </style>

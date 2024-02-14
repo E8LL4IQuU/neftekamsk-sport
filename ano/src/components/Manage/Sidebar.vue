@@ -4,8 +4,9 @@ import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon } from '@heroicons/vue/24/s
 </script>
 
 <template>
-  <!-- Desktop -->
-  <nav class="hidden lg:block min-h-screen p-4 border-r">
+<div class="lg:fixed lg:left-0">
+    <!-- Desktop -->
+    <nav class="hidden lg:block min-h-screen p-4 border-r">
     <h1 class="text-3xl mb-5 text-black">Управление</h1>
     <ul>
       <li class="flex flex-col">
@@ -44,6 +45,7 @@ import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon } from '@heroicons/vue/24/s
     <!-- TODO: add logout button
       POST /api/auth/logout -->
   </nav>
+</div>
 </template>
 
 <style scoped></style>
