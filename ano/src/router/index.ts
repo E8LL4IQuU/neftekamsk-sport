@@ -43,7 +43,6 @@ const router = createRouter({
     },
     {
       path: '/news/:id',
-      name: 'news',
       components: {
         default: () => import('@/views/NewsView.vue'),
         navbar: () => import('@/components/NavBar.vue'),
