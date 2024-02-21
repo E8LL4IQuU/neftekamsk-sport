@@ -7,7 +7,7 @@ import { type IRLEvent } from "@/types/apiTypes";
 const url: string = import.meta.env.VITE_ENDPOINT;
 const IRLEvent = ref<IRLEvent>();
 const route = useRoute();
-const EventId: number = Number(route.params.id);
+const EventID: number = Number(route.params.id);
 const isRegistrationPopupOpen = ref<boolean>(false);
 const FirstName = ref<string>('');
 const LastName = ref<string>('');
@@ -24,16 +24,16 @@ const closeRegistrationPopup = (): void => {
 
 const submitRegistrationForm = async (): Promise<void> => {
   try {
-    const formData = new FormData()
+    const signupObject = {
+      FirstName: FirstName.value,
+      LastName: LastName.value,
+      PhoneNumber: PhoneNumber.value,
+      Email: Email.value,
+    }
 
-    formData.append('FirstName', FirstName.value);
-    formData.append('LastName', LastName.value);
-    formData.append('PhoneNumber', PhoneNumber.value);
-    formData.append('Email', Email.value);
+    const requestConfig = { method: 'post', url: `${url}/api/signups?id=${EventID}`, data: signupObject }
 
-    const requestConfig = { method: 'post', url: `${url}/api/signups/`, data: formData }
-
-    const reponse = await axios(requestConfig).then(() => {
+    await axios(requestConfig).then(() => {
       closeRegistrationPopup();
     })
 
@@ -44,7 +44,7 @@ const submitRegistrationForm = async (): Promise<void> => {
 
 const fetchIRLEvents = async (): Promise<void> => {
   try {
-    const response = await axios.get<IRLEvent>(`${url}/api/events/${EventId}`);
+    const response = await axios.get<IRLEvent>(`${url}/api/events/${EventID}`);
     IRLEvent.value = response.data;
   } catch (error) {
     console.error("Error fetching IRLevents:", error);
