@@ -11,7 +11,7 @@ const router = createRouter({
         // this generates a separate chunk (news.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         default: () => import('@/views/Page.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -20,7 +20,7 @@ const router = createRouter({
       name: 'events',
       components: {
         default: () => import('@/views/EventsView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -28,7 +28,7 @@ const router = createRouter({
       path: '/events/:id',
       components: {
         default: () => import('@/views/EventView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -37,7 +37,7 @@ const router = createRouter({
       name: 'news',
       components: {
         default: () => import('@/views/NewsBulkView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -45,7 +45,7 @@ const router = createRouter({
       path: '/news/:id',
       components: {
         default: () => import('@/views/NewsView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -54,7 +54,7 @@ const router = createRouter({
       name: 'schedule',
       components: {
         default: () => import('@/views/ScheduleView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -63,7 +63,7 @@ const router = createRouter({
       name: 'sections',
       components: {
         default: () => import('@/views/SectionsView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -72,7 +72,7 @@ const router = createRouter({
       name: 'gallery',
       components: {
         default: () => import('@/views/GalleryView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -81,7 +81,7 @@ const router = createRouter({
       name: 'documents',
       components: {
         default: () => import('@/views/DocumentsView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
@@ -90,7 +90,7 @@ const router = createRouter({
       name: 'people',
       components: {
         default: () => import('@/views/PeopleView.vue'),
-        navbar: () => import('@/components/NavBar.vue'),
+        navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }
     },
