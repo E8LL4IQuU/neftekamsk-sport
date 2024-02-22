@@ -20,7 +20,6 @@ const data = {
 // TODO: login field autofocus or focus on input
 
 // TODO: hide axios errors in console 
-// https://dev.to/zelig880/how-to-catch-the-body-of-an-axios-error-4lk0
 onMounted(async () => {
     await axios
         .get(`${url}/api/auth/user`, {

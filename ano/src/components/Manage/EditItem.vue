@@ -103,6 +103,7 @@ onMounted(() => {
       <div class="flex items-center pe-auto md:p-3 h-100">
         <router-link :to="`/manage/${ItemForm.url}`" class="flex p-4 gap-x-3 text-black items-center">
           <ChevronLeftIcon class="h-4 pt-1"></ChevronLeftIcon>
+          <!-- FIXME: it should conditionally show either events or news -->
           <p class="font-bold text-sm text-gray-700">Мероприятия</p>
         </router-link>
         <p class="text-gray-400 ms-3">Новое</p>
@@ -116,12 +117,9 @@ onMounted(() => {
           <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
             изображение</button>
         </div>
-
-        <!-- TODO: remove outline on focus -->
         <div v-if="ItemForm.url === 'events'" class="w-64">
           <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
         </div>
-
       </div>
       <input required v-model="title"
         class="text-3xl md:text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
