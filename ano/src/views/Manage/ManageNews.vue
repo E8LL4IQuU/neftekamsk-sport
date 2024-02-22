@@ -28,7 +28,6 @@ const formatTimestamp = (timestamp: number): string => {
     return localDate.toLocaleString('ru-RU', options);
 };
 
-
 const fetchNews = async (): Promise<void> => {
     try {
         const response = await axios.get<News[]>(`${url}/api/news`)
@@ -63,9 +62,8 @@ onMounted(() => {
                         </div>
                         <div class="lg:flex lg:justify-between lg:items-center">
                             <p class="text-gray-700 line-clamp-2">{{ newsItem.Description }}</p>
-                            <!-- TODO: deleting doesn't update the page -->
                             <div class="min-w-fit">
-                                <TrashButton @reloadNews="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
+                                <TrashButton @reloadItems="fetchNews" :id="newsItem.ID" type="news"></TrashButton>
                             </div>
                         </div>
                     </div>
