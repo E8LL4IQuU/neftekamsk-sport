@@ -229,8 +229,6 @@ func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error deleting record"})
 	}
 
-	// TODO: Delete associated image, but if we do the image will be deleted for every post that uses it
-
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"message": "Record deleted successfully"})
 }
 
