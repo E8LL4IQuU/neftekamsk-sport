@@ -41,5 +41,5 @@ func InitializeRoutes(app *fiber.App) {
 	app.Put("/api/news/:id", UpdateNews)
 	app.Delete("/api/news/:id", DeleteNews)
 
-	app.Delete("/api/signups", DeleteSignup)
+	app.Delete("/api/signups/:id", DeleteSignup)
 }

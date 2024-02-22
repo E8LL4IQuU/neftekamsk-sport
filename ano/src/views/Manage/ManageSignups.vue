@@ -55,7 +55,6 @@ onMounted(() => {
                     <div class="lg:flex lg:justify-between lg:items-center mb-4">
                         <h2 class="text-2xl font-bold text-gray-700 line-clamp-1">{{ signupItem.FirstName }} {{
                             signupItem.LastName }}</h2>
-                        <!-- FIXME: timestamp is incorrect -->
                         <span class="text-gray-500">{{ formatTimestamp(signupItem.CreatedAt) }}</span>
                     </div>
                     <div class="lg:flex lg:justify-between lg:items-center">
@@ -63,7 +62,6 @@ onMounted(() => {
                             <span class="text-gray-700 line-clamp-1">{{ signupItem.PhoneNumber }}</span>
                             <span class="text-gray-700 line-clamp-1">{{ signupItem.Email }}</span>
                         </div>
-                        <!-- FIXME: 405 Method not allowed -->
                         <TrashButton @reloadItems="fetchSignups" :id="signupItem.ID" type="signups"></TrashButton>
                     </div>
                 </div>

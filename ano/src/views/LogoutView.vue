@@ -10,7 +10,6 @@ const url: string = import.meta.env.VITE_ENDPOINT
 const message = ref<string>()
 
 onMounted(async () => {
-  // FIXME: why post
   await axios.post(`${url}/api/auth/logout`, {
     withCredentials: true
   })

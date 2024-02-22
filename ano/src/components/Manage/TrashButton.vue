@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { TrashIcon } from '@heroicons/vue/24/outline'
 
-const emit = defineEmits(['reloadItemsW'])
+const emit = defineEmits(['reloadItems'])
 const props = defineProps(['id', 'type'])
 const url: string = import.meta.env.VITE_ENDPOINT
 
@@ -14,7 +14,7 @@ const handleClick = async () => {
                 console.log(response)
             })
             .finally(() => {
-                emit('reloadItemsW')
+                emit('reloadItems')
             })
     } catch (error) {
         console.error('Error deleting news: ', error)
