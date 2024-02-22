@@ -21,6 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- FIXME: footer flickering while loading -->
   <router-link v-for="item in news" :to="`${url}/news/${item.ID}`">
     <div class="containers hover:bg-slate-200 transition-colors">
       <div class="flex justify-between mt-5 py-9 gap-3 laptop:block laptop:text-center mobile:py-[35px]">

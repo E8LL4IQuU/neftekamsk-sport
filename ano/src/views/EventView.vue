@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import { type IRLEvent } from "@/types/apiTypes";
@@ -7,12 +7,12 @@ import { type IRLEvent } from "@/types/apiTypes";
 const url: string = import.meta.env.VITE_ENDPOINT;
 const IRLEvent = ref<IRLEvent>();
 const route = useRoute();
-const EventID: number = Number(route.params.id);
 const isRegistrationPopupOpen = ref<boolean>(false);
 const FirstName = ref<string>('');
 const LastName = ref<string>('');
 const PhoneNumber = ref<string>('');
 const Email = ref<string>('');
+let EventID: number = Number(route.params.id);
 
 const openRegistrationPopup = (): void => {
   isRegistrationPopupOpen.value = true;
@@ -42,7 +42,7 @@ const submitRegistrationForm = async (): Promise<void> => {
   }
 };
 
-const fetchIRLEvents = async (): Promise<void> => {
+const fetchIRLEvent = async (): Promise<void> => {
   try {
     const response = await axios.get<IRLEvent>(`${url}/api/events/${EventID}`);
     IRLEvent.value = response.data;
@@ -51,11 +51,14 @@ const fetchIRLEvents = async (): Promise<void> => {
   }
 };
 
-
-
 onMounted(() => {
-  fetchIRLEvents();
+  fetchIRLEvent();
 });
+
+watch(() => route.params.id, (newID) => {
+  EventID = Number(newID)
+  fetchIRLEvent();
+})
 </script>
 
 <template>
