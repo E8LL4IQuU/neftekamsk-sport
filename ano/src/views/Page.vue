@@ -1,23 +1,22 @@
 <template>
   <div class="wrapper">
     <Hero />
+    <h3 class="text-6xl text-center pt-16 pb-6 text-gray-500 font-medium mobile:text-4xl">Мероприятия</h3>
     <Slider :SliderData="IRLEvents" />
+    <h3 class="text-6xl pt-16 text-center text-black font-normal">Новости</h3>
+    <div class="flex flex-wrap justify-center">
+      <NewsComponent :NewsData="News" />
+    </div>
+    <h3 class="text-6xl pt-10 pb-10 text-center text-black font-normal">Галерея</h3>
     <div>
-      <h3 class="text-6xl pt-4 pb-3 text-center text-black font-normal">Новости</h3>
-      <div class="flex flex-wrap justify-center">
-        <NewsComponent :NewsData="News" />
-      </div>
-      <h3 class="text-6xl pt-4 pb-3 text-center text-black font-normal">Галерея</h3>
-      <div>
-        <Gallery :GalleryData="GalleryData" />
-      </div>
-      <h3 class="text-6xl pt-4 pb-3 text-center text-black font-normal">Истории людей</h3>
-      <div>
-        <StoriesPeople :PeopleData="PeopleData" />
-      </div>
-      <div>
-        <Connect />
-      </div>
+      <Gallery :GalleryData="GalleryData" />
+    </div>
+    <h3 class="text-6xl pt-16 pb-10 text-center text-black font-normal">Истории людей</h3>
+    <div>
+      <StoriesPeople :PeopleData="PeopleData" />
+    </div>
+    <div>
+      <Connect />
     </div>
   </div>
 </template>
@@ -47,12 +46,12 @@ const fetchIRLEvents = async (): Promise<void> => {
 }
 
 const fetchNews = async (): Promise<void> => {
-    try {
-        const response = await axios.get<News[]>(`${url}/api/news?limit=3`)
-        News.value = response.data
-    } catch (error) {
-        console.error('Error fetching news:', error)
-    }
+  try {
+    const response = await axios.get<News[]>(`${url}/api/news?limit=3`)
+    News.value = response.data
+  } catch (error) {
+    console.error('Error fetching news:', error)
+  }
 }
 
 onMounted(async () => {
