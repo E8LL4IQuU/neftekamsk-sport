@@ -124,7 +124,7 @@ onMounted(() => {
       <input required v-model="title"
         class="text-3xl md:text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
         placeholder="Название мероприятия" />
-      <textarea required v-model="description" class="md:text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
+      <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
     <!-- TODO: submit button -->

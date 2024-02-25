@@ -287,3 +287,20 @@ func CreateSignup(c *fiber.Ctx) error {
 func DeleteSignup(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Signup{})
 }
+
+
+func GetPhoto(c *fiber.Ctx) error {
+	return getItems(c, &[]model.Photo{}, "ID")
+}
+
+func GetPhotoByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.Photo{})
+}
+
+func CreatePhoto(c *fiber.Ctx) error {
+	return createItem(c, true, &model.Photo{})
+}
+
+func DeletePhoto(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.Photo{})
+}

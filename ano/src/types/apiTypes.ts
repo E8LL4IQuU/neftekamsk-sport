@@ -27,3 +27,8 @@ export interface Signup {
     Email: string
     CreatedAt: number
 }
+
+export interface Photo {
+    ID: number
+    ImagePath: string
+}

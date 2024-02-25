@@ -121,6 +121,10 @@ const router = createRouter({
       {
         path: 'signups',
         component: () => import('@/views/Manage/ManageSignups.vue')
+      },
+      {
+        path: 'photos',
+        component: () => import('@/views/Manage/ManagePhotos.vue')
       }]
     },
     {
@@ -132,6 +136,11 @@ const router = createRouter({
       path: '/manage/news/create',
       name: 'manage.news.create',
       component: () => import('@/views/Manage/CreateNews.vue'),
+    },
+    {
+      path: '/manage/photos/create',
+      name: 'manage.photos.create',
+      component: () => import('@/views/Manage/CreatePhoto.vue')
     },
     {
       path: '/manage/news/:id',
