@@ -95,7 +95,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- FIXME: after selecting date, enter is not submitting the form, if fixing please do not use event listeners -->
   <!-- TODO: add image upload progress -->
 
   <body class="bg-white">
@@ -103,7 +102,7 @@ onMounted(() => {
       <div class="flex items-center pe-auto md:p-3 h-100">
         <router-link :to="`/manage/${ItemForm.url}`" class="flex p-4 gap-x-3 text-black items-center">
           <ChevronLeftIcon class="h-4 pt-1"></ChevronLeftIcon>
-          <!-- FIXME: it should conditionally show either events or news -->
+          <!-- FIXME: hardcoded -->
           <p class="font-bold text-sm text-gray-700">Мероприятия</p>
         </router-link>
         <p class="text-gray-400 ms-3">Новое</p>
@@ -127,7 +126,8 @@ onMounted(() => {
       <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
-    <!-- TODO: submit button -->
+    
+    <button class="bg-red-300 w-full text-2xl font-bold py-4 rounded-xl absolute bottom-0 lg:w-auto lg:right-4 lg:bottom-3 lg:px-10" @click="submit">Отправить</button>
   </body>
 </template>
 
