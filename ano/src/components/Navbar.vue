@@ -35,6 +35,20 @@ const fetchIRLEvents = async (): Promise<void> => {
   }
 };
 
+const formatTimestamp = (timestamp: string): string => {
+  const date = new Date(timestamp);
+
+  const options: Intl.DateTimeFormatOptions = {
+    month: '2-digit',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric'
+
+  };
+
+  return date.toLocaleDateString("ru-RU", options);
+}
+
 onMounted(() => {
   fetchIRLEvents();
 });
@@ -72,8 +86,9 @@ onMounted(() => {
                 <div v-for="item in IRLEvents" :key="item.Title"
                   class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">
                   <div class="flex-auto">
-                    <router-link :to="`/events/${item.ID}`" class="block font-semibold text-gray-900">
-                      {{ item.Title }}
+                    <router-link :to="`/events/${item.ID}`" class="block text-gray-900">
+                      <h2 class="font-semibold">{{ item.Title }}</h2>
+                      <h3>{{ formatTimestamp(item.Date) }}</h3>
                       <span class="absolute inset-0" />
                     </router-link>
                   </div>
@@ -122,13 +137,14 @@ onMounted(() => {
                   <router-link v-for="item in [...IRLEvents]" :key="item.Title" :to="`/events/${item.ID}`"
                     @click="mobileMenuOpen = false">
                     <DisclosureButton as="div"
-                      class="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                      {{ item.Title }}
+                      class="block rounded-lg py-0.5 my-1 pl-6 pr-3 text-sm leading-7 text-gray-900 bg-gray-100 hover:bg-gray-300">
+                      <h2 class="font-semibold">{{ item.Title }}</h2>
+                      <h3>{{ formatTimestamp(item.Date) }}</h3>
                     </DisclosureButton>
                   </router-link>
-                  <router-link to="events">
-                    <DisclosureButton as="div"
-                      class="block text-center rounded-lg py-2 pl-6 pr-3 text-sm leading-7 hover:bg-gray-50">
+                  <router-link to="/events" @click="mobileMenuOpen = false">
+                    <DisclosureButton as="div" 
+                      class="block text-center rounded-lg py-2 pl-6 pr-3 text-sm leading-7 bg-gray-200 hover:bg-gray-300">
                       Все мероприятия
                     </DisclosureButton>
                   </router-link>
