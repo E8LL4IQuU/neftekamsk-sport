@@ -4,8 +4,7 @@
       <div class="m-auto" v-for="(people, index) in PeopleData" :key="index">
         <div class="text-center max-w-[328px] pt-5 pb-[60px]">
           <div>
-            <img class="w-[150px] h-[150px] rounded-full mb-[20px] m-auto"
-                 :src="people.img">
+            <img class="w-[150px] h-[150px] rounded-full mb-[20px] m-auto" :src="people.img">
           </div>
           <div class="text-black">
             <h4 class="pb-[3px] font-bold text-[36px]">{{ people.name }}</h4>
@@ -16,8 +15,12 @@
       </div>
     </div>
     <div class="text-center mb-[40px]">
-      <a class="text-white bg-black pt-[13px] pb-[13px] pr-[20px] pl-[20px] rounded-[10px]  hover:bg-[#474747] duration-300 cursor-pointer"
-         href="/people">Больше историй людей</a>
+      <router-link to="/people">
+        <span
+          class="text-white bg-black pt-[13px] pb-[13px] pr-[20px] pl-[20px] rounded-[10px]  hover:bg-[#474747] duration-300 cursor-pointer">
+          Больше историй людей</span>
+      </router-link>
+
     </div>
   </div>
 </template>
@@ -35,6 +38,4 @@ const props = defineProps<{
 }>()
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

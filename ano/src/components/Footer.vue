@@ -16,7 +16,7 @@
       </div>
       <div class="flex items-center gap-5 tablet:gap-2 mobile:justify-center">
         <img class="w-[45px] tablet:w-[25px]" src="@/assets/wats.svg" alt="wats">
-        <a href="https://api.whatsapp.com/send/?phone=79173522080&text&type=phone_number&app_absent=0">+7 (917) 352 20 80</a>
+        <a rel='noopener noreferrer' href="https://api.whatsapp.com/send/?phone=79173522080&text&type=phone_number&app_absent=0">+7 (917) 352 20 80</a>
       </div>
     </div>
   </div>
