@@ -17,6 +17,14 @@ const fetchPhotos = async (): Promise<void> => {
     }
 }
 
+const getFileType = (url: string): string => {
+  const extension = url.split('.').pop()?.toLowerCase()
+  if (extension === 'mp4' || extension === 'mov' || extension === 'wmv' || extension === 'avi' || extension === 'ogg' || extension === 'webm' || extension === '3GP') {
+    return 'video'
+  }
+  else return 'image'
+}
+
 onMounted(() => {
     fetchPhotos()
 })
@@ -36,7 +44,10 @@ onMounted(() => {
             <div>
                 <div class="grid grid-cols-2 gap-4">
                     <div v-for="photo in photos" :key="photo.ID" class="relative">
-                        <img :src="`${url}/uploads/${photo.ImagePath}`" class="w-full h-64 object-cover rounded-lg ">
+                        <img v-if="getFileType(photo.ImagePath) === 'image'" :src="`${url}/uploads/${photo.ImagePath}`"
+                            class="w-full h-72 object-cover rounded-lg">
+                        <video autoplay muted loop controls v-else :src="`${url}/uploads/${photo.ImagePath}`"
+                            class="w-full h-72 object-cover rounded-lg"></video>
                         <div class="min-w-fit absolute right-2 bottom-2">
                             <TrashButton @reloadItems="fetchPhotos" :id="photo.ID" type="photos"></TrashButton>
                         </div>
