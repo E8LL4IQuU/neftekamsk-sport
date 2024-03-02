@@ -5,22 +5,19 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,vue}",
   ],
   theme: {
-    extend: {},
-    screens: {
-      'pc': {'max': '1300px'},
-      'mac': {'max': '1440px'},
-      'laptop':{'max':'935px'},
-      'tablet':{'max':'760px'},
-      'mobile':{'max':'520px'},
-      'sm': {'min': '640px'},
-      'md': {'min': '768px'},
-      'lg': {'min': '1024px'},
-      'xl': {'min': '1280px'},
-      '2xl': {'min': '1536px'}
-    }
+    extend: {
+      screens: {
+        'pc': { 'max': '1300px' },
+        'mac': { 'max': '1440px' },
+        'laptop': { 'max': '935px' },
+        'tablet': { 'max': '760px' },
+        'mobile': { 'max': '520px' },
+        '2xl': { 'min': '1750px' }
+      }
+    },
   },
   plugins: [
-  require('@tailwindcss/forms'),
+    require('@tailwindcss/forms'),
   ],
 }
 

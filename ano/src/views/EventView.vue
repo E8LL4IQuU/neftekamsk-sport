@@ -75,31 +75,31 @@ watch(() => route.params.id, (newID) => {
           <div v-if="isRegistrationPopupOpen"
             class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
             @click.self="closeRegistrationPopup">
-            <div @click.stop class="relative bg-white rounded-[20px] w-full lg:w-1/2 xl:w-5/12 flex flex-col gap-y-3 items-center text-center p-[40px] sm:px-0 mac:p-[10px]">
+            <div @click.stop class="relative bg-white rounded-[20px] w-full xl:w-1/2 flex flex-col gap-y-3 items-center text-center p-[40px] sm:px-0 mac:p-[10px]">
               <button @click="closeRegistrationPopup"
                 class="text-7xl absolute top-0 right-2 pt-5 pr-4 text-gray-600 hover:text-[#F24E1E] mac:pt-0">&times;</button>
               <h2 class="text-black text-[40px] font-bold mobile:pr-5">ЗАПИСЬ</h2>
               <!-- Registration form content -->
               <form @submit.prevent="submitRegistrationForm" class="w-full md:w-8/12 pb-6">
-                <div class="mb-4">
+                <div class="">
                   <input required v-model="FirstName" type="text" id="FirstName"
                          class="w-full text-black mt-[30px] px-[15px] py-[15px] border-none rounded-[20px] bg-stone-200 placeholder-black placeholder-shown:font-bold text-[24px] mac:mt-[10px] mobile:text-[16px]"
                     placeholder="Имя">
                 </div>
 
-                <div class="mb-4">
+                <div class="">
                   <input required v-model="LastName" type="text" id="LastName"
                          class="w-full text-black mt-[30px] px-[15px] py-[15px] border-none rounded-[20px] bg-stone-200 placeholder-black placeholder-shown:font-bold text-[24px] mac:mt-[10px] mobile:text-[16px]"
                     placeholder="Фамилия">
                 </div>
 
-                <div class="mb-4">
+                <div class="">
                   <input required v-model="PhoneNumber" type="text" id="PhoneNumber"
                          class="w-full text-black mt-[30px] px-[15px] py-[15px] border-none rounded-[20px] bg-stone-200 placeholder-black placeholder-shown:font-bold text-[24px] mac:mt-[10px] mobile:text-[16px]"
                     placeholder="Номер телефона">
                 </div>
 
-                <div class="mb-4">
+                <div class="">
                   <input v-model="Email" type="text" id="Email"
                     class="w-full text-black mt-[30px] px-[15px] py-[15px] border-none rounded-[20px] bg-stone-200 placeholder-black placeholder-shown:font-bold text-[24px] mac:mt-[10px] mobile:text-[16px]"
                     placeholder="Почта(необязательно)">
