@@ -41,7 +41,7 @@ watch(() => route.params.id, (newID) => {
 </script>
 
 <template>
-  <div class="lg:grid lg:grid-cols-12 sm:px-0 lg:container mx-auto pb-16">
+  <div class="lg:grid lg:grid-cols-12 sm:px-0 xl:container mx-auto pb-16">
     <div class="sm:col-span-9 mb-16" v-if="news">
       <img class="sm:w-full sm:h-[600px] object-cover" :src="`${url}/uploads/${news.ImagePath}`" alt="">
       <div class="px-5 pt-3">
@@ -49,15 +49,14 @@ watch(() => route.params.id, (newID) => {
         <p class="leading-6 text-black max-w-7xl">{{ news.Description }}</p>
       </div>
     </div>
-    <div class="flex flex-col justify-center sm:col-span-3 lg:mt-0 px-5 lg:mx-10">
-      <p class="font-bold text-black mb-1">Новости</p>
+    <div class="flex flex-col justify-center sm:col-span-3 lg:mt-0 mx-5 lg:mx-2">
+      <p class="font-bold text-black mb-0.5">Новости</p>
       <hr class="mb-1">
       <router-link v-for="item in newsBulk" :to="`/news/${item.ID}`">
         <div class="hover:bg-slate-100 transition-colors">
-          <div class="flex items-center py-2 gap-3 lg:text-center">
-            <!-- FIXME: inconsistent image size -->
-            <img class="h-20 w-20 object-cover" :src="`${url}/uploads/${item.ImagePath}`" />
-            <!-- FIXME: inconsistent gap between image and text -->
+          <div class="flex items-center pb-2 gap-3">
+            <img class="h-10 w-10 object-cover flex-shrink-0" :src="`${url}/uploads/${item.ImagePath}`" />
+            <!-- FIXME: Clamp text at a reasonable point, for example after a dot -->
             <h4 class="text-black line-clamp-2">{{ item.Title }}</h4>
           </div>
         </div>
