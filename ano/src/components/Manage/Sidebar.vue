@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
-import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon, PhotoIcon } from '@heroicons/vue/24/solid'
+
+const props = defineProps(['sidebarData'])
 </script>
 
 <template>
@@ -9,16 +10,9 @@ import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon, PhotoIcon } from '@heroico
     <nav class="hidden lg:block min-h-screen p-4 border-r">
       <h1 class="text-3xl mb-5 text-black">Управление</h1>
       <ul>
-        <!-- TODO: export to prop, use v-for -->
         <li class="flex flex-col">
-          <router-link :to="'/manage/events'"
-            :class="{ 'text-black font-bold': $route.path === '/manage/events', 'text-gray-700': $route.path !== '/manage/events' }">Мероприятия</router-link>
-          <router-link :to="'/manage/news'"
-            :class="{ 'text-black font-bold': $route.path === '/manage/news', 'text-gray-700': $route.path !== '/manage/news' }">Новости</router-link>
-          <router-link :to="'/manage/signups'"
-            :class="{ 'text-black font-bold': $route.path === '/manage/signups', 'text-gray-700': $route.path !== '/manage/signups' }">Записи</router-link>
-          <router-link :to="'/manage/photos'"
-            :class="{ 'text-black font-bold': $route.path === '/manage/photos', 'text-gray-700': $route.path !== '/manage/photos' }">Галерея</router-link>
+          <router-link v-for="item in props.sidebarData" :to="item.path"
+            :class="{ 'text-black font-bold': $route.path === item.path, 'text-gray-700': $route.path !== item.path }">{{ item.name }}</router-link>
         </li>
       </ul>
       <!-- TODO: add logout button
@@ -26,28 +20,16 @@ import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon, PhotoIcon } from '@heroico
     </nav>
 
     <!-- Mobile -->
-    <nav class="lg:hidden text-start fixed bottom-0 w-full bg-white p-2 z-10">
+    <nav class="lg:hidden fixed bottom-0 w-full bg-stone-300 py-3 z-10">
       <ul class="grid grid-cols-4 text-center justify-between gap-x-3">
-        <router-link class="h-20 rounded-lg flex flex-col justify-center" :to="'/manage/events'"
-          :class="{ 'text-black font-bold bg-red-300': $route.path === '/manage/events', 'text-gray-700 bg-slate-300': $route.path !== '/manage/events' }">
-          <CalendarIcon class="h-11"></CalendarIcon>
-          <span class="text-xs">Мероприятия</span>
-        </router-link>
-        <router-link class="h-20 rounded-lg flex flex-col justify-center" :to="'/manage/news'"
-          :class="{ 'text-black font-bold bg-red-300': $route.path === '/manage/news', 'text-gray-700 bg-slate-300': $route.path !== '/manage/news' }">
-          <MegaphoneIcon class="h-11"></MegaphoneIcon>
-          <span>Новости</span>
-        </router-link>
-        <router-link class="h-20 rounded-lg flex flex-col justify-center" :to="'/manage/signups'"
-          :class="{ 'text-black font-bold bg-red-300': $route.path === '/manage/signups', 'text-gray-700 bg-slate-300': $route.path !== '/manage/signups' }">
-          <ArchiveBoxIcon class="h-11"></ArchiveBoxIcon>
-          <span>Записи</span>
-        </router-link>
-        <router-link class="h-20 rounded-lg flex flex-col justify-center" :to="'/manage/photos'"
-          :class="{ 'text-black font-bold bg-red-300': $route.path === '/manage/photos', 'text-gray-700 bg-slate-300': $route.path !== '/manage/photos' }">
-          <PhotoIcon class="h-11"></PhotoIcon>
-          <span>Галлерея</span>
-        </router-link>
+          <router-link v-for="item in props.sidebarData" class="h-12 rounded-lg flex flex-col justify-between items-center" :to="item.path"
+            :class="{ 'text-black': $route.path === item.path, 'text-gray-700': $route.path !== item.path }">
+            <div>
+              <component :class="{ 'bg-orange-300 saturate-50 rounded-2xl': $route.path === item.path }" class="h-7 w-16"
+                :is="item.icon"></component>
+            </div>
+            <span class="font-bold text-xs">{{ item.name }}</span>
+          </router-link>
       </ul>
       <!-- TODO: add logout button
       POST /api/auth/logout -->

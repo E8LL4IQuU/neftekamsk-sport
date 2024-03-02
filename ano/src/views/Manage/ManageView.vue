@@ -3,14 +3,16 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Manage/Sidebar.vue'
 import axios from 'axios'
+import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import { ArchiveBoxIcon as ArchiveBoxSolidIcon, CalendarIcon as CalendarSolidIcon, MegaphoneIcon as MegaphoneSolidIcon, PhotoIcon as PhotoSolidIcon } from '@heroicons/vue/24/solid'
 
 const url: string = import.meta.env.VITE_ENDPOINT
 const INVALID_USER_ID: number = 0
 const isLoggedIn = ref<number>(0)
 const router = useRouter()
 
-onMounted( async () => {
-    try {
+onMounted(async () => {
+  try {
     const response = await axios.get<{ id: number }>(`${url}/api/auth/user`, {
       withCredentials: true,
     })
@@ -24,15 +26,20 @@ onMounted( async () => {
     }
   }
 })
+
+const sidebarData = [
+    { name: 'Мероприятия', path: '/manage/events', icon: CalendarIcon, iconActive: CalendarSolidIcon},
+    { name: 'Новости', path: '/manage/news', icon: MegaphoneIcon, iconActive: MegaphoneSolidIcon},
+    { name: 'Записи', path: '/manage/signups', icon: ArchiveBoxIcon, iconActive: ArchiveBoxSolidIcon},
+    { name: 'Галлерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon}
+]
 </script>
 
 <template>
-<body class="bg-white">
-    <Sidebar v-if="isLoggedIn"></Sidebar>
+  <body class="bg-white">
+    <Sidebar v-if="isLoggedIn" :sidebarData=sidebarData></Sidebar>
     <RouterView v-if="isLoggedIn" class="pb-20 lg:pb-0"></RouterView>
-</body>
+  </body>
 </template>
 
-<style scoped style="scss">
-
-</style>
+<style scoped style="scss"></style>
