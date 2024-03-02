@@ -63,8 +63,8 @@ watch(() => route.params.id, (newID) => {
 
 <template>
   <div class="px-1 sm:px-0 sm:container mx-auto pb-20">
-    <div class="lg:flex gap-x-12 justify-between" v-if="IRLEvent">
-      <img class="sm:w-full" :src="`${url}/uploads/${IRLEvent.ImagePath}`" alt="">
+    <div class="lg:flex gap-x-12" v-if="IRLEvent">
+      <img class="sm:w-full md:w-1/2" :src="`${url}/uploads/${IRLEvent.ImagePath}`" alt="">
       <div class="mobile:text-center">
         <h1 class="text-black text-3xl font-bold pb-3">{{ IRLEvent.Title }}</h1>
         <p class="text-black max-w-7xl">{{ IRLEvent.Description }}</p>
