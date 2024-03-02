@@ -19,7 +19,7 @@ const data = {
 };
 // TODO: login field autofocus or focus on input
 
-// TODO: hide axios errors in console 
+// FIXME: hide axios errors in console 
 onMounted(async () => {
     await axios
         .get(`${url}/api/auth/user`, {
@@ -28,7 +28,6 @@ onMounted(async () => {
         // 200 OK
         .then((response) => {
             if (response.data.id != 0) {
-                // FIXME: push to where the user came from
                 router.push("/manage");
             }
         })
@@ -43,12 +42,10 @@ async function submit() {
     await axios
         .post(`${url}/api/auth/login`, data, { withCredentials: true })
         .then((response) => {
-            // FIXME: push to where the user came from
             router.push("/manage");
         })
         .catch(function (error) {
-            // TODO: maybe make field "email" red for visibility
-            // make field normal back on input
+            // TODO: maybe make fields red for visibility, and revert back on input
             if (404 == error.response.status) {
                 toast(StatusNotFound)
             } else if (400 == error.response.status) {

@@ -21,18 +21,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <router-link v-for="item in news" :to="`${url}/news/${item.ID}`">
+  <router-link v-for="item in news" :to="`/news/${item.ID}`">
     <div class="containers hover:bg-slate-200 transition-colors">
-      <div class="flex justify-between mt-5 py-9 gap-3 laptop:block laptop:text-center mobile:py-[35px]">
+      <div class="flex justify-between mt-5 py-4 laptop:block laptop:text-center mobile:py-[35px]">
         <div>
           <img
-            class="w-[650px] h-[520px] rounded-[30px] mac:w-[500px] mac:h-[400px] laptop:mx-auto mobile:w-full object-contain"
+            class="w-[350px] h-[260px] md:w-[600px] md:h-[440px] rounded laptop:mx-auto object-cover"
             :src="`${url}/uploads/${item.ImagePath}`" />
         </div>
         <div class="max-w-[665px] mac:max-w-[500px] laptop:mx-auto mobile:w-full">
-          <h4 class="text-black text-center text-[36px] mb-[14px] mac:text-[30px] line-clamp-2">{{ item.Title }}</h4>
+          <h4 class="text-black text-center text-[36px] mb-[14px] mac:text-[30px] line-clamp-2 leading-10">{{ item.Title }}</h4>
           <hr class="max-w-[540px] bg-[#E4E4E4] mx-auto">
-          <p class="text-[#6F6F6F] text-[28px] pt-[14px] text-right  mac:text-[20px] laptop:text-center line-clamp-[10]">
+          <p
+            class="text-[#6F6F6F] text-[28px] pt-[14px] text-right  mac:text-[20px] laptop:text-center line-clamp-[11] leading-7">
             {{ item.Description }}</p>
         </div>
       </div>

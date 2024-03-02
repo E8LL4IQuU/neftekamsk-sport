@@ -1,4 +1,3 @@
-<!-- FIXME: do we even need this page? maybe just redirect to "/" -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import axios from 'axios'

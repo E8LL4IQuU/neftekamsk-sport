@@ -32,7 +32,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- FIXME: overlaps with mobile navbar -->
     <div class="lg:ps-52">
         <div class="p-4 lg:py-5 lg:px-12">
             <div class="flex justify-between">
