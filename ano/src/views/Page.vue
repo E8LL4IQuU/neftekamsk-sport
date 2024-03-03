@@ -9,7 +9,7 @@
     </div>
     <h3 class="text-6xl pt-10 pb-10 text-center text-black font-normal">Галерея</h3>
     <div>
-      <Gallery :GalleryData="GalleryData" />
+      <Gallery :galleryData="galleryData" />
     </div>
     <h3 class="text-6xl pt-16 pb-10 text-center text-black font-normal">Истории людей</h3>
     <div>
@@ -60,11 +60,13 @@ onMounted(async () => {
 })
 
 // mock data
-const GalleryData = {
-  "linkImgOne": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-  "linkImgTwo": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-  "linkImgThree": "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-  "videos": "https://res.cloudinary.com/demo/video/upload/q_auto,f_auto/dog.mp4"
+const galleryData = {
+  photos: [
+    "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
+    "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
+    "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG"
+  ],
+  video: "https://res.cloudinary.com/demo/video/upload/q_auto,f_auto/dog.mp4"
 }
 const PeopleData = [
   {
@@ -87,6 +89,7 @@ const PeopleData = [
   },
 ]
 </script>
+
 <style scoped>
 .wrapper {
   max-width: 1380px;

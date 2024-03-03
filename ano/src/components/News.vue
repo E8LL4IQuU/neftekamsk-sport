@@ -1,6 +1,6 @@
 <template>
   <div class="pt-5" v-for="(news, index) in props.NewsData" :key="index">
-    <!-- FIXME: pointing cursor on bottom of div creates jittery movement -->
+    <!-- FIXME: When hovering the cursor over the bottom of the div, there's jittery movement -->
     <router-link :to="`/news/${news.ID}`">
       <div class="hover:-translate-y-5 duration-300 py-3 md:p-6">
         <img class="w-[350px] h-[260px] object-cover" :src='`${url}/uploads/${news.ImagePath}`'>
