@@ -1,48 +1,41 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 
-const navbarItems: string[][] = [
-  // [Navbar item name, Navbar item link]
-  ["Новости", "/news"],
-  ["Расписание", "/schedule"],
-  ["Направления", "/sections"],
-  ["Галерея", "/gallery"],
-  ["Истории людей", "/people"],
-  ["Документы", "/documents"]
-]
-const NavData = [
+const navbarData = [
   {
-    "links": "/news",
-    "name": "Новости"
+    name: "Новости",
+    path: "/news"
   },
   {
-    "links": "/schedule",
-    "name": "Расписание"
+    name: "Расписание",
+    path: "/schedule"
   },
   {
-    "links": "/sections",
-    "name": "Направления"
+    name: "Направления",
+    path: "/sections"
   },
   {
-    "links": "/gallery",
-    "name": "Галерея"
+    name: "Галерея",
+    path: "/gallery"
   },
   {
-    "links": "/people",
-    "name": "Истории людей"
+    name: "Истории людей",
+    path: "/people"
   },
   {
-    "links": "/documents",
-    "name": "Документы"
+    name: "Документы",
+    path: "/documents"
   },
 ]
 </script>
 
 <template>
   <div class="bg-white">
-    <RouterView name="navbar" :navbarItems="navbarItems"></RouterView>
+    <!-- @/components/Navbar.vue -->
+    <RouterView name="navbar" :navbarData="navbarData"></RouterView>
     <RouterView />
-    <RouterView name="footer" :NavData="NavData"></RouterView>
+    <!-- @/components/Footer.vue -->
+    <RouterView name="footer" :navbarData="navbarData"></RouterView>
   </div>
 </template>
 

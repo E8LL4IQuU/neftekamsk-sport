@@ -19,9 +19,7 @@ import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 import axios from "axios";
 import { type IRLEvent } from "@/types/apiTypes";
 
-const props = defineProps<{
-  navbarItems: string[][];
-}>();
+const props = defineProps(['navbarData'])
 const url: string = import.meta.env.VITE_ENDPOINT;
 const IRLEvents = ref<IRLEvent[]>([]);
 const mobileMenuOpen = ref<boolean>(false);
@@ -58,7 +56,7 @@ onMounted(() => {
   <header class="bg-white">
     <nav class="container mx-auto flex items-center justify-between p-6 sm:p-0 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
-        <router-link :to="'/'" class="-m-1.5 p-1.5">
+        <router-link to="/" class="-m-1.5 p-1.5">
           <span class="sr-only">АНО "Нефтекамск спортивный"</span>
           <Logo class="sm:p-3"></Logo>
         </router-link>
@@ -104,8 +102,10 @@ onMounted(() => {
           </transition>
         </Popover>
 
-        <div v-for="item in props.navbarItems">
-          <router-link :to="item[1]" class="text-sm font-semibold leading-6 text-gray-900">{{ item[0] }}</router-link>
+        <div v-for="item in props.navbarData">
+          <router-link :to="item.path" class="text-sm font-semibold leading-6 text-gray-900">
+            {{ item.name }}
+          </router-link>
         </div>
       </PopoverGroup>
     </nav>
@@ -143,7 +143,7 @@ onMounted(() => {
                     </DisclosureButton>
                   </router-link>
                   <router-link to="/events" @click="mobileMenuOpen = false">
-                    <DisclosureButton as="div" 
+                    <DisclosureButton as="div"
                       class="block text-center rounded-lg py-2 pl-6 pr-3 text-sm leading-7 bg-gray-200 hover:bg-gray-300">
                       Все мероприятия
                     </DisclosureButton>
@@ -151,9 +151,9 @@ onMounted(() => {
                 </DisclosurePanel>
               </Disclosure>
 
-              <div v-for="item in props.navbarItems">
-                <router-link :to="item[1]" class="text-sm font-semibold leading-6 text-gray-900"
-                  @click="mobileMenuOpen = false">{{ item[0] }}</router-link>
+              <div v-for="item in props.navbarData">
+                <router-link :to="item.path" class="text-sm font-semibold leading-6 text-gray-900"
+                  @click="mobileMenuOpen = false">{{ item.name }}</router-link>
               </div>
             </div>
           </div>
