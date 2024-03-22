@@ -68,13 +68,9 @@ const galleryData = {
   ],
   video: "https://res.cloudinary.com/demo/video/upload/q_auto,f_auto/dog.mp4"
 }
+
+// FIXME: use '@/assets/staff1.jpeg'
 const PeopleData = [
-  {
-    "img": "https://static.tildacdn.com/tild3235-3065-4462-a662-666363353834/i.jpg",
-    "name": "Dmitry Shishkin",
-    "activity": "Предприниматель",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi metus, cursus et diam in, feugiat porttitor sapien. Mauris vel fringilla quam",
-  },
   {
     "img": "https://static.tildacdn.com/tild3235-3065-4462-a662-666363353834/i.jpg",
     "name": "Dmitry Shishkin",

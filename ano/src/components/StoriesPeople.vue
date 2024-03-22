@@ -15,12 +15,11 @@
       </div>
     </div>
     <div class="text-center mb-[40px]">
-      <router-link to="/people">
+      <!-- <router-link to="/people">
         <span
           class="text-white bg-black pt-[13px] pb-[13px] pr-[20px] pl-[20px] rounded-[10px]  hover:bg-[#474747] duration-300 cursor-pointer">
           Больше историй людей</span>
-      </router-link>
-
+      </router-link> -->
     </div>
   </div>
 </template>

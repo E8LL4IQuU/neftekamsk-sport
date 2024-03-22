@@ -1,5 +1,3 @@
-version: "3.8"
-
 # Avoid running not from project root(directory where compose.yaml is stored) as it causes docker to silently fail .env file load
 services:
   web:

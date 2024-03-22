@@ -9,7 +9,7 @@
     <p class="text-[24px] text-[#AFAFAF] font-light">Для записи на занятия, используйте наш WhatsApp <a
         href="tel:+79173522080" class="text-[#585858] underline decoration-1"> +7 (917) 352 20 80</a></p>
     <div class="pt-9">
-      <div class="grid grid-cols-8 items-center gap-[2px]">
+      <div class="grid grid-cols-8 gap-[2px]">
         <div class="bg-[#B5B5B5]">
           <p class="text-white font-bold text-[20px] p-[14px]">Название</p>
         </div>
