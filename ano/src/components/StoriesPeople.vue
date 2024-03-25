@@ -1,15 +1,20 @@
 <template>
   <div>
-    <div class="flex justify-center flex-wrap">
-      <div class="m-auto" v-for="(people, index) in PeopleData" :key="index">
-        <div class="text-center max-w-[328px] pt-5 pb-[60px]">
+    <div class="grid grid-cols-2 mx-auto max-w-3xl lg:max-w-5xl">
+      <div class="" v-for="(people, index) in PeopleData" :key="index">
+        <div class="text-center pt-5 pb-[60px]">
           <div>
-            <img class="w-[150px] h-[150px] rounded-full mb-[20px] m-auto" :src="people.img">
+            <img
+              class="w-[150px] h-[150px] rounded-full mb-[20px] m-auto"
+              :src="people.img"
+            />
           </div>
           <div class="text-black">
             <h4 class="pb-[3px] font-bold text-[36px]">{{ people.name }}</h4>
-            <span class="font-medium text-[24px] text-[#727272]">{{ people.activity }}</span>
-            <p class=" font-medium text-[24px]">{{ people.description }}</p>
+            <span class="font-medium text-[24px] text-[#727272]">{{
+              people.activity
+            }}</span>
+            <p class="font-medium text-[24px]">{{ people.description }}</p>
           </div>
         </div>
       </div>
@@ -33,8 +38,8 @@ interface IPeople {
 }
 
 const props = defineProps<{
-  PeopleData: IPeople[]
-}>()
+  PeopleData: IPeople[];
+}>();
 </script>
 
 <style scoped></style>
