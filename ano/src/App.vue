@@ -6,10 +6,10 @@ const navbarData = [
     name: "Новости",
     path: "/news"
   },
-  {
-    name: "Расписание",
-    path: "/schedule"
-  },
+  // {
+  //   name: "Расписание",
+  //   path: "/schedule"
+  // },
   {
     name: "Направления",
     path: "/sections"
@@ -18,10 +18,10 @@ const navbarData = [
     name: "Галерея",
     path: "/gallery"
   },
-  {
-    name: "Истории людей",
-    path: "/people"
-  },
+  // {
+  //   name: "Истории людей",
+  //   path: "/people"
+  // },
   {
     name: "Документы",
     path: "/documents"

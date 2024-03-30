@@ -12,7 +12,7 @@ func InitializeRoutes(app *fiber.App) {
 	// Auth
 	// routes with auth as a second path argument are skipped through auth middleware
 	// TODO: remove "auth" from path
-	app.Post("/api/auth/register", Register)
+	// app.Post("/api/auth/register", Register)
 	app.Post("/api/auth/login", Login)
 	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)

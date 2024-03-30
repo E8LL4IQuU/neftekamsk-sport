@@ -13,9 +13,9 @@
     <input name="tab-btn" type="radio" value="tab-br4" id="tab-br4" v-model="selectedTab"/>
     <label class="text-[24px] mac:text-[18px] pc:text-[14px] p-[10px] tablet:p-[4px] tablet:m-[5px] tablet:text-[14px]" for="tab-br4">Поддержка <br class="tablet:hidden">
       ветеранов спорта</label>
-    <input name="tab-btn" type="radio" value="tab-br5" id="tab-br5" v-model="selectedTab"/>
+    <!-- <input name="tab-btn" type="radio" value="tab-br5" id="tab-br5" v-model="selectedTab"/>
     <label class="text-[24px] mac:text-[18px] pc:text-[14px] p-[10px] tablet:p-[4px] tablet:m-[5px] tablet:text-[14px]" for="tab-br5">Спортивный <br class="tablet:hidden">
-      клуб “Наш ковчег”</label>
+      клуб “Наш ковчег”</label> -->
   </div>
   <div class="tab-br" :id="selectedTab + '-content'">
     <slot :name="selectedTab"/>
