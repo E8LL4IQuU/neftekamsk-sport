@@ -1,5 +1,6 @@
 <template>
   <!-- FIXME: Footer is flickering on some pages while loading -->
+  <!-- FIXME: it only shows 4 links although navbar has 5 -->
 
   <!-- Desktop -->
   <div class="hidden md:flex flex-col justify-center bg-neutral-800 p-10">
@@ -39,7 +40,8 @@
     <div>
       <h2 class="text-gray-300 font-bold">О нас</h2>
       <hr class="w-20 my-2">
-      <div v-for="index in Array(2, 3, 4, 5)">
+      <!-- FIXME: make dynamic from number of elements in navbarData -->
+      <div v-for="index in Array(2, 3)">
         <router-link :to="props.navbarData[index].path">
           <span class="leading-6">{{ props.navbarData[index].name }}</span>
         </router-link>

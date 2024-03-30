@@ -40,6 +40,10 @@ import { onMounted, ref } from "vue";
 import axios from "axios";
 import { type IRLEvent, type News } from "@/types/apiTypes";
 
+import HeroPhoto1 from "@/assets/heroPhoto1.jpeg"
+import HeroPhoto2 from "@/assets/heroPhoto2.jpeg"
+import HeroPhoto3 from "@/assets/heroPhoto3.jpeg"
+import HeroVideo from "@/assets/heroVideo.webm";
 import StaffPhoto1 from "@/assets/staff1.jpeg";
 import StaffPhoto2 from "@/assets/staff2.jpeg";
 
@@ -70,14 +74,13 @@ onMounted(async () => {
   fetchNews();
 });
 
-// mock data
 const galleryData = {
   photos: [
-    "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-    "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
-    "https://thumb.tildacdn.com/tild6538-3765-4639-b764-656637656238/-/format/webp/_1.JPG",
+    HeroPhoto1,
+    HeroPhoto3,
+    HeroPhoto2,
   ],
-  video: "https://res.cloudinary.com/demo/video/upload/q_auto,f_auto/dog.mp4",
+  video: HeroVideo
 };
 
 const PeopleData = [
