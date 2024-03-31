@@ -5,15 +5,16 @@ import (
 )
 
 func InitializeRoutes(app *fiber.App) {
-	// Every route should be added to nginx config at
-	// nginx/default.conf
+	// Every route here should be added to nginx config at
+	// nginx/default.conf, docker container rebuild required afterwards
 	// otherwise "404 Not found" will be returned
 
+	// Public routes
 	// Auth
-	// routes with auth as a second path argument are skipped through auth middleware
-	// TODO: remove "auth" from path
+	// FIXME: remove "auth" from path
 	// app.Post("/api/auth/register", Register)
 	app.Post("/api/auth/login", Login)
+	// FIXME: what is this
 	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)
 	app.Post("/api/auth/logout", Logout)
@@ -30,7 +31,7 @@ func InitializeRoutes(app *fiber.App) {
 
 	app.Post("/api/signups", CreateSignup)
 
-	// Authenticated only routes ahead
+	// Authenticated-only routes
 	app.Use(NewMiddleware())
 
 	app.Post("/api/events", CreateEvent)

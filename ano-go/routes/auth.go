@@ -1,8 +1,6 @@
 package routes
 
 import (
-	"strings"
-
 	"github.com/E8LL4IQuU/ano-go/model"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
@@ -10,7 +8,6 @@ import (
 
 func parseBody(c *fiber.Ctx) map[string]string {
 	var data map[string]string
-
 	c.BodyParser(&data)
 
 	return data
@@ -19,12 +16,8 @@ func parseBody(c *fiber.Ctx) map[string]string {
 func authMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
-	// We were splitting url at "/" ["", "api", "auth", "login"] to disable auth on login routes
-	// TODO: remove path checking after we remove "auth" from url path
-	parts := strings.Split(c.Path(), "/")
-	// Allow routes with "auth" as second segment of path
 	// Only check for auth if we're in production mode
-	if ENVIRONMENT == "dev" || (len(parts) > 2 && parts[2] == "auth") {
+	if ENVIRONMENT == "dev" {
 		return c.Next()
 	}
 
@@ -53,7 +46,7 @@ func Register(c *fiber.Ctx) error {
 	c.Accepts("application/json")
 	data := parseBody(c)
 
-	// Check if email is not taken"
+	// Check if email is not taken
 	var user model.User
 	model.DB.Where("email = ?", data["email"]).First(&user)
 	if user.ID != 0 {
