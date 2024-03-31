@@ -87,13 +87,13 @@ const PeopleData = [
   {
     img: StaffPhoto1,
     name: "Андрей Филимонов",
-    activity: "Учредитель",
+    activity: "Директор",
     description: "",
   },
   {
     img: StaffPhoto2,
     name: "Елена Приходько",
-    activity: "Директор",
+    activity: "Учредитель",
     description: "",
   },
 ];
