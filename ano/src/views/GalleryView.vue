@@ -30,7 +30,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mx-auto pb-10">
+  <body class="container mx-auto pb-10">
     <h1 class="text-3xl font-bold mb-4">Галлерея</h1>
     <div class="grid lg:grid-cols-2 gap-4">
       <!-- TODO: enlarge photo on click -->
@@ -41,7 +41,7 @@ onMounted(() => {
           class="w-full h-72 object-cover rounded-lg"></video>
       </div>
     </div>
-  </div>
+  </body>
 </template>
 
 <style></style>

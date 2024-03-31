@@ -8,7 +8,8 @@ const news = ref<News[]>([])
 
 const fetchNewsBulk = async (): Promise<void> => {
   try {
-    const response = await axios.get<News[]>(`${url}/api/news`)
+    // FIXME: pagination and lazy load
+    const response = await axios.get<News[]>(`${url}/api/news?limit=50`)
     news.value = response.data
   } catch (error) {
     console.error('Error fetching news:', error)
@@ -21,6 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
+<body>
   <router-link v-for="item in news" :to="`/news/${item.ID}`">
     <div class="containers hover:bg-slate-200 transition-colors">
       <div class="flex justify-between mt-5 py-4 laptop:block laptop:text-center mobile:py-[35px]">
@@ -39,6 +41,7 @@ onMounted(() => {
       </div>
     </div>
   </router-link>
+</body>
 </template>
 
 <style scoped>

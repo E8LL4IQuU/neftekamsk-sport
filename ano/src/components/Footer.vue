@@ -1,5 +1,4 @@
 <template>
-  <!-- FIXME: Footer is flickering on some pages while loading -->
   <!-- FIXME: it only shows 4 links although navbar has 5 -->
 
   <!-- Desktop -->

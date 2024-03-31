@@ -76,7 +76,8 @@ const isStale = (date: string): boolean => {
 
 const fetchIRLEvents = async (): Promise<void> => {
   try {
-    const response = await axios.get<IRLEvent[]>(`${url}/api/events`)
+    // FIXME: pagination and lazy load
+    const response = await axios.get<IRLEvent[]>(`${url}/api/events?limit=50`)
     IRLEvents.value = response.data
   } catch (error) {
     console.error('Error fetching IRLEvents: ', error)
