@@ -30,6 +30,7 @@ const navbarData = [
 </script>
 
 <template>
+  <!-- TODO: Change website title and favicon -->
   <div class="bg-white">
     <!-- @/components/Navbar.vue -->
     <RouterView name="navbar" :navbarData="navbarData"></RouterView>

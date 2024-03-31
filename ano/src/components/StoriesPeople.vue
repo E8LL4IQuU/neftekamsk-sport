@@ -4,17 +4,14 @@
       <div class="" v-for="(people, index) in PeopleData" :key="index">
         <div class="text-center pt-5 pb-[60px]">
           <div>
-            <img
-              class="w-[150px] h-[150px] rounded-full mb-[20px] m-auto"
-              :src="people.img"
-            />
+            <img class="w-36 lg:w-48 rounded-full mb-3 mx-auto" :src="people.img" />
           </div>
           <div class="text-black">
-            <h4 class="pb-[3px] font-bold text-[36px]">{{ people.name }}</h4>
-            <span class="font-medium text-[24px] text-[#727272]">{{
-              people.activity
-            }}</span>
-            <p class="font-medium text-[24px]">{{ people.description }}</p>
+            <h4 class="text-2xl lg:text-4xl pb-[3px] font-bold ">{{ people.name }}</h4>
+            <span class="lg:text-2xl font-medium  text-neutral-600">{{
+        people.activity
+      }}</span>
+            <p class="text-2xl font-medium">{{ people.description }}</p>
           </div>
         </div>
       </div>

@@ -43,4 +43,7 @@ server {
 
         error_page 404 /;
 
+        #TODO: add maintenance page on 5XX errors
+        #Not sure if that's the right place to implement though as we have a couple of nginx instances inside docker containers
+
 }

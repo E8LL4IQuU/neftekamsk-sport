@@ -1,23 +1,23 @@
 <template>
   <div class="wrapper">
     <Hero />
-    <h3
-      class="text-6xl text-center pt-16 pb-6 text-gray-500 font-medium mobile:text-4xl"
-    >
+    <h3 class="text-4xl lg:text-5xl text-center pt-16 pb-6 text-black font-semibold">
       Мероприятия
     </h3>
     <Slider :SliderData="IRLEvents" />
-    <h3 class="text-6xl pt-16 text-center text-black font-normal">Новости</h3>
+    <h3 class="text-4xl lg:text-5xl pt-16 text-center text-black font-semibold">
+      Новости
+    </h3>
     <div class="flex flex-wrap justify-center">
       <NewsComponent :NewsData="News" />
     </div>
-    <h3 class="text-6xl pt-10 pb-10 text-center text-black font-normal">
+    <h3 class="text-4xl lg:text-5xl pt-10 pb-10 text-center text-black font-semibold">
       Галерея
     </h3>
     <div>
       <Gallery :galleryData="galleryData" />
     </div>
-    <h3 class="text-6xl pt-16 pb-10 text-center text-black font-normal">
+    <h3 class="text-4xl lg:text-5xl pt-16 pb-10 text-center text-black font-semibold">
       Руководители
     </h3>
     <div>
