@@ -1,5 +1,6 @@
 <template>
-  <!-- FIXME: it only shows 4 links although navbar has 5 -->
+  <!-- FIXME: either fix it not showing some of the links, or remove these links altogether and make navbar sticky -->
+  <!-- TODO: add privacy policy, eff, fsf, github -->
 
   <!-- Desktop -->
   <div class="hidden md:flex flex-col justify-center bg-neutral-800 p-10">
