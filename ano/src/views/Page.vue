@@ -1,28 +1,31 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper text-center text-black font-semibold">
     <Hero />
-    <h3 class="text-4xl lg:text-5xl text-center pt-16 pb-6 text-black font-semibold">
+    <h3 class="text-4xl lg:text-5xl pt-10 pb-6">
       Мероприятия
     </h3>
     <Slider :SliderData="IRLEvents" />
-    <h3 class="text-4xl lg:text-5xl pt-16 text-center text-black font-semibold">
+    <h3 class="text-4xl lg:text-5xl pt-10 pb-6">
       Новости
     </h3>
     <div class="flex flex-wrap justify-center">
       <NewsComponent :NewsData="News" />
     </div>
-    <h3 class="text-4xl lg:text-5xl pt-10 pb-10 text-center text-black font-semibold">
+    <h3 class="text-4xl lg:text-5xl pt-10 pb-6">
       Галерея
     </h3>
     <div>
       <Gallery :galleryData="galleryData" />
     </div>
-    <h3 class="text-4xl lg:text-5xl pt-16 pb-10 text-center text-black font-semibold">
+    <h3 class="text-4xl lg:text-5xl pt-10 pb-6">
       Руководители
     </h3>
     <div>
       <StoriesPeople :PeopleData="PeopleData" />
     </div>
+    <h3 class="text-4xl lg:text-5xl pb-6">
+      Связаться с нами
+    </h3>
     <div>
       <Connect />
     </div>

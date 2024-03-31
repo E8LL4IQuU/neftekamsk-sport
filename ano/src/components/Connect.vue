@@ -1,6 +1,5 @@
 <template>
   <div class="text-black text-center">
-    <h4 class="text-4xl lg:text-6xl pb-[17px] font-semibold">Связаться с нами</h4>
     <div class="text-2xl lg:text-3xl">
       <div>
         <a href="tel:+79173522080">+ 7 (917) 352 20 80</a>

@@ -2,7 +2,7 @@
   <div>
     <div class="grid grid-cols-2 mx-auto max-w-3xl lg:max-w-5xl">
       <div class="" v-for="(people, index) in PeopleData" :key="index">
-        <div class="text-center pt-5 pb-[60px]">
+        <div class="text-center">
           <div>
             <img class="w-36 lg:w-48 rounded-full mb-3 mx-auto" :src="people.img" />
           </div>

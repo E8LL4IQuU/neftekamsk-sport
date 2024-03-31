@@ -1,16 +1,17 @@
 <template>
-  <div class="pt-5" v-for="(news, index) in props.NewsData" :key="index">
+  <div v-for="(news, index) in props.NewsData" :key="index">
     <!-- FIXME: When hovering the cursor over the bottom of the div, there's jittery movement -->
     <router-link :to="`/news/${news.ID}`">
-      <div class="hover:-translate-y-5 duration-300 py-3 md:p-6">
-        <img class="w-[350px] h-[260px] object-cover" :src='`${url}/uploads/${news.ImagePath}`'>
-        <div class="w-[350px]">
+      <div class="hover:-translate-y-5 duration-300 lg:mx-3 mb-8">
+        <img class="w-full lg:w-[350px] h-[260px] object-cover" :src='`${url}/uploads/${news.ImagePath}`'>
+        <div class="w-full lg:w-[350px] px-2 lg:px-0.5">
           <div class="flex items-center justify-between">
-            <h5 class="text-black font-semibold text-[24px] line-clamp-2">{{ news.Title }}</h5>
-            <span class="text-gray-400 font-normal text-[20px]"><span>{{ formatTimestamp(news.CreatedAt)
-                }}</span></span>
+            <h5 class="text-start text-black font-semibold text-[24px] line-clamp-2 leading-6">{{ news.Title }}</h5>
+            <span class="text-gray-400 font-normal text-[20px]">
+              {{ formatTimestamp(news.CreatedAt) }}
+            </span>
           </div>
-          <p class="text-gray-500 font-medium text-[20px] line-clamp-3">{{ news.Description }}</p>
+          <p class="text-start text-gray-500 font-medium text-[20px] line-clamp-3 leading-6">{{ news.Description }}</p>
         </div>
       </div>
     </router-link>

@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-// TODO: We have duplicate src/assets/logo.svg and src/components/icons/Logo.vue
-import Logo from "@/components/icons/Logo.vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification"
@@ -100,6 +98,7 @@ const StatusInternalServerError = {
   }
   ```
 -->
+
     <body class="h-full bg-white">
         <!--
       This example requires updating your template:
@@ -112,9 +111,9 @@ const StatusInternalServerError = {
         <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8" v-if="isLoginRequired">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <div class="flex justify-center">
-                    <Logo></Logo>
+                    <img class="w-16" src="@/assets/logo.png">
                 </div>
-                <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                     Sign in to your account
                 </h2>
             </div>
@@ -122,7 +121,8 @@ const StatusInternalServerError = {
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form @submit.prevent="submit" class="space-y-6" action="#" method="POST">
                     <div>
-                        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
+                            address</label>
                         <div class="mt-2">
                             <input required v-model="data.email" id="email" name="email" autocomplete="email"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
@@ -131,7 +131,8 @@ const StatusInternalServerError = {
 
                     <div>
                         <div class="flex items-center justify-between">
-                            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+                            <label for="password"
+                                class="block text-sm font-medium leading-6 text-gray-900">Password</label>
                         </div>
                         <div class="mt-2">
                             <input required v-model="data.password" id="password" name="password" type="password"

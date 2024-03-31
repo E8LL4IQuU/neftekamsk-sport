@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Logo from "./icons/Logo.vue";
-
 import { onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import {
@@ -54,11 +52,11 @@ onMounted(() => {
 
 <template>
   <header class="bg-white">
-    <nav class="container mx-auto flex items-center justify-between p-6 sm:p-0 lg:px-8" aria-label="Global">
+    <nav class="container mx-auto flex items-center justify-between py-1 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
-        <router-link to="/" class="-m-1.5 p-1.5">
+        <router-link to="/">
           <span class="sr-only">АНО "Нефтекамск спортивный"</span>
-          <Logo class="sm:p-3"></Logo>
+          <img class="w-10" src="@/assets/logo.png" alt="Лого">
         </router-link>
       </div>
       <div class="flex lg:hidden">
@@ -116,7 +114,7 @@ onMounted(() => {
         <div class="flex items-center justify-between">
           <router-link to="/" class="-m-1.5 p-1.5">
             <span class="sr-only">АНО "Нефтекамск Спортивный"</span>
-            <Logo></Logo>
+            <img class="w-10" src="@/assets/logo.png" alt="Лого">
           </router-link>
           <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
             <span class="sr-only">Закрыть меню</span>
