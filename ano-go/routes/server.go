@@ -18,25 +18,27 @@ var (
 )
 
 func InitializeFiber() {
+	var cookieSecure bool = true
+	var cookieSameSite string = "Strict"
+
 	app := fiber.New(fiber.Config{
 		// 100 MB
 		BodyLimit: 100 * 1024 * 1024,
 		// If raising limit here you will also have to change it in nginx conf for docker containers(neftekamsk-sport/nginx/nginx.conf) and on your host machine, template for it is in /nginx/host.conf.example
+		// TODO: maybe we can export it to .env but then again it will still have to be manually changed in nginx on host
 	})
 
-	var cookieSecure bool = false
-	if ENVIRONMENT == "production" {
-		cookieSecure = true
-	} else {
-		fmt.Println("Warning: running in developer mode, security and auth features disabled")
+	if ENVIRONMENT == "dev" {
+		cookieSecure = false
+		cookieSameSite = "None"
+		fmt.Println("INSECURE MODE: running in developer mode, security and auth features disabled")
 	}
 
 	store = session.New(session.Config{
 		CookieHTTPOnly: true,
 		CookieSecure:   cookieSecure,
 		Expiration:     time.Hour * 2880,
-		// FIXME: probably has to be anything but None in production
-		CookieSameSite: "None",
+		CookieSameSite: cookieSameSite,
 	})
 
 	app.Use(cors.New(cors.Config{
@@ -44,6 +46,8 @@ func InitializeFiber() {
 		AllowOrigins:     "http://localhost:5173",
 		AllowHeaders:     "Access-Control-Allow-Origin, Content-Type, Origin, Accept",
 	}))
+
+	// TODO: CSRF
 
 	// Auth is inside routes as NewMiddeware()
 	InitializeRoutes(app)
