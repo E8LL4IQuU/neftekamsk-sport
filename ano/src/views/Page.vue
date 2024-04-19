@@ -21,7 +21,7 @@
       Руководители
     </h3>
     <div>
-      <StoriesPeople :PeopleData="PeopleData" />
+      <Staff :PeopleData="PeopleData" />
     </div>
     <h3 class="text-4xl lg:text-5xl pb-6">
       Связаться с нами
@@ -37,7 +37,7 @@ import Hero from "@/components/Hero.vue";
 import Slider from "@/components/Slider.vue";
 import NewsComponent from "@/components/News.vue";
 import Gallery from "@/components/Gallery.vue";
-import StoriesPeople from "@/components/StoriesPeople.vue";
+import Staff from "@/components/Staff.vue";
 import Connect from "@/components/Connect.vue";
 import { onMounted, ref } from "vue";
 import axios from "axios";
