@@ -1,9 +1,10 @@
 package model
 
 import (
+	"os"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
 var DB *gorm.DB
@@ -28,5 +29,5 @@ func InitializeDB() {
 
 	DB = connection
 
-	connection.AutoMigrate(&User{}, &Event{}, &News{}, &Signup{}, &Photo{})
+	connection.AutoMigrate(&User{}, &Event{}, &News{}, &Signup{}, &Photo{}, &Athlete{})
 }

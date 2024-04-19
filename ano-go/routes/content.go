@@ -252,6 +252,7 @@ func DeleteEvent(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Event{})
 }
 
+
 func GetNews(c *fiber.Ctx) error {
 	return getItems(c, &[]model.News{}, "ID")
 }
@@ -271,6 +272,7 @@ func UpdateNews(c *fiber.Ctx) error {
 func DeleteNews(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.News{})
 }
+
 
 func GetSignups(c *fiber.Ctx) error {
 	return getItems(c, &[]model.Signup{}, "ID")
@@ -303,4 +305,25 @@ func CreatePhoto(c *fiber.Ctx) error {
 
 func DeletePhoto(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Photo{})
+}
+
+
+func GetAthletes(c *fiber.Ctx) error {
+	return getItems(c, &[]model.Athlete{}, "ID")
+}
+
+func GetAthleteByID(c *fiber.Ctx) error {
+	return getItemByID(c, &model.Athlete{})
+}
+
+func CreateAthlete(c *fiber.Ctx) error {
+	return createItem(c, true, &model.Athlete{})
+}
+
+func UpdateAthlete(c *fiber.Ctx) error {
+	return updateItem(c, &model.Athlete{})
+}
+
+func DeleteAthlete(c *fiber.Ctx) error {
+	return deleteRecord(c, &model.Athlete{})
 }

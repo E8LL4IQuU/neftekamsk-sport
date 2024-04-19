@@ -18,10 +18,10 @@ const navbarData = [
     name: "Галерея",
     path: "/gallery"
   },
-  // {
-  //   name: "Истории людей",
-  //   path: "/people"
-  // },
+  {
+    name: "Истории людей",
+    path: "/people"
+  },
   {
     name: "Документы",
     path: "/documents"
