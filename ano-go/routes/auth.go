@@ -16,7 +16,7 @@ func parseBody(c *fiber.Ctx) map[string]string {
 func authMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
-	// Only check for auth if we're in production mode
+	// Skip auth if we're in dev mode
 	if ENVIRONMENT == "dev" {
 		return c.Next()
 	}
@@ -152,6 +152,13 @@ func HealthCheck(c *fiber.Ctx) error {
 }
 
 func User(c *fiber.Ctx) error {
+	var user model.User
+
+	if ENVIRONMENT == "dev" {
+		model.DB.Where("id = ?", 1).First(&user)
+		return c.Status(fiber.StatusOK).JSON(user)
+	}
+
 	sess, err := store.Get(c)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
@@ -171,7 +178,6 @@ func User(c *fiber.Ctx) error {
 			"message": "not authorized",
 		})
 	}
-	var user model.User
 
 	// TODO: check if user exists
 	model.DB.Where("id = ?", userId).First(&user)
