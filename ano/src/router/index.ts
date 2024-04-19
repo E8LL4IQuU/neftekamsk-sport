@@ -89,7 +89,7 @@ const router = createRouter({
       path: '/people',
       name: 'people',
       components: {
-        default: () => import('@/views/PeopleView.vue'),
+        default: () => import('@/views/AthletesView.vue'),
         navbar: () => import('@/components/Navbar.vue'),
         footer: () => import('@/components/Footer.vue')
       }

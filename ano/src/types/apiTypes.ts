@@ -32,3 +32,11 @@ export interface Photo {
     ID: number
     ImagePath: string
 }
+
+export interface Athlete {
+    ID: number
+    Name: string
+    Description: string
+    ImagePath: string
+    CreatedAt: number
+}
