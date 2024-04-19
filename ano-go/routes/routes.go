@@ -31,6 +31,9 @@ func InitializeRoutes(app *fiber.App) {
 
 	app.Post("/api/signups", CreateSignup)
 
+	app.Get("/api/photos", GetPhoto)
+	app.Get("/api/photos/:id", GetPhotoByID)
+
 	// Authenticated-only routes
 	app.Use(NewMiddleware())
 
@@ -44,8 +47,6 @@ func InitializeRoutes(app *fiber.App) {
 
 	app.Delete("/api/signups/:id", DeleteSignup)
 
-	app.Get("/api/photos", GetPhoto)
-	app.Get("/api/photos/:id", GetPhotoByID)
 	app.Post("/api/photos", CreatePhoto)
 	app.Delete("/api/photos/:id", DeletePhoto)
 }
