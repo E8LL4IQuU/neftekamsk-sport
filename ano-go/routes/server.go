@@ -43,15 +43,11 @@ func InitializeFiber() {
 
 	app.Use(cors.New(cors.Config{
 		AllowCredentials: true,
-		// FIXME: probably we need to remove AllowOrigins
 		AllowOrigins:     "http://localhost:5173",
 		AllowHeaders:     "Access-Control-Allow-Origin, Content-Type, Origin, Accept",
 	}))
 
-	// TODO: Helmet
 	// TODO: CSRF
-	// TODO: Maybe cache, but need to experiment to see if new changes drop cache
-
 
 	// Auth is inside routes as NewMiddeware()
 	InitializeRoutes(app)
