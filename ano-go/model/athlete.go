@@ -6,7 +6,7 @@ import (
 
 type Athlete struct {
 	ID          uint64
-	Name        string
+	Title       string
 	Description string
 	ImagePath   string
 	CreatedAt   uint64

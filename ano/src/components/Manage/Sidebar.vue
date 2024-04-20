@@ -5,6 +5,7 @@ const props = defineProps(['sidebarData'])
 </script>
 
 <template>
+  <!-- FIXME: Athletes button disappears when clicked -->
   <div class="lg:fixed lg:left-0">
     <!-- Desktop -->
     <nav class="hidden lg:block min-h-screen p-4 border-r">
@@ -23,7 +24,8 @@ const props = defineProps(['sidebarData'])
 
     <!-- Mobile -->
     <nav class="lg:hidden fixed bottom-0 w-full bg-stone-300 py-3 z-10">
-      <ul class="grid grid-cols-4 text-center justify-between">
+      <!-- FIXME: make grid-cols-x dynamic by items count -->
+      <ul class="grid grid-cols-5 text-center justify-between">
         <div v-for="item in props.sidebarData">
           <router-link v-if="$route.path === item.path" class="h-12 rounded-lg flex flex-col justify-between items-center"
             :to="item.path"
@@ -49,6 +51,7 @@ const props = defineProps(['sidebarData'])
       POST /api/auth/logout -->
     </nav>
   </div>
+
 </template>
 
 <style scoped></style>

@@ -3,8 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Sidebar from '@/components/Manage/Sidebar.vue'
 import axios from 'axios'
-import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon, PhotoIcon } from '@heroicons/vue/24/outline'
-import { ArchiveBoxIcon as ArchiveBoxSolidIcon, CalendarIcon as CalendarSolidIcon, MegaphoneIcon as MegaphoneSolidIcon, PhotoIcon as PhotoSolidIcon } from '@heroicons/vue/24/solid'
+import { ArchiveBoxIcon, CalendarIcon, MegaphoneIcon, PhotoIcon, TrophyIcon } from '@heroicons/vue/24/outline'
+import { ArchiveBoxIcon as ArchiveBoxSolidIcon, CalendarIcon as CalendarSolidIcon, MegaphoneIcon as MegaphoneSolidIcon, PhotoIcon as PhotoSolidIcon, TrophyIcon as TrophySolidIcon } from '@heroicons/vue/24/solid'
 
 const url: string = import.meta.env.VITE_ENDPOINT
 const INVALID_USER_ID: number = 0
@@ -31,7 +31,8 @@ const sidebarData = [
     { name: 'Мероприятия', path: '/manage/events', icon: CalendarIcon, iconActive: CalendarSolidIcon},
     { name: 'Новости', path: '/manage/news', icon: MegaphoneIcon, iconActive: MegaphoneSolidIcon},
     { name: 'Записи', path: '/manage/signups', icon: ArchiveBoxIcon, iconActive: ArchiveBoxSolidIcon},
-    { name: 'Галлерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon}
+    { name: 'Галлерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon},
+    { name: 'Спортсмены', path: '/manage/athletes', icon: TrophyIcon, IconActive: TrophySolidIcon}
 ]
 </script>
 

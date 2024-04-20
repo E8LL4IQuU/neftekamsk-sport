@@ -102,7 +102,7 @@ onMounted(() => {
       <div class="flex items-center pe-auto md:p-3 h-100">
         <router-link :to="`/manage/${ItemForm.url}`" class="flex p-4 gap-x-3 text-black items-center">
           <ChevronLeftIcon class="h-4 pt-1"></ChevronLeftIcon>
-          <!-- FIXME: hardcoded -->
+          <!-- FIXME: hardcoded title -->
           <p class="font-bold text-sm text-gray-700">Мероприятия</p>
         </router-link>
         <p class="text-gray-400 ms-3">Новое</p>
@@ -120,13 +120,15 @@ onMounted(() => {
           <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
         </div>
       </div>
+      <!-- FIXME: hardcoded placeholder -->
       <input v-if="ItemForm.url !== 'photos'" required v-model="title"
-        class="text-3xl md:text-6xl placeholder-gray-300 font-bold border-none tracking-tight -ms-3 focus:ring-0"
+        class="text-3xl md:text-6xl placeholder-gray-300 text-black font-bold border-none tracking-tight -ms-3 focus:ring-0"
         placeholder="Название мероприятия" />
-      <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 border-none -ms-2 focus:ring-0"
+      <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 text-black border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
     
+    <!-- FIXME: fix styles -->
     <button class="bg-red-300 w-full text-2xl font-bold py-4 rounded-xl absolute bottom-0 lg:w-auto lg:right-4 lg:bottom-3 lg:px-10" @click="submit">Отправить</button>
   </body>
 </template>

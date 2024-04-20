@@ -125,6 +125,10 @@ const router = createRouter({
       {
         path: 'photos',
         component: () => import('@/views/Manage/ManagePhotos.vue')
+      },
+      {
+        path: 'athletes',
+        component: () => import('@/views/Manage/ManageAthletes.vue')
       }]
     },
     {
@@ -143,9 +147,20 @@ const router = createRouter({
       component: () => import('@/views/Manage/CreatePhoto.vue')
     },
     {
+      path: '/manage/athletes/create',
+      name: 'manage.athletes.create',
+      component: () => import('@/views/Manage/CreateAthlete.vue')
+    },
+    {
       path: '/manage/news/:id',
       name: 'newsEdit',
       component: () => import('@/views/Manage/EditNews.vue'),
+    },
+    {
+      path: '/manage/athletes/:id',
+      name: 'athletesEdit',
+      // FIXME: implement athlete edit
+      redirect: '/manage/athletes'
     },
     {
       path: '/:catchAll(.*)',

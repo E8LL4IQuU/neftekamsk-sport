@@ -4,7 +4,9 @@ import ItemEdit from '@/components/Manage/EditItem.vue'
 </script>
 
 <template>
-    <ItemEdit requestType="post" url="events"></ItemEdit>
+    <ItemEdit requestType="post" url="athletes"></ItemEdit>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
