@@ -11,6 +11,8 @@ const INVALID_USER_ID: number = 0
 const isLoggedIn = ref<number>(0)
 const router = useRouter()
 
+// FIXME: The event vnode-unmounted is not declared in the emits option. It will leak into the component's attributes ($attrs)
+
 onMounted(async () => {
   try {
     const response = await axios.get<{ id: number }>(`${url}/api/auth/user`, {
@@ -32,7 +34,7 @@ const sidebarData = [
     { name: 'Новости', path: '/manage/news', icon: MegaphoneIcon, iconActive: MegaphoneSolidIcon},
     { name: 'Записи', path: '/manage/signups', icon: ArchiveBoxIcon, iconActive: ArchiveBoxSolidIcon},
     { name: 'Галлерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon},
-    { name: 'Спортсмены', path: '/manage/athletes', icon: TrophyIcon, IconActive: TrophySolidIcon}
+    { name: 'Спортсмены', path: '/manage/athletes', icon: TrophyIcon, iconActive: TrophySolidIcon}
 ]
 </script>
 
