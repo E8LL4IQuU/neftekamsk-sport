@@ -22,7 +22,7 @@ onMounted(() => {
 </script>
 
 <template>
-<body>
+<body class="bg-white">
   <router-link v-for="item in news" :to="`/news/${item.ID}`">
     <div class="containers hover:bg-slate-200 transition-colors">
       <div class="flex justify-between mt-5 py-4 laptop:block laptop:text-center mobile:py-[35px]">

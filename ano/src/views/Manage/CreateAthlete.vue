@@ -4,7 +4,7 @@ import ItemEdit from '@/components/Manage/EditItem.vue'
 </script>
 
 <template>
-    <ItemEdit requestType="post" url="athletes"></ItemEdit>
+    <ItemEdit requestType="post" url="athletes" breadcrumb="спортсмены" title="Имя и фамилия"></ItemEdit>
 </template>
 
 <style scoped>

@@ -7,7 +7,7 @@ import { type IRLEvent, type News } from '@/types/apiTypes';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
-const ItemForm = defineProps(['requestType', 'url']);
+const ItemForm = defineProps(['requestType', 'url', 'breadcrumb', 'title']);
 const url: string = import.meta.env.VITE_ENDPOINT;
 const router = useRouter();
 const route = useRoute();
@@ -102,8 +102,7 @@ onMounted(() => {
       <div class="flex items-center pe-auto md:p-3 h-100">
         <router-link :to="`/manage/${ItemForm.url}`" class="flex p-4 gap-x-3 text-black items-center">
           <ChevronLeftIcon class="h-4 pt-1"></ChevronLeftIcon>
-          <!-- FIXME: hardcoded title -->
-          <p class="font-bold text-sm text-gray-700">Мероприятия</p>
+          <p class="font-bold text-sm text-gray-700 capitalize">{{ ItemForm.breadcrumb }}</p>
         </router-link>
         <p class="text-gray-400 ms-3">Новое</p>
       </div>
@@ -116,14 +115,15 @@ onMounted(() => {
           <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
             изображение</button>
         </div>
+        <!-- TODO: render according to a prop, "date" for example -->
         <div v-if="ItemForm.url === 'events'" class="w-64">
           <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
         </div>
       </div>
-      <!-- FIXME: hardcoded placeholder -->
-      <input v-if="ItemForm.url !== 'photos'" required v-model="title"
+      <!-- FIXME: Capitalize placeholder -->
+      <input v-if="ItemForm.title" required v-model="title"
         class="text-3xl md:text-6xl placeholder-gray-300 text-black font-bold border-none tracking-tight -ms-3 focus:ring-0"
-        placeholder="Название мероприятия" />
+        :placeholder="ItemForm.title" />
       <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 text-black border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>

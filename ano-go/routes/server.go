@@ -55,4 +55,5 @@ func InitializeFiber() {
 	app.Listen(":8000")
 
 	// TODO: Create a function that will clear images that are not part of the database anymore
+	// TODO: Add error logging
 }
