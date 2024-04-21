@@ -19,6 +19,20 @@ const title = ref<string>('');
 const description = ref<string>('');
 const date = ref<Date | null>(null);
 
+const determineMode = (requestType: string): string => {
+  switch (requestType) {
+    case "post":
+      return "новое"
+    
+    case "put":
+      return "редактирование"
+  
+    default:
+      return "custom action"
+  }
+
+}
+
 const openFileInput = (): void => {
   if (fileInputRef.value instanceof HTMLInputElement) {
     fileInputRef.value.click();
@@ -104,7 +118,7 @@ onMounted(() => {
           <ChevronLeftIcon class="h-4 pt-1"></ChevronLeftIcon>
           <p class="font-bold text-sm text-gray-700 capitalize">{{ ItemForm.breadcrumb }}</p>
         </router-link>
-        <p class="text-gray-400 ms-3">Новое</p>
+        <p class="text-gray-400 ms-3">{{ determineMode(ItemForm.requestType) }}</p>
       </div>
     </header>
     <form @submit.prevent="submit" @keydown.enter.prevent="submit" class="flex flex-col ps-5 md:ps-28 pt-8">

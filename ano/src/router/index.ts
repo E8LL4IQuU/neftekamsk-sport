@@ -159,8 +159,7 @@ const router = createRouter({
     {
       path: '/manage/athletes/:id',
       name: 'athletesEdit',
-      // FIXME: implement athlete edit
-      redirect: '/manage/athletes'
+      component: () => import('@/views/Manage/EditAthletes.vue')
     },
     {
       path: '/:catchAll(.*)',
