@@ -4,6 +4,7 @@ import Tabs from "@/components/Tabs.vue";
 
 // FIXME: Extraneous non-props attributes (modelValue) were passed to component but could not be automatically inherited because component renders fragment or text root nodes.
 // FIXME: Mobile layout
+// FIXME: Fix gaps between categories
 const selectedTab = ref('tab-br1')
 </script>
 
