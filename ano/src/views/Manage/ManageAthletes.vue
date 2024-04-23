@@ -27,7 +27,7 @@ onMounted(() => {
     <div class="lg:ps-52">
         <div class="p-4 lg:py-5 lg:px-12">
             <div class="flex justify-between">
-                <h1 class="text-3xl text-black font-bold mb-3">Спортсмены</h1>
+                <h1 class="text-3xl text-black font-bold mb-3">Люди спорта</h1>
                 <router-link :to="'/manage/athletes/create'">
                     <button
                         class="bg-black rounded-xl text-xl lg:text-base lg:rounded text-white py-2 px-3 ml-auto">Создать</button>

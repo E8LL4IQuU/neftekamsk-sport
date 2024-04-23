@@ -19,7 +19,7 @@ const navbarData = [
     path: "/gallery"
   },
   {
-    name: "Истории людей",
+    name: "Люди спорта",
     path: "/people"
   },
   {

@@ -34,7 +34,7 @@ const sidebarData = [
     { name: 'Новости', path: '/manage/news', icon: MegaphoneIcon, iconActive: MegaphoneSolidIcon},
     { name: 'Записи', path: '/manage/signups', icon: ArchiveBoxIcon, iconActive: ArchiveBoxSolidIcon},
     { name: 'Галлерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon},
-    { name: 'Спортсмены', path: '/manage/athletes', icon: TrophyIcon, iconActive: TrophySolidIcon}
+    { name: 'Люди спорта', path: '/manage/athletes', icon: TrophyIcon, iconActive: TrophySolidIcon}
 ]
 </script>
 
