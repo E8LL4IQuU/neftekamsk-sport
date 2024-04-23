@@ -53,7 +53,6 @@ onMounted(() => {
                 </router-link>
             </div>
             <div class="news-list">
-                <!-- FIXME: add breadcrumb, title -->
                 <router-link v-for="newsItem in news" :key="newsItem.ID"
                     :to="{ name: 'newsEdit', params: { id: newsItem.ID } }">
                     <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer">

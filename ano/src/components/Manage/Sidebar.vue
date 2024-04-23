@@ -5,7 +5,6 @@ const props = defineProps(['sidebarData'])
 </script>
 
 <template>
-  <!-- FIXME: Athletes button disappears when clicked -->
   <div class="lg:fixed lg:left-0">
     <!-- Desktop -->
     <nav class="hidden lg:block min-h-screen p-4 border-r">

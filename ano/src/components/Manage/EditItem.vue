@@ -138,6 +138,7 @@ onMounted(() => {
       <input v-if="ItemForm.title" required v-model="title"
         class="text-3xl md:text-6xl placeholder-gray-300 text-black font-bold border-none tracking-tight -ms-3 focus:ring-0"
         :placeholder="ItemForm.title" />
+      <!-- FIXME: make this field take up remainder of space -->
       <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 text-black border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
