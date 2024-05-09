@@ -24,10 +24,9 @@ const props = defineProps(['sidebarData'])
     <!-- Mobile -->
     <nav class="lg:hidden fixed bottom-0 w-full bg-stone-300 h-16 z-10">
       <!-- FIXME: add new signups badge -->
-      <!-- FIXME: place links in center while preserving full height of clickable area -->
       <div class="grid grid-flow-col text-center h-full">
         <div v-for="item in props.sidebarData" class="flex flex-col justify-center">
-          <router-link v-if="$route.path === item.path" class="rounded-lg flex flex-col items-center" :to="item.path"
+          <router-link v-if="$route.path === item.path" class="rounded-lg flex flex-col items-center justify-center h-full" :to="item.path"
             :class="{ 'text-black': $route.path === item.path, 'text-gray-700': $route.path !== item.path }">
             <div>
               <component :class="{ 'bg-orange-300 saturate-50 rounded-2xl': $route.path === item.path }"
@@ -36,7 +35,7 @@ const props = defineProps(['sidebarData'])
             <span class="font-bold text-xs">{{ item.name }}</span>
           </router-link>
 
-          <router-link v-else class="rounded-lg flex flex-col items-center" :to="item.path"
+          <router-link v-else class="rounded-lg flex flex-col items-center justify-center h-full" :to="item.path"
             :class="{ 'text-black': $route.path === item.path, 'text-gray-700': $route.path !== item.path }">
             <div>
               <component :class="{ 'bg-orange-300 saturate-50 rounded-2xl': $route.path === item.path }"
