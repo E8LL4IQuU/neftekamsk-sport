@@ -142,9 +142,7 @@ onMounted(() => {
       <textarea v-if="ItemForm.url !== 'photos'" required v-model="description" class="md:text-xl placeholder-gray-400 text-black border-none -ms-2 focus:ring-0"
         placeholder="Начните писать описание..." rows="15"></textarea>
     </form>
-    
-    <!-- FIXME: fix styles -->
-    <button class="bg-red-300 w-full text-2xl font-bold py-4 rounded-xl absolute bottom-0 lg:w-auto lg:right-4 lg:bottom-3 lg:px-10" @click="submit">Отправить</button>
+    <button class="bg-red-600 hover:bg-red-400 w-full text-xl font-bold py-3 rounded-xl absolute bottom-0 lg:w-auto lg:right-4 lg:bottom-3 lg:px-7 text-white duration-300 ease-out hover:scale-105" @click="submit">Применить</button>
   </body>
 </template>
 
