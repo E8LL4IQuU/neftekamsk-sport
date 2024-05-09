@@ -53,6 +53,7 @@ onMounted(() => {
 <template>
   <!-- TODO: reapply ed00ce2 but fix header overlapping with the content afterwards -->
   <header class="bg-white">
+    <!-- FIXME: Gap is too big I guess -->
     <nav class="container mx-auto flex items-center justify-between py-1 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1">
         <router-link to="/">

@@ -2,9 +2,10 @@
 import {ref} from "vue";
 import Tabs from "@/components/Tabs.vue";
 
-// FIXME: Extraneous non-props attributes (modelValue) were passed to component but could not be automatically inherited because component renders fragment or text root nodes.
+// FIXME: enforce fixed aspect ratio to images
 // FIXME: Mobile layout
 // FIXME: Fix gaps between categories
+// FIXME: Extraneous non-props attributes (modelValue) were passed to component but could not be automatically inherited because component renders fragment or text root nodes.
 const selectedTab = ref('tab-br1')
 </script>
 

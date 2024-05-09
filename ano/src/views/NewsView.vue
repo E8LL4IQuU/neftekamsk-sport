@@ -41,16 +41,20 @@ watch(() => route.params.id, (newID) => {
 </script>
 
 <template>
+  <!-- Content -->
   <div class="lg:grid lg:grid-cols-12 sm:px-0 xl:container mx-auto pb-16">
     <div class="sm:col-span-9 mb-16" v-if="news">
       <img class="sm:w-full sm:h-[600px] object-cover" :src="`${url}/uploads/${news.ImagePath}`" alt="">
       <div class="px-5 pt-3">
         <h1 class="leading-8 text-black text-3xl font-bold mb-3 line-clamp-5">{{ news.Title }}</h1>
+        <!-- FIXME: links in the text are not clickable -->
         <p class="leading-6 text-black max-w-7xl">{{ news.Description }}</p>
       </div>
     </div>
+    <!-- Sidebar -->
     <div class="flex flex-col justify-center sm:col-span-3 lg:mt-0 mx-5 lg:mx-2">
       <p class="font-bold text-black mb-0.5">Новости</p>
+      <!-- FIXME: hr is too long -->
       <hr class="mb-1">
       <router-link v-for="item in newsBulk" :to="`/news/${item.ID}`">
         <div class="hover:bg-slate-100 transition-colors">

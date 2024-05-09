@@ -36,7 +36,7 @@ onMounted(() => {
             <div class="athletes-list">
                 <router-link v-for="athlete in athletes" :key="athlete.ID"
                     :to="{ name: 'athletesEdit', params: { id: athlete.ID } }">
-                    <!-- FIXME: fix layout -->
+                    <!-- FIXME: enforce fixed image size here and in AthletesView -->
                     <div class="mb-4 p-4 bg-white shadow-md rounded-md cursor-pointer flex gap-x-2">
                         <img :src="`${url}/uploads/${athlete.ImagePath}`" class="h-32 w-24 object-cover" alt="">
                         <div class="basis-full">

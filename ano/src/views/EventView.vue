@@ -62,7 +62,7 @@ watch(() => route.params.id, (newID) => {
 </script>
 
 <template>
-  <div class="px-1 sm:px-0 sm:container mx-auto pb-20">
+  <body class="px-1 sm:px-0 sm:container mx-auto pb-20">
     <div class="lg:flex gap-x-12" v-if="IRLEvent">
       <img class="sm:w-full md:w-1/2" :src="`${url}/uploads/${IRLEvent.ImagePath}`" alt="">
       <div class="mobile:text-center">
@@ -72,6 +72,7 @@ watch(() => route.params.id, (newID) => {
           <button class="px-2 py-2 mt-3 rounded bg-red-400 text-white hover:bg-red-500" @click="openRegistrationPopup">Записаться</button>
 
           <!-- Registration Popup -->
+          <!-- FIXME: Too small bottom padding -->
           <div v-if="isRegistrationPopupOpen"
             class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
             @click.self="closeRegistrationPopup">
@@ -119,7 +120,7 @@ watch(() => route.params.id, (newID) => {
         </div>
       </div>
     </div>
-  </div>
+  </body>
 </template>
 
 <style scoped></style>

@@ -17,6 +17,7 @@ var (
 	ENVIRONMENT string = os.Getenv("ENVIRONMENT")
 )
 
+// TODO: backup database data
 func InitializeFiber() {
 	var cookieSecure bool = true
 	var cookieSameSite string = "Strict"
