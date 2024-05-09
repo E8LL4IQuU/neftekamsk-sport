@@ -28,9 +28,9 @@
             <div>
               <h3 class="text-xl font-bold uppercase mobile:text-[16px]">{{ event.Title }}</h3>
             </div>
-            <div>
+            <!-- <div>
               <span class="text-gray-600 text-base font-light mobile:text-[14px]">{{ formatTimestamp(event.Date) }}</span>
-            </div>
+            </div> -->
           </div>
           <div class="text-gray-500">
             <p class="max-w-[600px]">{{ event.Description }}</p>
@@ -52,20 +52,20 @@ const IRLEvents = ref<IRLEvent[]>([])
 const selectedFilter = ref<string>("all")
 let isLoading: boolean = true
 
-const formatTimestamp = (timestamp: string): string => {
-  const date = new Date(timestamp);
+// const formatTimestamp = (timestamp: string): string => {
+//   const date = new Date(timestamp);
 
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric'
+//   const options: Intl.DateTimeFormatOptions = {
+//     year: 'numeric',
+//     month: '2-digit',
+//     day: 'numeric',
+//     hour: 'numeric',
+//     minute: 'numeric'
 
-  };
+//   };
 
-  return date.toLocaleDateString("ru-RU", options);
-}
+//   return date.toLocaleDateString("ru-RU", options);
+// }
 
 const isStale = (date: string): boolean => {
   const yesterday = new Date()

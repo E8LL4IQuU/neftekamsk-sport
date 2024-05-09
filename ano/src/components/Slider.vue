@@ -6,12 +6,12 @@
     }" :navigation="true" :modules="modules">
       <SwiperSlide v-for="(slide, index) in SliderData" :key="index">
         <div class="flex flex-col justify-center">
-          <img class="w-auto h-72 lg:h-screen object-cover lg:max-h-[700px] brightness-75"
+          <img class="w-auto h-72 lg:h-screen object-cover lg:max-h-[700px] brightness-[60%]"
             :src="`${url}/uploads/${slide.ImagePath}`" alt="slider image" />
           <div class="w-full text-white absolute text-center justify-center">
-            <h2 class="text-white text-5xl pb-3 mobile:text-3xl line-clamp-1">{{ slide.Title }}</h2>
-            <h3 class="text-white font-normal pb-3 text-[20px]">{{ formatTimestamp(slide.Date) }}</h3>
-            <router-link disabled class="p-2 rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300"
+            <h2 class="text-white text-5xl font-bold pb-12 mobile:text-3xl line-clamp-1">{{ slide.Title }}</h2>
+            <!-- <h3 class="text-white font-normal pb-3 text-[20px]">{{ formatTimestamp(slide.Date) }}</h3> -->
+            <router-link disabled class="py-2 px-4 text-sm rounded-[4px] bg-gray-400 hover:bg-gray-600 duration-300"
               :to="`/events/${slide.ID}`">Подробнее</router-link>
           </div>
         </div>
@@ -37,20 +37,20 @@ const modules = [
   Navigation
 ]
 
-const formatTimestamp = (timestamp: string): string => {
-  const date = new Date(timestamp);
+// const formatTimestamp = (timestamp: string): string => {
+//   const date = new Date(timestamp);
 
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric'
+//   const options: Intl.DateTimeFormatOptions = {
+//     year: 'numeric',
+//     month: '2-digit',
+//     day: 'numeric',
+//     hour: 'numeric',
+//     minute: 'numeric'
 
-  };
+//   };
 
-  return date.toLocaleDateString("ru-RU", options);
-}
+//   return date.toLocaleDateString("ru-RU", options);
+// }
 </script>
 
 <style scoped lang="sass">

@@ -129,10 +129,10 @@ onMounted(() => {
           <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
             изображение</button>
         </div>
-        <!-- TODO: render according to a prop, "date" for example -->
+        <!-- TODO: render according to a prop, "date" for example
         <div v-if="ItemForm.url === 'events'" class="w-64">
           <VueDatePicker v-model="date" placeholder="Выберите дату" text-input></VueDatePicker>
-        </div>
+        </div> -->
       </div>
       <!-- FIXME: Capitalize placeholder -->
       <input v-if="ItemForm.title" required v-model="title"

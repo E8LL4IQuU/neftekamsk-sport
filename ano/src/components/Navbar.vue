@@ -31,19 +31,19 @@ const fetchIRLEvents = async (): Promise<void> => {
   }
 };
 
-const formatTimestamp = (timestamp: string): string => {
-  const date = new Date(timestamp);
+// const formatTimestamp = (timestamp: string): string => {
+//   const date = new Date(timestamp);
 
-  const options: Intl.DateTimeFormatOptions = {
-    month: '2-digit',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric'
+//   const options: Intl.DateTimeFormatOptions = {
+//     month: '2-digit',
+//     day: 'numeric',
+//     hour: 'numeric',
+//     minute: 'numeric'
 
-  };
+//   };
 
-  return date.toLocaleDateString("ru-RU", options);
-}
+//   return date.toLocaleDateString("ru-RU", options);
+// }
 
 onMounted(() => {
   fetchIRLEvents();
@@ -86,7 +86,7 @@ onMounted(() => {
                   <div class="flex-auto">
                     <router-link :to="`/events/${item.ID}`" class="block text-gray-900">
                       <h2 class="font-semibold">{{ item.Title }}</h2>
-                      <h3>{{ formatTimestamp(item.Date) }}</h3>
+                      <!-- <h3>{{ formatTimestamp(item.Date) }}</h3> -->
                       <span class="absolute inset-0" />
                     </router-link>
                   </div>
@@ -139,7 +139,7 @@ onMounted(() => {
                     <DisclosureButton as="div"
                       class="block rounded-lg py-0.5 my-1 pl-6 pr-3 text-sm leading-7 text-gray-900 bg-gray-100 hover:bg-gray-300">
                       <h2 class="font-semibold">{{ item.Title }}</h2>
-                      <h3>{{ formatTimestamp(item.Date) }}</h3>
+                      <!-- <h3>{{ formatTimestamp(item.Date) }}</h3> -->
                     </DisclosureButton>
                   </router-link>
                   <router-link to="/events" @click="mobileMenuOpen = false">
