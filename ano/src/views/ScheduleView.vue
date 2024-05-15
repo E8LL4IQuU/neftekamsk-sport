@@ -16,16 +16,16 @@
         <table class="w-full table-auto border-collapse border-gray-200">
           <thead>
             <tr>
-              <th class="px-6 py-3 text-gray-500 text-left font-bold bg-slate-100 text-sm uppercase">День недели</th>
-              <th class="px-6 py-3 text-gray-500 text-left font-bold bg-slate-100 text-sm uppercase">Занятия</th>
+              <th class="px-6 py-3 text-gray-500 text-left font-bold bg-slate-300 text-sm uppercase">День недели</th>
+              <th class="px-6 py-3 text-gray-500 text-left font-bold bg-slate-300 text-sm uppercase">Занятия</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, weekIndex) in weeklySchedule" :key="weekIndex"
-              :class="{ 'bg-slate-100': (weekIndex % 2 == 1) }">
+              :class="{ 'bg-slate-300': (weekIndex % 2 == 1) }">
               <td class="px-6 py-3 text-left font-bold">{{ item.day }}</td>
               <td>
-                <div :class="{ 'bg-slate-100': (weekIndex % 2 == 1) }" class="w-full">
+                <div :class="{ 'bg-slate-300': (weekIndex % 2 == 1) }" class="w-full">
                   <template v-for="(event, eventIndex) in item.events">
                     <div class="px-6 py-3 text-left">{{ event }}</div>
                     <!-- <span class="text-gray-500 text-sm">({{ getDuration(event) }})</span> -->
