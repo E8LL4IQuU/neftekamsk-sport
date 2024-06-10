@@ -33,7 +33,7 @@ const sidebarData = [
     { name: 'Мероприятия', path: '/manage/events', icon: CalendarIcon, iconActive: CalendarSolidIcon},
     { name: 'Новости', path: '/manage/news', icon: MegaphoneIcon, iconActive: MegaphoneSolidIcon},
     { name: 'Записи', path: '/manage/signups', icon: ArchiveBoxIcon, iconActive: ArchiveBoxSolidIcon},
-    { name: 'Галлерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon},
+    { name: 'Галерея', path: '/manage/photos', icon: PhotoIcon, iconActive: PhotoSolidIcon},
     { name: 'Люди спорта', path: '/manage/athletes', icon: TrophyIcon, iconActive: TrophySolidIcon}
 ]
 </script>
