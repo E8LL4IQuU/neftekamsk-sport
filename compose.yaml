@@ -37,4 +37,7 @@ services:
       MARIADB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MARIADB_DATABASE: ${DATABASE_NAME}
     volumes:
-      - ./database:/var/lib/mysql
+      - database:/var/lib/mysql
+
+volumes:
+  database:
