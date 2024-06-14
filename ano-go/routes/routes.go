@@ -9,12 +9,17 @@ func InitializeRoutes(app *fiber.App) {
 	// nginx/default.conf, docker container rebuild required afterwards
 	// otherwise "404 Not found" will be returned
 
+	// TODO: Add big fricking placeholder to the frontend when we're in developer mode
+	// Permit registration if we're in dev mode
+	if ENVIRONMENT == "dev" {
+		app.Post("/api/auth/register", Register)
+	}
+
 	// Public routes
 	// Auth
-	// FIXME: remove "auth" from path
-	// app.Post("/api/auth/register", Register)
+	// FIXME: remove "/auth" from path
 	app.Post("/api/auth/login", Login)
-	// FIXME: what is this
+	// FIXME: what is this lol
 	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)
 	app.Post("/api/auth/logout", Logout)

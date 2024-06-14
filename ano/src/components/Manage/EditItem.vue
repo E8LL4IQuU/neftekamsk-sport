@@ -126,6 +126,7 @@ onMounted(() => {
         <input required type="file" ref="fileInputRef" @change="onFileChange" class="hidden">
         <div class="inline-flex items-center group">
           <PlusIcon class="h-5 pt-1 text-gray-500 group-hover:text-gray-600"></PlusIcon>
+          <!-- TODO: Selection state -->
           <button @click.prevent="openFileInput" class="text-gray-400 ms-1 group-hover:text-gray-600">Добавить
             изображение</button>
         </div>

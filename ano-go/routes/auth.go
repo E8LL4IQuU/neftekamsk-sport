@@ -155,7 +155,9 @@ func User(c *fiber.Ctx) error {
 	var user model.User
 
 	if ENVIRONMENT == "dev" {
-		model.DB.Where("id = ?", 1).First(&user)
+		user := model.User{
+			ID: 1,
+		}
 		return c.Status(fiber.StatusOK).JSON(user)
 	}
 
