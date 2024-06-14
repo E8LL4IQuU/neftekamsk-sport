@@ -154,11 +154,9 @@ func HealthCheck(c *fiber.Ctx) error {
 func User(c *fiber.Ctx) error {
 	var user model.User
 
+	// Skip auth when in dev mode
 	if ENVIRONMENT == "dev" {
-		user := model.User{
-			ID: 1,
-		}
-		return c.Status(fiber.StatusOK).JSON(user)
+		return nil
 	}
 
 	sess, err := store.Get(c)
