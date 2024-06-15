@@ -25,6 +25,7 @@ services:
       DATABASE_PORT: ${DATABASE_PORT}
       ENVIRONMENT: ${ENVIRONMENT}
     build: ./ano-go
+    # FIXME: Use healthcheck instead of entrypoint thingy
     depends_on:
       - db
     volumes:
@@ -38,6 +39,18 @@ services:
       MARIADB_DATABASE: ${DATABASE_NAME}
     volumes:
       - database:/var/lib/mysql
+  cypress:
+    container_name: ${CYPRESS_CONTAINER_NAME}
+    restart: ${DOCKER_RESTART_POLICY}
+    ports:
+      - 7002:7002
+    build: ./cypress
+    environment:
+      CYPRESS_BASE_URL: ${BASE_URL}
+    depends_on:
+      - web
+    volumes:
+      - ./cypress/:/e2e/
 
 volumes:
   database:
