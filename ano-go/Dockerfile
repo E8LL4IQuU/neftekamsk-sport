@@ -1,21 +1,27 @@
-FROM golang:alpine
+# Step 1: Build go application
+FROM golang AS build
 
 WORKDIR /app
 
-RUN apk update && apk upgrade && apk add curl
+RUN apt update && apt upgrade -y
 
-# FIXME: why not just 'COPY . .'
-COPY ./go.mod go.sum ./
-RUN go mod tidy && go mod download && go mod verify
+COPY go.mod go.sum ./
+RUN go mod download
 
-# Install CompileDaemon
-RUN go install -mod=mod github.com/githubnemo/CompileDaemon
-
-# FIXME: why move entrypoint separately
 COPY . .
-COPY ./entrypoint.sh /entrypoint.sh
+RUN go build -o /app/ano-go .
 
-# FIXME: do we need to chmod
-RUN chmod +rx /entrypoint.sh
+# Step 2: Run go application
+FROM debian AS prod-stage
 
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+WORKDIR /app
+
+RUN apt update && apt upgrade -y && \
+    apt install -y curl
+
+COPY --from=build /app/ano-go .
+COPY entrypoint.sh .
+
+RUN chmod +x entrypoint.sh
+
+CMD ["./ano-go"]

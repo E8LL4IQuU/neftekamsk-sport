@@ -1,0 +1,16 @@
+FROM golang
+
+WORKDIR /app
+
+RUN apt update && apt upgrade -y && \
+    apt install -y curl
+
+COPY ./go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+# Install CompileDaemon
+RUN go install -mod=mod github.com/githubnemo/CompileDaemon
+
+CMD CompileDaemon --build="go build -o ano-go ." --command="./ano-go"
