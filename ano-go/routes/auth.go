@@ -1,9 +1,12 @@
 package routes
 
 import (
+	"strconv"
+
 	"github.com/E8LL4IQuU/ano-go/model"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 func parseBody(c *fiber.Ctx) map[string]string {
@@ -163,4 +166,37 @@ func User(c *fiber.Ctx) error {
 	model.DB.Where("id = ?", userId).First(&user)
 
 	return c.Status(fiber.StatusOK).JSON(user)
+}
+
+
+func DeleteUser(c *fiber.Ctx) error {
+	// Get the user ID from the URL parameter
+	id := c.Params("id")
+
+	// Convert the ID to an integer
+	userID, err := strconv.Atoi(id)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "User not found",
+		})
+	}
+
+	// Find the user by ID and delete it
+	var user model.User
+	result := model.DB.First(&user, userID)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "User not found",
+			})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Internal server error",
+		})
+	}
+
+	model.DB.Delete(&user)
+
+	// Return a success response
+	return c.SendStatus(fiber.StatusNoContent)
 }

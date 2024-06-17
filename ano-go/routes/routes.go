@@ -43,6 +43,8 @@ func InitializeRoutes(app *fiber.App) {
 	// Authenticated-only routes
 	app.Use(NewMiddleware())
 
+	app.Delete("/api/users/:id", DeleteUser)
+
 	app.Post("/api/events", CreateEvent)
 	app.Put("/api/events/:id", UpdateEvent)
 	app.Delete("/api/events/:id", DeleteEvent)
