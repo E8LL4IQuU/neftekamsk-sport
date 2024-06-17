@@ -31,6 +31,7 @@ onMounted(() => {
 
 <template>
   <body class="container mx-auto pb-10 bg-white">
+    <!-- FIXME: inconsistent header text -->
     <h1 class="text-3xl font-bold mb-4 text-black">Галерея</h1>
     <div class="grid lg:grid-cols-2 gap-4">
       <!-- TODO: enlarge photo on click -->

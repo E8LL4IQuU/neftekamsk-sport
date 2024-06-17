@@ -1,6 +1,6 @@
 <template>
 
-  <body class="container m-auto">
+  <body class="container m-auto bg-white">
     <div>
       <h1 class="text-black text-[40px] font-light pb-[24px]">Люди спорта</h1>
     </div>

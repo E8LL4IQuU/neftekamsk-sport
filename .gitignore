@@ -8,7 +8,7 @@
 *.sln
 *.sw?
 
-.env
-ano/.env
+.env*
+ano/.env*
 ano-go/uploads/
 database/

@@ -1,8 +1,10 @@
 <template>
+  <!-- FIXME: white text on the white background -->
 
   <body class="bg-white">
     <!-- TODO: mobile layout -->
     <div class="container mx-auto mb-8 ">
+      <!-- FIXME: inconsistent header text -->
       <h2 class="text-black pt-[14px] text-4xl font-bold mb-8 mobile:text-3xl">Расписание</h2>
       <p class="text-[24px] text-neutral-600 font-light leading-6">
         Для записи на занятия, используйте наш WhatsApp

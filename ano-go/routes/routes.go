@@ -19,7 +19,7 @@ func InitializeRoutes(app *fiber.App) {
 	// Auth
 	// FIXME: remove "/auth" from path
 	app.Post("/api/auth/login", Login)
-	// FIXME: what is this lol
+	// FIXME: what is this lol, are we in Canada?
 	app.Get("/api/auth/healthcheck", HealthCheck)
 	app.Get("/api/auth/user", User)
 	app.Post("/api/auth/logout", Logout)

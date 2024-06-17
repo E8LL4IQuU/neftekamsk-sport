@@ -1,3 +1,4 @@
+<!-- FIXME: why isn't it in Manage folder -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import axios from 'axios'

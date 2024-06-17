@@ -12,6 +12,7 @@ const selectedTab = ref('tab-br1')
 <template>
   <div>
   <div class="max-w-[1200px] m-auto">
+    <!-- FIXME: inconsistent header text -->
     <div>
       <h1 class="text-black text-[40px] font-light pb-[24px]">Направления</h1>
     </div>

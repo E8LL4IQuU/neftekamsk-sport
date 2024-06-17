@@ -62,7 +62,7 @@ watch(() => route.params.id, (newID) => {
 </script>
 
 <template>
-  <body class="px-1 sm:px-0 sm:container mx-auto pb-20">
+  <body class="px-1 sm:px-0 sm:container mx-auto pb-20 bg-white">
     <div class="lg:flex gap-x-12" v-if="IRLEvent">
       <img class="sm:w-full md:w-1/2" :src="`${url}/uploads/${IRLEvent.ImagePath}`" alt="">
       <div class="mobile:text-center">

@@ -1,6 +1,7 @@
 <template>
   <div class="max-w-[1250px]  m-auto mb-8 ">
     <div class="flex justify-between items-center p-5">
+      <!-- FIXME: inconsistent header text -->
       <div>
         <h2 class="text-black pt-[14px] pb-[18px] font-light text-4xl mobile:text-3xl">Мероприятия</h2>
       </div>
