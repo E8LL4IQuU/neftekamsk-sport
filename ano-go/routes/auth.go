@@ -131,26 +131,6 @@ func Logout(c *fiber.Ctx) error {
 	})
 }
 
-func HealthCheck(c *fiber.Ctx) error {
-	sess, err := store.Get(c)
-	if err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "not authorized",
-		})
-	}
-
-	auth := sess.Get(AUTH_KEY)
-	if auth != nil {
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{
-			"message": "authenticated",
-		})
-	} else {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "not authorized",
-		})
-	}
-}
-
 func User(c *fiber.Ctx) error {
 	var user model.User
 
