@@ -20,7 +20,6 @@ services:
       test: curl -f localhost:80
       start_period: 0s
       start_interval: 1s
-      retries: 1000
   backend:
     container_name: ${BACKEND_CONTAINER_NAME}
     restart: ${DOCKER_RESTART_POLICY}
@@ -37,10 +36,9 @@ services:
     volumes:
       - ./ano-go/:/app/
     healthcheck:
-      test: curl -f localhost:8000/api/auth/user
+      test: curl -f localhost:8000/api/events?limit=0
       start_period: 0s
       start_interval: 1s
-      retries: 1000
   db:
     container_name: ${DATABASE_CONTAINER_NAME}
     restart: ${DOCKER_RESTART_POLICY}
@@ -55,7 +53,6 @@ services:
       test: mariadb --user=root --password='${DATABASE_ROOT_PASSWORD}' --execute='show databases;'
       start_period: 0s
       start_interval: 1s
-      retries: 1000
   # FIXME: [STARTED] Task Without title
   cypress:
     container_name: ${CYPRESS_CONTAINER_NAME}
