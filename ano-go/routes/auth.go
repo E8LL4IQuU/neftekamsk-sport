@@ -19,11 +19,6 @@ func parseBody(c *fiber.Ctx) map[string]string {
 func authMiddleware(c *fiber.Ctx) error {
 	sess, err := store.Get(c)
 
-	// Skip auth if we're in dev mode
-	if ENVIRONMENT == "dev" {
-		return c.Next()
-	}
-
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"message": "unauthorized",
@@ -136,11 +131,6 @@ func Logout(c *fiber.Ctx) error {
 
 func User(c *fiber.Ctx) error {
 	var user model.User
-
-	// Skip auth when in dev mode
-	if ENVIRONMENT == "dev" {
-		return nil
-	}
 
 	sess, err := store.Get(c)
 	if err != nil {

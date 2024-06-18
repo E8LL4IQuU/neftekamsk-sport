@@ -30,9 +30,13 @@ func InitializeFiber() {
 	})
 
 	if ENVIRONMENT == "dev" {
+		// ANSI escape code for red background
+		const redBg = "\033[41m"
+		const reset = "\033[0m"
+
 		cookieSecure = false
 		cookieSameSite = "None"
-		fmt.Println("INSECURE MODE: running in developer mode, security and auth features disabled")
+		fmt.Println(redBg + "INSECURE: running in developer mode, security requirements disabled" + reset)
 	}
 
 	store = session.New(session.Config{

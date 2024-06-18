@@ -1,4 +1,4 @@
-<!-- FIXME: why isn't it in Manage folder -->
+<!-- FIXME: why isn't it in the Manage folder -->
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import axios from "axios";
