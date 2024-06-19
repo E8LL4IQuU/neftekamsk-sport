@@ -1,7 +1,6 @@
 // cypress/e2e/production_spec.cy.js
 
 if (Cypress.env('ENVIRONMENT') !== 'dev') {
-
   Cypress.Commands.add('apiRequest', (method, url, body, headers = {}) => {
     return cy.request({
       method,
