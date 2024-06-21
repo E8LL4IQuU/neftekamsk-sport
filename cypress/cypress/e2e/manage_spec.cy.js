@@ -3,7 +3,18 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
   const randomUsername = self.crypto.randomUUID();
   const randomPassword = self.crypto.randomUUID();
 
-  it('register a new user in dev mode', () => {
+  const loginViaAPI = () => {
+    return cy.request({
+      method: 'POST',
+      url: '/api/auth/login',
+      body: {
+        email: randomUsername,
+        password: randomPassword
+      },
+    });
+  };
+
+  it('registers a new user in dev mode', () => {
     cy.request('POST', '/api/auth/register', {
       username: 'cypress',
       email: randomUsername,
@@ -83,20 +94,7 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
     });
   });
 
-  describe('Manage', () => {
-
-    // Function to login via API
-    const loginViaAPI = () => {
-      return cy.request({
-        method: 'POST',
-        url: '/api/auth/login',
-        body: {
-          email: randomUsername,
-          password: randomPassword
-        },
-      });
-    };
-
+  describe('Manage routes', () => {
     // Ensure user is logged out before each test
     beforeEach(() => {
       cy.clearCookies();
@@ -130,7 +128,53 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
         cy.get('h1').contains('Новости');
       });
     });
+  });
 
+  describe('Manage Events', () => {
+    const newEvent = {
+      name: 'Test Event',
+      description: 'This is a test event.',
+      date: '2024-07-01',
+      location: 'Test Location',
+      image: 'test-image.png'
+    };
+
+    const updatedEvent = {
+      name: 'Updated Test Event',
+      description: 'This is an updated test event.',
+      image: 'updated-test-image.jpg'
+    };
+
+    it('should create a new event', () => {
+      loginViaAPI().then(() => {
+        cy.visit('/manage/events');
+        cy.contains('button', 'Создать').click();
+        cy.url().should('include', '/manage/events/create');
+
+        cy.get('input[placeholder="Название мероприятия"]').type(newEvent.name); // Adjust the placeholder if needed
+        cy.get('textarea[placeholder="Начните писать описание..."]').type(newEvent.description);
+
+        // // Fill the date field
+        // cy.get('input[type="date"]').type(newEvent.date);
+
+        // Handle file upload
+        cy.fixture(newEvent.image).then(fileContent => {
+          cy.get('input[type="file"]').attachFile({
+            fileContent,
+            fileName: newEvent.image,
+            mimeType: 'image/jpeg'
+          });
+        });
+
+        cy.contains('button', 'Применить').click();
+
+        // TODO: Verify event is created
+      })
+    });
+
+  });
+
+  describe('Post-testing cleanup', () => {
     it('delete user that we created', () => {
       loginViaAPI().then(() => {
         cy.request({
@@ -139,5 +183,5 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
         });
       })
     })
-  });
+  })
 }

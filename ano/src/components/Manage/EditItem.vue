@@ -2,9 +2,9 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
-import { ChevronLeftIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import { ChevronLeftIcon } from '@heroicons/vue/24/solid';
 import { type IRLEvent, type News } from '@/types/apiTypes';
-import '@vuepic/vue-datepicker/dist/main.css';
+// import '@vuepic/vue-datepicker/dist/main.css';
 
 // Props
 const ItemForm = defineProps<{
@@ -28,7 +28,7 @@ const fileInputRef = ref<HTMLInputElement | null>(null);
 const filename = ref<string>('+ Добавить изображение');
 const title = ref<string>('');
 const description = ref<string>('');
-const date = ref<Date | null>(null);
+// const date = ref<Date | null>(null);
 
 // Computed
 const mode = computed(() => {
@@ -60,9 +60,9 @@ const submit = async (): Promise<void> => {
     const formData = new FormData();
     formData.append('title', title.value);
     formData.append('description', description.value);
-    if (date.value !== null) {
-      formData.append('date', date.value.toISOString());
-    }
+    // if (date.value !== null) {
+    //   formData.append('date', date.value.toISOString());
+    // }
     if (file.value !== null) {
       formData.append('image', file.value);
     }
@@ -92,9 +92,9 @@ const getFields = async (): Promise<void> => {
     const response = await axios.get<News | IRLEvent>(`${baseUrl}/api/${ItemForm.url}/${itemId}`);
     title.value = response.data.Title;
     description.value = response.data.Description;
-    if ('Date' in response.data) {
-      date.value = new Date(response.data.Date);
-    }
+    // if ('Date' in response.data) {
+    //   date.value = new Date(response.data.Date);
+    // }
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       router.push('/login');

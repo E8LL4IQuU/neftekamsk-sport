@@ -13,6 +13,7 @@ if (Cypress.env('ENVIRONMENT') !== 'dev') {
 
   describe('Production environment test', () => {
     // TODO: add tests
+      // TODO: check there's only one admin account
     const routes = [
       {
         name: 'disallow registering in production',
