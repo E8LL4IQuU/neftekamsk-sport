@@ -181,6 +181,24 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
       })
     })
 
+    it('should delete an event', () => {
+      loginViaAPI().then(() => {
+        cy.visit('/manage/events');
+        // Intercept the DELETE request
+        cy.intercept('DELETE', '**/api/events/*').as('deleteEvent');
+
+        // Select the first event slide dynamically
+        cy.get('.swiper-slide').first().within(() => {
+          // Click the delete button
+          cy.get('button').contains('Удалить').click();
+        });
+
+        // Wait for the delete request to be called and check the response status
+        cy.wait('@deleteEvent').its('response.statusCode').should('eq', 200);
+
+        // TODO: Verify the event slide is no longer in the DOM
+      })
+    })
 
   });
 
@@ -194,5 +212,4 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
       })
     })
   })
-
 }
