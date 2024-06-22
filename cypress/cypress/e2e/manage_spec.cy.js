@@ -134,12 +134,13 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
     const newEvent = {
       name: 'Test Event',
       description: 'This is a test event.',
-      date: '2024-07-01',
+      image: 'test-image.png'
     };
 
     const updatedEvent = {
       name: 'Updated Test Event',
       description: 'This is an updated test event.',
+      image: 'updated-test-image.jpg'
     };
 
     it('should create a new event', () => {
@@ -151,19 +152,35 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
         cy.get('input[placeholder="Название мероприятия"]').type(newEvent.name); // Adjust the placeholder if needed
         cy.get('textarea[placeholder="Начните писать описание..."]').type(newEvent.description);
 
-        // // Fill the date field
-        // cy.get('input[type="date"]').type(newEvent.date);
-
         // Handle file upload
         cy.get('input[type="file"]')
-          .attachFile('test-image.png');
+          .attachFile(newEvent.image);
 
         cy.contains('button', 'Применить').click();
 
         cy.get('input[name="eventName"]').should('have.value', newEvent.name);
         cy.get('input[name="eventDescription"]').should('have.value', newEvent.description);
+        // TODO: check image
       })
     });
+
+    it('should edit an event', () => {
+      loginViaAPI().then(() => {
+        cy.visit('/manage/events');
+        cy.get('input[name="eventName"]').eq(0).clear().type(updatedEvent.name);
+        cy.get('input[name="eventDescription"]').eq(0).clear().type(updatedEvent.description);
+        cy.get('input[type="file"]')
+          .eq(0)
+          .attachFile(updatedEvent.image);
+
+        cy.contains('button', 'Применить').click();
+
+        cy.get('input[name="eventName"]').should('have.value', updatedEvent.name)
+        cy.get('input[name="eventDescription"]').should('have.value', updatedEvent.description);
+        // TODO: check image
+      })
+    })
+
 
   });
 
