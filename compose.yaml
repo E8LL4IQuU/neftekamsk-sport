@@ -1,7 +1,7 @@
 # Avoid running not from project root(directory where compose.yaml is stored) as it causes docker to silently fail .env file load
 services:
   web:
-    container_name: ${WEB_CONTAINER_NAME} 
+    container_name: ${WEB_CONTAINER_NAME}
     build: ./ano
     restart: ${DOCKER_RESTART_POLICY}
     ports:
@@ -18,10 +18,13 @@ services:
         condition: service_healthy
     healthcheck:
       test: curl -f localhost:80
-      start_period: 0s
       start_interval: 1s
+
   backend:
     container_name: ${BACKEND_CONTAINER_NAME}
+    build:
+      context: ./ano-go
+      dockerfile: Dockerfile
     restart: ${DOCKER_RESTART_POLICY}
     environment:
       DATABASE_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
@@ -29,37 +32,32 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_PORT: ${DATABASE_PORT}
       ENVIRONMENT: ${ENVIRONMENT}
-    build:
-      context: ./ano-go
-      dockerfile: Dockerfile
+    volumes:
+      - ./ano-go/:/app/
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./ano-go/:/app/
     healthcheck:
       test: curl -f localhost:8000/api/events?limit=0
-      start_period: 0s
       start_interval: 1s
+
   db:
     container_name: ${DATABASE_CONTAINER_NAME}
-    restart: ${DOCKER_RESTART_POLICY}
     build: ./database
+    restart: ${DOCKER_RESTART_POLICY}
     environment:
       MARIADB_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
       MARIADB_DATABASE: ${DATABASE_NAME}
     volumes:
       - database:/var/lib/mysql
     healthcheck:
-      # FIXME: change execute to something else as this gets executed every 30 seconds
       test: mariadb --user=root --password='${DATABASE_ROOT_PASSWORD}' --execute='show databases;'
-      start_period: 0s
       start_interval: 1s
-  # FIXME: [STARTED] Task Without title
+
   cypress:
     container_name: ${CYPRESS_CONTAINER_NAME}
-    restart: ${DOCKER_RESTART_POLICY}
     build: ./cypress
+    restart: ${DOCKER_RESTART_POLICY}
     environment:
       CYPRESS_BASE_URL: ${BASE_URL}
       CYPRESS_ENVIRONMENT: ${ENVIRONMENT}
@@ -71,4 +69,3 @@ services:
 
 volumes:
   database:
-  
