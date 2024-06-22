@@ -135,14 +135,11 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
       name: 'Test Event',
       description: 'This is a test event.',
       date: '2024-07-01',
-      location: 'Test Location',
-      image: 'test-image.png'
     };
 
     const updatedEvent = {
       name: 'Updated Test Event',
       description: 'This is an updated test event.',
-      image: 'updated-test-image.jpg'
     };
 
     it('should create a new event', () => {
@@ -158,17 +155,13 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
         // cy.get('input[type="date"]').type(newEvent.date);
 
         // Handle file upload
-        cy.fixture(newEvent.image).then(fileContent => {
-          cy.get('input[type="file"]').attachFile({
-            fileContent,
-            fileName: newEvent.image,
-            mimeType: 'image/jpeg'
-          });
-        });
+        cy.get('input[type="file"]')
+          .attachFile('test-image.png');
 
         cy.contains('button', 'Применить').click();
 
-        // TODO: Verify event is created
+        cy.get('input[name="eventName"]').should('have.value', newEvent.name);
+        cy.get('input[name="eventDescription"]').should('have.value', newEvent.description);
       })
     });
 
@@ -184,4 +177,5 @@ if (Cypress.env('ENVIRONMENT') === 'dev') {
       })
     })
   })
+
 }
