@@ -15,8 +15,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// TODO: We'll have to send random data to this server to check every possible panic it gives
-
 func getFileExtension(file *multipart.FileHeader) string {
 	name := file.Filename
 	ext := filepath.Ext(name)
@@ -48,19 +46,15 @@ func hasField(obj interface{}, fieldName string) bool {
 func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 	form, err := c.MultipartForm()
 	if err != nil {
-		return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": "" + err.Error(),
-		})
+		return "", err
 	}
 	defer form.RemoveAll()
 
-	files := form.File["image"] // "image" is the name of the input field in the form
+	files := form.File["image"]
 
 	if isImageRequired {
 		if files == nil {
-			return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"message": "form file 'image' required",
-			})
+			return "", fmt.Errorf("form file 'image' required")
 		}
 	} else {
 		if files == nil {
@@ -69,24 +63,22 @@ func saveImage(c *fiber.Ctx, isImageRequired bool) (string, error) {
 	}
 
 	if len(files) != 1 {
-		return "", c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"message": "only one image allowed",
-		})
+		return "", fmt.Errorf("only one image allowed")
 	}
 
 	var path string
 	for _, file := range files {
 		uploadedFile, err := file.Open()
 		if err != nil {
-			return "", c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"message": "" + err.Error(),
-			})
+			return "", err
 		}
 		defer uploadedFile.Close()
 
 		filename, _ := generateSHA256Name(uploadedFile)
 		path = filename + getFileExtension(file)
-		c.SaveFile(file, "./uploads/"+path)
+		if err := c.SaveFile(file, "./uploads/"+path); err != nil {
+			return "", err
+		}
 	}
 
 	return path, nil
@@ -109,7 +101,7 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 		ids := strings.Split(excludedIDParam, ",")
 
 		for _, id := range ids {
-			parsedID, err := strconv.ParseUint(id, 10, 64)
+			parsedID, err := strconv.ParseUint(id, 10, 0) // 0 means to use the bit size of uint
 			if err != nil {
 				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID format"})
 			}
@@ -117,11 +109,8 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 		}
 	}
 
-	// Create a new instance of the modelType
-	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
-
-	// Retrieve the value of the created instance
-	itemValue := reflect.ValueOf(item)
+	modelSliceType := reflect.TypeOf(modelType).Elem()
+	modelSlice := reflect.New(modelSliceType).Interface()
 
 	query := model.DB.Order(orderByColumn + " desc").Limit(limit)
 
@@ -129,27 +118,23 @@ func getItems(c *fiber.Ctx, modelType interface{}, orderByColumn string) error {
 		query = query.Not("id", excludedIDs)
 	}
 
-	if err := query.Find(itemValue.Interface()).Error; err != nil {
+	if err := query.Find(modelSlice).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
+	return c.Status(fiber.StatusOK).JSON(modelSlice)
 }
 
 func getItemByID(c *fiber.Ctx, modelType interface{}) error {
 	recordID := c.Params("id")
 
-	// Create a new instance of the modelType
 	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
 
-	// Retrieve the value of the created instance
-	itemValue := reflect.ValueOf(item)
-
-	if err := model.DB.First(itemValue.Interface(), recordID).Error; err != nil {
+	if err := model.DB.First(item, recordID).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
 	}
 
-	return c.Status(fiber.StatusOK).JSON(itemValue.Interface())
+	return c.Status(fiber.StatusOK).JSON(item)
 }
 
 func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error {
@@ -178,37 +163,29 @@ func createItem(c *fiber.Ctx, isImageRequired bool, modelType interface{}) error
 }
 
 func updateItem(c *fiber.Ctx, modelType interface{}) error {
-	// Parse item ID from the request params
 	id, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid ID"})
 	}
 
-	// Find the existing item by ID in the database
 	item := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
 	if err := model.DB.First(item, id).Error; err != nil {
-		// Handle the error
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": fmt.Sprintf("%s not found", reflect.TypeOf(modelType).Elem().Name())})
 	}
 
-	// Parse the item details directly into the existing item
 	if err := c.BodyParser(item); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error": "Invalid request payload"})
 	}
 
-	// Parse the image
 	updatedPath, err := saveImage(c, false)
 	if err != nil {
 		return err
 	}
 
-	// Update the image path if provided
 	if updatedPath != "" {
-		// Assuming "ImagePath" is a field in your model
 		reflect.ValueOf(item).Elem().FieldByName("ImagePath").SetString(updatedPath)
 	}
 
-	// Save the updated item back to the database
 	model.DB.Save(item)
 	return c.Status(fiber.StatusOK).JSON(item)
 }
@@ -216,16 +193,12 @@ func updateItem(c *fiber.Ctx, modelType interface{}) error {
 func deleteRecord(c *fiber.Ctx, modelType interface{}) error {
 	recordID := c.Params("id")
 
-	// Find the record in the database by ID
 	record := reflect.New(reflect.TypeOf(modelType).Elem()).Interface()
 	if err := model.DB.First(record, recordID).Error; err != nil {
-		// Handle the error
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "Record not found"})
 	}
 
-	// Delete the record
 	if err := model.DB.Delete(record).Error; err != nil {
-		// Handle the error
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"error": "Error deleting record"})
 	}
 
@@ -252,7 +225,6 @@ func DeleteEvent(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Event{})
 }
 
-
 func GetNews(c *fiber.Ctx) error {
 	return getItems(c, &[]model.News{}, "ID")
 }
@@ -273,7 +245,6 @@ func DeleteNews(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.News{})
 }
 
-
 func GetSignups(c *fiber.Ctx) error {
 	return getItems(c, &[]model.Signup{}, "ID")
 }
@@ -290,7 +261,6 @@ func DeleteSignup(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Signup{})
 }
 
-
 func GetPhoto(c *fiber.Ctx) error {
 	return getItems(c, &[]model.Photo{}, "ID")
 }
@@ -306,7 +276,6 @@ func CreatePhoto(c *fiber.Ctx) error {
 func DeletePhoto(c *fiber.Ctx) error {
 	return deleteRecord(c, &model.Photo{})
 }
-
 
 func GetAthletes(c *fiber.Ctx) error {
 	return getItems(c, &[]model.Athlete{}, "ID")

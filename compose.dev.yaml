@@ -19,6 +19,7 @@ services:
     healthcheck:
       test: curl -f localhost:80
       start_interval: 1s
+      retries: 1000
 
   backend:
     container_name: ${BACKEND_CONTAINER_NAME}
@@ -40,6 +41,7 @@ services:
     healthcheck:
       test: curl -f localhost:8000/api/events?limit=0
       start_interval: 1s
+      retries: 1000
 
   db:
     container_name: ${DATABASE_CONTAINER_NAME}
@@ -53,6 +55,7 @@ services:
     healthcheck:
       test: mariadb --user=root --password='${DATABASE_ROOT_PASSWORD}' --execute='show databases;'
       start_interval: 1s
+      retries: 1000
 
   cypress:
     container_name: ${CYPRESS_CONTAINER_NAME}
